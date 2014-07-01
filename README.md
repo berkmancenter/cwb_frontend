@@ -6,7 +6,7 @@ After checking out, run `bundle install`. Then start the server:
 
     sproutcore server
 
-You'll find it running at http://localhost:4042/cwb/.
+You'll find it running at [http://localhost:4020/cwb](http://localhost:4020/cwb/).
 
 ## Building
 
