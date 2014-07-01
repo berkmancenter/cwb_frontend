@@ -18,7 +18,7 @@ end
 mode :production do
 end
 
-
+proxy '/', :to => 'localhost:3000'
 
 # Proxying.
 # When running the app locally, same-origin policy prevents the app (at localhost)
