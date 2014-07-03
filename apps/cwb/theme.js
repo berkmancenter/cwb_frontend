@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Cwb
+// Project:   CWB
 // Copyright: @2014 My Company, Inc.
 // ==========================================================================
-/*globals Cwb */
+/*globals CWB */
 
 // This is the theme that defines how your app renders.
 //
@@ -15,12 +15,12 @@
 //
 // NOTE: if you want to change the theme this one is based on, don't
 // forget to change the :css_theme property in your buildfile.
-Cwb.Theme = SC.AceTheme.create({
+CWB.Theme = SC.AceTheme.create({
   name: 'cwb'
 });
 
 // SproutCore needs to know that your app's theme exists
-SC.Theme.addTheme(Cwb.Theme);
+SC.Theme.addTheme(CWB.Theme);
 
 // Setting it as the default theme makes every pane SproutCore
 // creates default to this theme unless otherwise specified.

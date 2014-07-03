@@ -1,8 +1,8 @@
 // ==========================================================================
-// Project:   Cwb
+// Project:   CWB
 // Copyright: @2014 My Company, Inc.
 // ==========================================================================
-/*globals Cwb */
+/*globals CWB */
 
 /** @namespace
 
@@ -10,10 +10,10 @@
 
   @extends SC.Object
 */
-Cwb = SC.Application.create(
-  /** @scope Cwb.prototype */ {
+CWB = SC.Application.create(
+  /** @scope CWB.prototype */ {
 
-  NAMESPACE: 'Cwb',
+  NAMESPACE: 'CWB',
   VERSION: '0.1.0',
 
   // This is your application store.  You will use this store to access all
