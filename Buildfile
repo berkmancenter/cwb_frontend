@@ -7,8 +7,18 @@
 # In addition to this Buildfile, each of your apps and frameworks may have its
 # own Buildfile with settings specific to each.
 
-# General configuration.
-config :all, :required => :sproutcore
+# Project-wide settings:
+config :all,
+  :build_prefix => 'public',
+  :url_prefix => 'static'
+
+# Application-specific settings:
+config :cwb,
+  :required => [:sproutcore, 'sproutcore/statechart'],
+  :theme => 'sproutcore/ace',
+  :title => "Curator's Workbench (CWB)",
+  :mime_types => {},
+  :load_fixtures => true
 
 # Development (debug) mode configuration.
 mode :debug do
