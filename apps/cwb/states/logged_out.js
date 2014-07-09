@@ -21,7 +21,7 @@ CWB.LOGGED_OUT = SC.State.extend({
 
   didCompleteAuthentication: function(response) {
     if (SC.ok(response)) {
-      this.gotoState('LOGGED_IN', {sessionToken: 'asdf-asdfa'});
+      this.gotoState('LOGGED_IN', {sessionToken: response.body().token});
     } else if (response.status == 401) {
       SC.AlertPane.error('Incorrect username or password. Please try again.');
     } else {
