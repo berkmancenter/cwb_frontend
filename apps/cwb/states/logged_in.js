@@ -1,11 +1,11 @@
 CWB.LOGGED_IN = SC.State.extend({
 
-  enterState: function(context) {
-    CWB.loginController.sessionToken = context.sessionToken;
+    initialSubstate: 'MANAGING_PROJECTS',
 
-    // TODO just showing the mainPane as a placeholder for now
-    CWB.getPath('mainPage.mainPane').append();
-    CWB.routes.setRoute('');
+    MANAGING_PROJECTS: SC.State.plugin('CWB.MANAGING_PROJECTS'),
+
+    enterState: function(context) {
+    CWB.loginController.sessionToken = context.sessionToken;
   },
 
   exitState: function() {},

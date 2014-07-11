@@ -1,0 +1,250 @@
+/* CWB.FolderListItemView */
+
+.sc-list-item-view {
+.pill {
+    position: absolute;
+    display: inline-block;
+    right: 4px;
+    top: 50%;
+    height: 12px;
+    margin-top: -7px;
+    padding: 0;
+}
+
+.pill-inner {
+    float: left;
+    min-width: 16px;
+    padding: 0;
+    height: 12px;
+    line-height: 11px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    letter-spacing: -1px;
+    overflow: hidden;
+}
+
+.pill-left {
+    -webkit-border-radius: 7px 0 0 7px;
+    -moz-border-radius: 7px 0 0 7px;
+    -ms-border-radius: 7px 0 0 7px;
+    -o-border-radius: 7px 0 0 7px;
+    border-radius: 7px 0 0 7px;
+    background-color: #aaa;
+    border: 1px #aaa solid;
+    padding-left: 7px;
+    padding-right: 2px;
+}
+
+.pill-right {
+    -webkit-border-radius: 0 7px 7px 0;
+    -moz-border-radius: 0 7px 7px 0;
+    -ms-border-radius: 0 7px 7px 0;
+    -o-border-radius: 0 7px 7px 0;
+    border-radius: 0 7px 7px 0;
+    background-color: #888;
+    border: 1px #888 solid;
+    padding-left: 2px;
+    padding-right: 8px;
+}
+
+&.sel {
+.pill-left {
+    background-color: #555;
+    border: 1px #555 solid;
+}
+.pill-right {
+    background-color: #333;
+    border: 1px #333 solid;
+}
+}
+
+&.active {
+.pill-left {
+    background-color: #222;
+    border: 1px #555 solid;
+}
+.pill-right {
+    background-color: #000;
+    border: 1px #000 solid;
+}
+}
+
+&.has-branch .pill {
+     right: 16px;
+ }
+}
+
+/* Alex's Style Overrides */
+.ace.source-list.collection {
+    background: #fff;
+}
+
+.sc-main {
+    background: #DADEE4;
+}
+
+/* Override seletion styles */
+.ace.source-list.collection .sc-collection-item.sel,
+.ace.collection.alternating .sc-collection-item.even.sel,
+.ace.collection .sc-collection-item.sel {
+    color: white;
+    font-weight: normal;
+    text-shadow: 0px -1px 0 rgba(0,0,0,.25);
+    border: none;
+    background: none;
+    background-color: #5296e0;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(82, 150, 224)),to(rgb(64, 123, 217)));
+    background-image: -webkit-linear-gradient(top, rgb(82, 150, 224), rgb(64, 123, 217));
+    background-image: -moz-linear-gradient(top, rgb(82, 150, 224), rgb(64, 123, 217));
+    background-image: -o-linear-gradient(top, rgb(82, 150, 224), rgb(64, 123, 217));
+    background-image: -ms-linear-gradient(top, rgb(82, 150, 224), rgb(64, 123, 217));
+    background-image: linear-gradient(top, rgb(82, 150, 224), rgb(64, 123, 217));
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#5296e0', EndColorStr='#407bd9');
+}
+
+.ace.toolbar {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    background: none;
+    background-color: #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 255, 255)),to(rgb(232, 232, 232)));
+    background-image: -webkit-linear-gradient(top, rgb(255, 255, 255), rgb(232, 232, 232));
+    background-image: -moz-linear-gradient(top, rgb(255, 255, 255), rgb(232, 232, 232));
+    background-image: -o-linear-gradient(top, rgb(255, 255, 255), rgb(232, 232, 232));
+    background-image: -ms-linear-gradient(top, rgb(255, 255, 255), rgb(232, 232, 232));
+    background-image: linear-gradient(top, rgb(255, 255, 255), rgb(232, 232, 232));
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#e8e8e8');
+    color: #555;
+    text-shadow: 0px 1px 1px white;
+    border-bottom: 1px solid #aaa;
+    border-width: 1px 0;
+    -webkit-box-shadow: rgba(0,0,0,.25) 0 0 5px;
+}
+/* Top toolbar */
+.sc-workspace-view .ace.toolbar:first-child {
+    border-top: none;
+}
+/* Bottom toolbar */
+.sc-workspace-view .ace.toolbar + .ace.toolbar {
+    border-top: 1px solid #ccc;
+    border-bottom: none;
+}
+
+.ace.button {
+    border: 0px none;
+    color: #555;
+    text-shadow: 0px 1px 1px rgba(255,255,255,.5);
+}
+
+.sc-split-view > .sc-view:first-child {
+.sc-source-list:first-child .sc-collection-item {
+    border-bottom: 1px solid #ddd;
+}
+}
+
+.login-pane {
+    -webkit-border-radius: 5px;
+    border: 1px solid #cAcEd4 !important;
+}
+
+/* CWB.SearchField */
+
+.search {
+    position: relative;
+}
+
+.search-field,
+.sc-workspace-view .ace.toolbar:first-child .sc-text-field-view {
+    outline: none;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+    background: #fff;
+}
+.sc-workspace-view .ace.toolbar:first-child .sc-text-field-view .border {
+    -webkit-appearance: none;
+    outline: none;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+    border: 1px solid #aaa;
+}
+.sc-workspace-view .ace.toolbar:first-child .sc-text-field-view .padding {
+    left: 8px;
+}
+.sc-workspace-view .ace.toolbar:first-child .sc-text-field-view input.field {
+    outline: none;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    /*background: url('icon-search.png') no-repeat center center;*/
+}
+
+/* CWB.FileListItemView */
+
+.cwb-file-list-item-view {
+span.size {
+    top: 50%;
+    height: 18px;
+    display: block;
+    position: absolute;
+    margin-top: -9px;
+    line-height: 18px;
+    left: 500px;
+    right: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+
+span.type {
+    top: 50%;
+    height: 18px;
+    display: block;
+    position: absolute;
+    margin-top: -9px;
+    line-height: 18px;
+    left: 580px;
+    right: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+
+img.tag-icon {
+    margin-top: -9px;
+    position: absolute;
+    top: 50%;
+    right: 26px;
+}
+
+img.star-icon {
+    margin-top: -9px;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+}
+}

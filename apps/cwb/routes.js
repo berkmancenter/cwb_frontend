@@ -9,5 +9,6 @@ CWB.routes = SC.Object.create({
 
   initRoutes: function() {
     SC.routes.add('login', CWB, CWB.login);
+    SC.routes.add('projects', CWB, CWB.projects);
   }
 });
