@@ -1,71 +1,71 @@
 sc_require('core');
 sc_require('views/source_list_view');
 
-//CWB.TermSourceListView = CWB.SourceListView.extend({
-//    exampleView: SC.ListItemView.extend({
-//        hasContentIcon: YES,
-//        contentUnreadCountKey: 'fileCount',
-//        contentValueKey: 'label',
-//        contentIconKey: 'icon',
-//        renderLabel: function(context, label) {
-//            var term = this.get('content');
-//            var toolTip = term.get('description');
-//            context.push('<label title="').text(toolTip).push('">', label || '', '</label>');
-//        }
-//    }),
-//
-//    doubleClick: function(evt) {
-//        CWB.statechart.sendAction('editTermFromDoubleClick', this);
-//        return YES;
-//    }
-//});
-//
-//CWB.VocabularyView = SC.WorkspaceView.extend({
-//    topToolbar: null,
-//    contentView: SC.ScrollView.extend({
-//        contentView: CWB.TermSourceListView.extend({
-////            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
-////            contentBinding: 'CWB.termsController.content',
-////            selectionBinding: 'CWB.termsController.selection'
-//        })
-//    }),
-//    bottomToolbar: SC.ToolbarView.extend({
-//        childViews: 'addTermButton editTermButton removeTermButton'.w(),
-//        addTermButton: SC.ButtonView.extend({
-//            controlSize: SC.HUGE_CONTROL_SIZE,
-//            layout: { centerY: 0, height: 30, left: 12, width: 110 },
-//            icon: sc_static('icons/add.png'),
-//            title: "Add Term",
-//            isEnabled: YES,
-//            action: 'createTerm'
-//        }),
-//        editTermButton: SC.ButtonView.extend({
-//            controlSize: SC.HUGE_CONTROL_SIZE,
-//            layout: { centerY: 0, height: 30, left: 132, width: 110 },
-//            icon: sc_static('icons/edit.png'),
-//            title: "Edit Term",
-//            isEnabled: NO,
-////            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
-//            action: 'editTerm'
-//        }),
-//        removeTermButton: SC.ButtonView.extend({
-//            controlSize: SC.HUGE_CONTROL_SIZE,
-//            layout: { centerY: 0, height: 30, right: 12, width: 130 },
-//            icon: sc_static('icons/remove.png'),
-//            title: "Remove Term",
-//            isEnabled: NO,
-////            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
-//            action: 'removeTerm'
-//        })
-//    })
-//});
-//
-//CWB.Vocabulary1View = CWB.VocabularyView.extend({});
-//CWB.Vocabulary2View = CWB.VocabularyView.extend({});
-//CWB.Vocabulary3View = CWB.VocabularyView.extend({});
-//CWB.Vocabulary4View = CWB.VocabularyView.extend({});
-//CWB.Vocabulary5View = CWB.VocabularyView.extend({});
-//CWB.Vocabulary6View = CWB.VocabularyView.extend({});
+CWB.TermSourceListView = CWB.SourceListView.extend({
+    exampleView: SC.ListItemView.extend({
+        hasContentIcon: YES,
+        contentUnreadCountKey: 'fileCount',
+        contentValueKey: 'label',
+        contentIconKey: 'icon',
+        renderLabel: function(context, label) {
+            var term = this.get('content');
+            var toolTip = term.get('description');
+            context.push('<label title="').text(toolTip).push('">', label || '', '</label>');
+        }
+    }),
+
+    doubleClick: function(evt) {
+        CWB.statechart.sendAction('editTermFromDoubleClick', this);
+        return YES;
+    }
+});
+
+CWB.VocabularyView = SC.WorkspaceView.extend({
+    topToolbar: null,
+    contentView: SC.ScrollView.extend({
+        contentView: CWB.TermSourceListView.extend({
+//            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+//            contentBinding: 'CWB.termsController.content',
+//            selectionBinding: 'CWB.termsController.selection'
+        })
+    }),
+    bottomToolbar: SC.ToolbarView.extend({
+        childViews: 'addTermButton editTermButton removeTermButton'.w(),
+        addTermButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, left: 12, width: 110 },
+            icon: sc_static('icons/add.png'),
+            title: "Add Term",
+            isEnabled: YES,
+            action: 'createTerm'
+        }),
+        editTermButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, left: 132, width: 110 },
+            icon: sc_static('icons/edit.png'),
+            title: "Edit Term",
+            isEnabled: NO,
+//            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
+            action: 'editTerm'
+        }),
+        removeTermButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, right: 12, width: 130 },
+            icon: sc_static('icons/remove.png'),
+            title: "Remove Term",
+            isEnabled: NO,
+//            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
+            action: 'removeTerm'
+        })
+    })
+});
+
+CWB.Vocabulary1View = CWB.VocabularyView.extend({});
+CWB.Vocabulary2View = CWB.VocabularyView.extend({});
+CWB.Vocabulary3View = CWB.VocabularyView.extend({});
+CWB.Vocabulary4View = CWB.VocabularyView.extend({});
+CWB.Vocabulary5View = CWB.VocabularyView.extend({});
+CWB.Vocabulary6View = CWB.VocabularyView.extend({});
 
 CWB.ProjectsScreen = SC.WorkspaceView.extend({
     topToolbar: SC.ToolbarView.extend({
@@ -125,7 +125,7 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
         dividerThickness: 1,
         defaultThickness: 250,
 
-        topLeftView: CWB.SourceListView.extend({
+        topLeftView: CWB.SourceListView.extend(SC.SplitChild, {
             contentValueKey: 'name',
             contentBinding: 'CWB.projectsController.arrangedObjects',
             selectionBinding: 'CWB.projectsController.selection',
@@ -159,7 +159,7 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             }
         }),
 
-        bottomRightView: SC.ScrollView.extend({
+        bottomRightView: SC.ScrollView.extend(SC.SplitChild, {
             layout: { top: 0, left: 0, bottom: 0, right: 0 },
             //hasHorizontalScroller: NO,
 
@@ -209,8 +209,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     }),
                     field: SC.TextFieldView.design({
                         layout: { left: 112, height: 22, right: 0, centerY: 0 },
-//                        valueBinding: SC.Binding.from('CWB.projectController.path'),
-//                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+                        valueBinding: SC.Binding.from('CWB.projectController.path'),
+                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
                         isEditable: NO
                     })
                 }), // path
