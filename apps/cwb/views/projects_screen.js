@@ -24,9 +24,9 @@ CWB.VocabularyView = SC.WorkspaceView.extend({
     topToolbar: null,
     contentView: SC.ScrollView.extend({
         contentView: CWB.TermSourceListView.extend({
-//            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
-//            contentBinding: 'CWB.termsController.content',
-//            selectionBinding: 'CWB.termsController.selection'
+            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+            contentBinding: 'CWB.termsController.content',
+            selectionBinding: 'CWB.termsController.selection'
         })
     }),
     bottomToolbar: SC.ToolbarView.extend({
@@ -45,7 +45,7 @@ CWB.VocabularyView = SC.WorkspaceView.extend({
             icon: sc_static('icons/edit.png'),
             title: "Edit Term",
             isEnabled: NO,
-//            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
+            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
             action: 'editTerm'
         }),
         removeTermButton: SC.ButtonView.extend({
@@ -54,7 +54,7 @@ CWB.VocabularyView = SC.WorkspaceView.extend({
             icon: sc_static('icons/remove.png'),
             title: "Remove Term",
             isEnabled: NO,
-//            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
+            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
             action: 'removeTerm'
         })
     })

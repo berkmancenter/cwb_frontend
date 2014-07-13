@@ -64,7 +64,7 @@ CWB.loginPage = SC.Page.design({
       loadingImage: SC.ImageView.design({
         layout: { width: 16, height: 16, bottom: 20, right: 110 },
         value: sc_static('images/loading.png'),
-        useImageCache: NO,
+        useImageQueue: NO,
         isVisibleBinding: 'CWB.loginController.isLoggingIn'
       }), // loadingImage
 
@@ -72,7 +72,7 @@ CWB.loginPage = SC.Page.design({
         layout: { height: 40, width: 230, right: 120, bottom: 7 },
         classNames: ['error-message'],
         valueBinding: 'CWB.loginController.errorMessage'
-      }), // errorMessage
+      }) // errorMessage
     }) // boxView
   }) // loginPane
 }); // loginPage
