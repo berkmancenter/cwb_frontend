@@ -1,0 +1,18 @@
+var my_project = BT.AppBuilder.create({
+  path: 'apps/cwb'
+});
+
+BT.serverConfig = {
+  host: "localhost",
+  port: 4020,
+  localOnly: true,
+
+  proxies: [
+    {
+      prefix: '/',
+      host: "localhost",
+      port: 3000,
+      proxyPrefix: '/'
+    }
+  ]
+};

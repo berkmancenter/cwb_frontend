@@ -2,9 +2,9 @@ The front-end SproutCore application for the Curators Workbench.
 
 ## Running
 
-After checking out, run `bundle install`. Then start the server:
+After checking out, run `bundle install`. Now install the new build tools `npm install`. Then start the server:
 
-    sproutcore server
+    ./node_modules/sproutcore/bin/sproutcore serve
 
 You'll find it running at [http://localhost:4020/cwb](http://localhost:4020/cwb/).
 
