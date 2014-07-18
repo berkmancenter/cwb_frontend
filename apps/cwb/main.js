@@ -29,6 +29,7 @@ CWB.main = function main() {
   // var content = CWB.store.find(CWB.Group);
   // CWB.groupsController.set('content', content);
 
+  CWB.routes.initRoutes();
 };
 
 
