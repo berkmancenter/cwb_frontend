@@ -14,8 +14,8 @@ sc_require('models/resource_model');
 CWB.Project = CWB.Resource.extend(
     /** @scope CWB.Project.prototype */ {
 
-//        vocabularies: SC.Record.toMany('CWB.Vocabulary', { isMaster: YES, inverse: 'project' }),
-//
+        vocabularies: SC.Record.toMany('CWB.Vocabulary', { isMaster: YES, inverse: 'project' }),
+
 //        nodes: SC.Record.toMany('CWB.Node', { isMaster: YES, inverse: 'project' }),
 //
 //        folders: function() {

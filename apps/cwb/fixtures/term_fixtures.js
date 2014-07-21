@@ -268,5 +268,19 @@ CWB.Term.FIXTURES = [
     vocabulary: 6,
     label: "Default Access Policy",
     description: null
+  },
+    
+  /* Vocabulary 1 */
+  {
+    id: 701,
+    vocabulary: 7,
+    label: "Term 1A",
+    description: null
+  },
+  {
+    id: 702,
+    vocabulary: 7,
+    label: "Term 1B",
+    description: null        
   }
 ];

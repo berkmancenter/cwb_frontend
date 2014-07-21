@@ -11,5 +11,11 @@ CWB.Project.FIXTURES = [
         name: "USIP-Sample",
         description: "A sample project for CWB application development.",
         path: '/tmp/usip-sample'
+    },
+    {
+        id: 'zzz',
+        name: "ZZZ",
+        description: "A test project for CWB testing.",
+        path: '/tmp/zztest'
     }
 ];

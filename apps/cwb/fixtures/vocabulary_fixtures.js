@@ -47,5 +47,12 @@ CWB.Vocabulary.FIXTURES = [
     label: "Rights",
     description: "Access control policy, documents read access and/or embargo.",
     terms: [601]
+  },
+  {
+    id: 7,
+    project: 'zzz',
+    label: "Format",
+    description: "Test vocabulary 1 documents.",
+    terms: [701, 702]
   }
 ];
