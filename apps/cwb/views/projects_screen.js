@@ -1,4 +1,5 @@
 sc_require('core');
+sc_require('resources/queries');
 sc_require('views/source_list_view');
 
 CWB.TermSourceListView = CWB.SourceListView.extend({
@@ -114,8 +115,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             themeName: 'point-right',
             title: "Files",
             action: 'gotoFiles',
-            isEnabled: NO
-//            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool()
+            isEnabled: NO,
+            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool()
         })
     }),
 

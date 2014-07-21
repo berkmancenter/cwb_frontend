@@ -2,6 +2,7 @@
 // Project:   CWB - mainPage
 // ==========================================================================
 /*globals CWB */
+sc_require('views/files_screen');
 sc_require('views/projects_screen');
 
 // This page describes the main user interface for the application.
@@ -14,10 +15,10 @@ CWB.mainPage = SC.Page.design({
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
-//    mainPane: SC.MainPane.design({
-//        childViews: 'filesScreen'.w(),
-//        filesScreen: CWB.FilesScreen.design()
-//    }),
+   mainPane: SC.MainPane.design({
+       childViews: 'filesScreen'.w(),
+       filesScreen: CWB.FilesScreen.design()
+   }),
 
     projectPane: SC.MainPane.design({
         childViews: 'projectsScreen'.w(),
