@@ -124,9 +124,11 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
 
     contentView: SC.SplitView.extend({
         dividerThickness: 1,
-        defaultThickness: 250,
+//        defaultThickness: 250,
+        layoutDirection: SC.LAYOUT_HORIZONTAL,
 
         topLeftView: CWB.SourceListView.extend(SC.SplitChild, {
+            size: 300,
             contentValueKey: 'name',
             contentBinding: 'CWB.projectsController.arrangedObjects',
             selectionBinding: 'CWB.projectsController.selection',
