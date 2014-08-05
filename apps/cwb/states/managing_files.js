@@ -6,7 +6,7 @@ CWB.MANAGING_FILES = SC.State.extend({
     var projectID = CWB.projectController.get('id');
 
     var rootFolders = CWB.store.find(SC.Query.local(CWB.Folder, {
-      conditions: 'project.id = %@ AND parent = 0',
+      conditions: 'project.id = %@ AND parent = null',
       parameters: [projectID],
       orderBy: 'name ASC'
     }));
@@ -24,6 +24,8 @@ CWB.MANAGING_FILES = SC.State.extend({
 
     CWB.getPath('mainPage.mainPane').append();
     CWB.routes.setRoute('files');
+//    CWB.routes.setRoute("project/%@/files".fmt(encodeURIComponent(projectID)));
+      
   },
 
   exitState: function() {

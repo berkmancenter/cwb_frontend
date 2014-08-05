@@ -14,15 +14,17 @@ sc_require('models/node_model');
 CWB.Folder = CWB.Node.extend(
 /** @scope CWB.Folder.prototype */ {
 
-  parent: SC.Record.attr(Number, { defaultValue: 0 }), // FIXME
+//  parent: SC.Record.attr(Number, { defaultValue: 0 }), // FIXME
+  parent: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
   files: SC.Record.toMany('CWB.File', { isMaster: YES, inverse: 'folder' }),
 
   name: SC.Record.attr(String),
 
-  subfolders: function() {
-    return CWB.store.find(SC.Query.local(CWB.Folder,
-      { conditions: 'parent = %@', parameters: [this.get('id')], orderBy: 'name ASC' }));
-  }.property().cacheable(),
+//  subfolders: function() {
+//    return CWB.store.find(SC.Query.local(CWB.Folder,
+//      { conditions: 'parent = %@', parameters: [this.get('id')], orderBy: 'name ASC' }));
+//  }.property().cacheable(),
+  subfolders: SC.Record.toMany('CWB.Folder', { isMaster: YES, inverse: 'parent'}),
 
   treeItemIsExpanded: NO,
 

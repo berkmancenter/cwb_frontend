@@ -1,8 +1,6 @@
-// ==========================================================================
-// Project:   CWB.Project
-// ==========================================================================
-/*globals CWB */
 sc_require('models/resource_model');
+sc_require('models/folder_model');
+sc_require('models/file_model');
 
 /** @class
 
@@ -16,21 +14,21 @@ CWB.Project = CWB.Resource.extend(
 
         vocabularies: SC.Record.toMany('CWB.Vocabulary', { isMaster: YES, inverse: 'project' }),
 
-//        nodes: SC.Record.toMany('CWB.Node', { isMaster: YES, inverse: 'project' }),
-//
-//        folders: function() {
-//            return CWB.store.find(SC.Query.local(CWB.Folder, {
-//                conditions: 'project.id = %@',
-//                parameters: [this.get('id')]
-//            }));
-//        }.property('nodes').cacheable(),
-//
-//        files: function() {
-//            return CWB.store.find(SC.Query.local(CWB.File, {
-//                conditions: 'project.id = %@',
-//                parameters: [this.get('id')]
-//            }));
-//        }.property('nodes').cacheable(),
+        nodes: SC.Record.toMany('CWB.Node', { isMaster: YES, inverse: 'project' }),
+
+        folders: function() {
+            return CWB.store.find(SC.Query.local(CWB.Folder, {
+                conditions: 'project.id = %@',
+                parameters: [this.get('id')]
+            }));
+        }.property('nodes').cacheable(),
+
+        files: function() {
+            return CWB.store.find(SC.Query.local(CWB.File, {
+                conditions: 'project.id = %@',
+                parameters: [this.get('id')]
+            }));
+        }.property('nodes').cacheable(),
 
         name: SC.Record.attr(String),
         description: SC.Record.attr(String),

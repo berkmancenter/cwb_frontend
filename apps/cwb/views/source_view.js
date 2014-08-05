@@ -18,10 +18,10 @@ CWB.SourceView = SC.View.extend({
     }),
 
     contentBinding: 'CWB.sourcesController.arrangedObjects', // FIXME
-    selectionBinding: 'CWB.sourcesController.selection',     // FIXME
+    selectionBinding: 'CWB.sourcesController.selection'     // FIXME
   }),
 
   folderView: CWB.FolderView.extend({
-    layout: { top: 64, left: 0, bottom: 0, right: 0 },
+    layout: { top: 64, left: 0, bottom: 0, right: 0 }
   })
 });
