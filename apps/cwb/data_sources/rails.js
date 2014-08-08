@@ -13,9 +13,18 @@ CWB.RailsDataSource = SC.DataSource.extend({
     fetch: function (store, query) {
         var recordType = query.get('recordType');
         
-        // TODO Turn back on when backend support Terms 
         if(recordType === CWB.Term) {
-            return NO;
+            SC.Logger.debug('    (Term) recordType: ' + recordType + ' conditions: ' + query.conditions + ' parameters: ' + query.parameters);
+
+            SC.Request.getUrl(this.routeFor(CWB.Vocabulary, store)).header(this.headers)
+                .notify(this, 'fetchDidCompleteWithRecordType', store, query, CWB.Vocabulary)
+                .json().send();
+
+            SC.Request.getUrl(this.routeFor(CWB.Term, store)).header(this.headers)
+                .notify(this, 'fetchDidCompleteWithRecordType', store, query, CWB.Term)
+                .json().send();
+
+            return YES;
         }
 
         SC.Logger.debug('CWB.RailsDataSource.fetch - recordType: ' + recordType + ' conditions: ' + query.conditions + ' parameters: ' + query.parameters);
@@ -56,6 +65,17 @@ CWB.RailsDataSource = SC.DataSource.extend({
     fetchDidComplete: function (response, store, query) {
         if (SC.ok(response)) {
             var recordType = query.get('recordType');
+            var records = response.get('body');
+            store.loadRecords(recordType, records);
+            store.dataSourceDidFetchQuery(query);
+        }
+        else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    fetchDidCompleteWithRecordType: function (response, store, query, recordType) {
+        if (SC.ok(response)) {
             var records = response.get('body');
             store.loadRecords(recordType, records);
             store.dataSourceDidFetchQuery(query);
