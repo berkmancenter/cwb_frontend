@@ -193,12 +193,13 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                       CWB.tagsController.set('content', node);
                       CWB.statechart.sendAction('showTagPane', function(result) {
                           CWB.tagsController.set('content', null);
-                          if (result) {
-                              node.commitRecord();
-                          }
-                          else {
-                              node.set('tagIDs', oldTags);
-                          }
+                          // TODO commented out until the backend is ready to handle term CRUD
+                          // if (result) {
+                          //     node.commitRecord();
+                          // }
+                          // else {
+                          //     node.set('tagIDs', oldTags);
+                          // }
                       });
                   },
 
@@ -377,8 +378,8 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           previewImage: SC.ImageView.extend({
               layout: { left: 20, top: 180, bottom: 20, right: 20 }, // TODO
-              scale: SC.BEST_FIT,
-              valueBinding: 'CWB.fileController.previewURL'
+              scale: SC.BEST_FIT
+              // valueBinding: 'CWB.fileController.previewURL'
           })
       })
       })
