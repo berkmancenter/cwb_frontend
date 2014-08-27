@@ -8,7 +8,7 @@ sc_require('views/file_list_item_view');
 CWB.FilesScreen = SC.WorkspaceView.extend({
   topToolbar: SC.ToolbarView.extend({
     anchorLocation: SC.ANCHOR_TOP,
-    childViews: 'projectsButton titleLabel downloadButton'.w(),
+    childViews: 'projectsButton titleLabel downloadLabel downloadMenu'.w(),
 
     projectsButton: SC.ButtonView.extend({
       controlSize: SC.HUGE_CONTROL_SIZE,
@@ -27,13 +27,21 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       valueBinding: 'CWB.projectController.name'
     }),
 
-    downloadButton: SC.ButtonView.extend({
-      controlSize: SC.HUGE_CONTROL_SIZE,
+    downloadLabel: SC.LabelView.design({
+      layout: { centerY: 0, height: 20, right: 150, width: 100 },
+      value: 'Download PIM:',
+      textAlign: SC.ALIGN_RIGHT
+    }),
+
+    downloadMenu: SC.SegmentedView.design({
       layout: { centerY: 0, height: 30, right: 12, width: 130 },
-      icon: sc_static('icons/download.png'),
-      title: "Download PIM",
-      isEnabled: YES,
-      action: 'downloadPIM'
+      items: [
+        {title:'RDF/XML', action:'downloadRDF'},
+        {title:'Turtle', action:'downloadTurtle'},
+      ],
+      itemTitleKey:'title',
+      itemActionKey:'action',
+      itemTargetKey:'target'
     })
   }),
 
