@@ -11,7 +11,6 @@ CWB.projectsController = SC.ArrayController.create({
     newName: null,
     newDescription: null,
     newPath: null,
-    newFiles: [],
 
     resetNewProject: function() {
 			this.set('newName', null);

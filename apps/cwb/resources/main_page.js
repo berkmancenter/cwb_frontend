@@ -327,7 +327,7 @@ CWB.mainPage = SC.Page.design({
 
         contentView: SC.View.extend({
             layout: { top: 12, left: 12, bottom: 12, right: 12 },
-            childViews: 'name description path files saveButton cancelButton'.w(),
+            childViews: 'name description path saveButton cancelButton'.w(),
             isVisible: YES,
 
             name: SC.View.design({
@@ -371,23 +371,6 @@ CWB.mainPage = SC.Page.design({
                     valueBinding: SC.Binding.from('CWB.projectsController.newPath')
                 })
             }),
-
-            // files: SC.View.design({
-            //     layout: { left: 0, right: 0, top: 102, height: 26 },
-            //     childViews: 'label field'.w(),
-            //     label: SC.LabelView.design({
-            //         layout: { left: 0, width: 110, height: 18, centerY: 0 },
-            //         value: "Project Root Directory",
-            //         textAlign: SC.ALIGN_LEFT
-            //     }),
-            //     field: SC.View.design({
-            //         layout: { left: 112, height: 22, right: 0, centerY: 0 },
-            //         valueBinding: SC.Binding.from('CWB.projectsController.newFiles'),
-            //         render: function (context) {
-            //             context.push("<input type='file' multiple />");
-            //         }
-            //     })
-            // }),
 
             saveButton: SC.ButtonView.extend({
                 controlSize: SC.HUGE_CONTROL_SIZE,
