@@ -24,7 +24,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       layout: { centerY: 0, centerX: 0, height: 30, width: 400 },
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
-      valueBinding: 'CWB.projectController.name'
+      valueBinding: 'CWB.projectController.versionPlusName'
     }),
 
     downloadButton: SC.ButtonView.extend({

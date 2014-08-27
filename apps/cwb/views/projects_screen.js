@@ -97,7 +97,7 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             layout: { centerY: 0, centerX: 0, height: 30, width: 200 },
             fontWeight: SC.BOLD_WEIGHT,
             textAlign: SC.ALIGN_CENTER,
-            value: "Projects"
+            value: "CWB (v" + CWB.VERSION + ") - Projects"
         }),
 
         logoutButton: SC.ButtonView.extend({
