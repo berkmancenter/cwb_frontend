@@ -306,5 +306,112 @@ CWB.mainPage = SC.Page.design({
         else {
             pane.remove();
         }
-    }.observes('tagPaneIsVisible')
+    }.observes('tagPaneIsVisible'),
+
+    createProjectPaneIsVisible: NO,
+    createProjectPaneCallback: null,
+    createProjectPaneMessage: '',
+
+    createProjectPaneIsVisibleDidChange: function() {
+        var pane = this.get('createProjectPane');
+        if (this.get('createProjectPaneIsVisible')) {
+            pane.append();
+            pane.get('contentView').get('name').get('field').becomeFirstResponder();
+        }
+        else {
+            pane.remove();
+        }
+    }.observes('createProjectPaneIsVisible'),
+
+    createProjectPane: SC.PanelPane.design({
+        layout: { width: 320, height: 240, centerX: 0, centerY: 0 },
+
+        contentView: SC.View.extend({
+            layout: { top: 12, left: 12, bottom: 12, right: 12 },
+            childViews: 'name description path message saveButton cancelButton'.w(),
+            isVisible: YES,
+
+            name: SC.View.design({
+                layout: { left: 0, right: 0, top: 0, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Project Name",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.projectsController.newName')
+                })
+            }),
+
+            description: SC.View.design({
+                layout: { left: 0, right: 0, top: 34, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Project Description",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.projectsController.newDescription')
+                })
+            }),
+
+            path: SC.View.design({
+                layout: { left: 0, right: 0, top: 68, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Project Path",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.projectsController.newPath')
+                })
+            }),
+
+            message: SC.View.design({
+                layout: { left: 0, right: 0, bottom: 60, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, right: 0, height: 18, centerY: 0 },
+                    textAlign: SC.ALIGN_CENTER,
+                    isVisible: YES,
+                    valueBinding: SC.Binding.from('CWB.mainPage.createProjectPaneMessage')
+                })
+            }),
+
+            saveButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, left: 40, height: 30, width: 80 },
+                title: "Save",
+                action: function(unused) {
+                    var callback = CWB.mainPage.get('createProjectPaneCallback');
+                    if (callback) {
+                        return callback(YES);
+                    }
+                },
+                isDefault: YES,
+                isEnabled: NO,
+                isEnabledBinding: SC.Binding.oneWay('CWB.projectsController.enableSaveButton').bool()
+            }),
+
+            cancelButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, right: 40, height: 30, width: 80 },
+                title: "Cancel",
+                action: function(unused) {
+                    CWB.mainPage.set('createProjectPaneIsVisible', NO);
+                    var callback = CWB.mainPage.get('createProjectPaneCallback');
+                    if (callback) {
+                        return callback(NO);
+                    }
+                },
+                isCancel: YES
+            })
+        })
+    }),
 });

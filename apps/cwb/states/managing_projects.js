@@ -14,23 +14,6 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         CWB.getPath('mainPage.projectPane').remove();
     },
 
-    createProject: function() {
-        var projectID = -Math.floor(Math.random() * 99999999); /* a temporary identifier */
-        var projectNo = ++this.projectNo;
-        var project = CWB.store.createRecord(CWB.Project, {
-            name: 'New Project #' + projectNo
-        }, projectID);
-        CWB.projectsController.selectObject(project);
-        project.commitRecord();
-    },
-
-    removeProject: function() {
-        var projectID = CWB.projectController.get('id');
-        var project = CWB.store.find(CWB.Project, projectID);
-        project.destroy();
-        project.commitRecord();
-    },
-
     createTerm: function() {
         var vocabularyID = CWB.termsController.get('vocabularyID');
         var vocabulary = CWB.store.find(CWB.Vocabulary, vocabularyID);
