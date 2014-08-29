@@ -37,7 +37,11 @@ CWB.MANAGING_FILES = SC.State.extend({
     CWB.mainPage.set('tagPaneCallback', callback);
   },
 
-  downloadPIM: function() {
-    window.location.href = '/download'; /* @see RootController#download */
+  downloadRDF: function() {
+    window.location.href = '/download?choice=rdfxml';
+  },
+
+  downloadTurtle: function() {
+    window.location.href = '/download?choice=n3';
   }
 });
