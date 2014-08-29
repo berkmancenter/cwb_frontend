@@ -91,6 +91,7 @@ CWB.File = CWB.Node.extend(
     'image/vnd.adobe.photoshop': sc_static('icons/files/psd.png')
   },
 
+  // we can probably remove this now that we're passing type from the backend
   typeTitle: function() {
     var type = this.get('type');
     return this.typeTitles[type] ? this.typeTitles[type] : 'Document';

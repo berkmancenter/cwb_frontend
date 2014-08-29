@@ -191,7 +191,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   contentIconKey: 'typeIcon',
                   contentValueKey: 'name',
                   contentSizeKey: 'size',
-                  contentTypeKey: 'typeTitle',
+                  contentTypeKey: 'type',
                   contentTagIconKey: 'tagIcon',
                   contentStarIconKey: 'starIcon',
 
@@ -335,7 +335,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
               typeValue: SC.LabelView.design({
                   layout: { top: 20, left: 120, width: 120, height: 18 },
-                  valueBinding: 'CWB.fileController.typeTitle'
+                  valueBinding: 'CWB.fileController.type'
               }),
 
               sizeLabel: SC.LabelView.design({
