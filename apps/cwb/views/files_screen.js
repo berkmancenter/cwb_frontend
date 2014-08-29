@@ -8,7 +8,7 @@ sc_require('views/file_list_item_view');
 CWB.FilesScreen = SC.WorkspaceView.extend({
   topToolbar: SC.ToolbarView.extend({
     anchorLocation: SC.ANCHOR_TOP,
-    childViews: 'projectsButton titleLabel downloadButton'.w(),
+    childViews: 'projectsButton titleLabel downloadLabel downloadMenu'.w(),
 
     projectsButton: SC.ButtonView.extend({
       controlSize: SC.HUGE_CONTROL_SIZE,
@@ -24,16 +24,24 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       layout: { centerY: 0, centerX: 0, height: 30, width: 400 },
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
-      valueBinding: 'CWB.projectController.name'
+      valueBinding: 'CWB.projectController.versionPlusName'
     }),
 
-    downloadButton: SC.ButtonView.extend({
-      controlSize: SC.HUGE_CONTROL_SIZE,
+    downloadLabel: SC.LabelView.design({
+      layout: { centerY: 0, height: 20, right: 150, width: 100 },
+      value: 'Download PIM:',
+      textAlign: SC.ALIGN_RIGHT
+    }),
+
+    downloadMenu: SC.SegmentedView.design({
       layout: { centerY: 0, height: 30, right: 12, width: 130 },
-      icon: sc_static('icons/download.png'),
-      title: "Download PIM",
-      isEnabled: YES,
-      action: 'downloadPIM'
+      items: [
+        {title:'RDF/XML', action:'downloadRDF'},
+        {title:'Turtle', action:'downloadTurtle'},
+      ],
+      itemTitleKey:'title',
+      itemActionKey:'action',
+      itemTargetKey:'target'
     })
   }),
 
@@ -183,7 +191,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   contentIconKey: 'typeIcon',
                   contentValueKey: 'name',
                   contentSizeKey: 'size',
-                  contentTypeKey: 'typeTitle',
+                  contentTypeKey: 'type',
                   contentTagIconKey: 'tagIcon',
                   contentStarIconKey: 'starIcon',
 
@@ -193,12 +201,13 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                       CWB.tagsController.set('content', node);
                       CWB.statechart.sendAction('showTagPane', function(result) {
                           CWB.tagsController.set('content', null);
-                          if (result) {
-                              node.commitRecord();
-                          }
-                          else {
-                              node.set('tagIDs', oldTags);
-                          }
+                          // TODO commented out until the backend is ready to handle term CRUD
+                          // if (result) {
+                          //     node.commitRecord();
+                          // }
+                          // else {
+                          //     node.set('tagIDs', oldTags);
+                          // }
                       });
                   },
 
@@ -326,7 +335,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
               typeValue: SC.LabelView.design({
                   layout: { top: 20, left: 120, width: 120, height: 18 },
-                  valueBinding: 'CWB.fileController.typeTitle'
+                  valueBinding: 'CWB.fileController.type'
               }),
 
               sizeLabel: SC.LabelView.design({
@@ -377,8 +386,8 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           previewImage: SC.ImageView.extend({
               layout: { left: 20, top: 180, bottom: 20, right: 20 }, // TODO
-              scale: SC.BEST_FIT,
-              valueBinding: 'CWB.fileController.previewURL'
+              scale: SC.BEST_FIT
+              // valueBinding: 'CWB.fileController.previewURL'
           })
       })
       })

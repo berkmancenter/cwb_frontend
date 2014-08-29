@@ -78,8 +78,9 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             layout: { centerY: 0, height: 30, left: 12, width: 120 },
             icon: sc_static('icons/add.png'),
             title: "Add Project",
-            isEnabled: NO, // TODO: isAdmin
-            action: 'createProject'
+            isEnabled: YES,
+            target: 'CWB.projectsController',
+            action: 'showCreateProjectPane'
         }),
 
         removeProjectButton: SC.ButtonView.extend({
@@ -88,8 +89,9 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             icon: sc_static('icons/remove.png'),
             title: "Remove Project",
             isEnabled: NO,
-            //isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(), // TODO: isAdmin
-            action: 'removeProject'
+            isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+            target: 'CWB.projectsController',
+            action: 'showRemoveProjectAlert'
         }),
 
         titleLabel: SC.LabelView.extend({
@@ -97,7 +99,7 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             layout: { centerY: 0, centerX: 0, height: 30, width: 200 },
             fontWeight: SC.BOLD_WEIGHT,
             textAlign: SC.ALIGN_CENTER,
-            value: "Projects"
+            value: "CWB (v" + CWB.VERSION + ") - Projects"
         }),
 
         logoutButton: SC.ButtonView.extend({
@@ -183,7 +185,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     field: SC.TextFieldView.design({
                         layout: { left: 112, height: 22, right: 0, centerY: 0 },
                         valueBinding: SC.Binding.from('CWB.projectController.name'),
-                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool()
+                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+                        isEditable: NO
                     })
                 }), // name
 
@@ -198,7 +201,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     field: SC.TextFieldView.design({
                         layout: { left: 112, height: 22, right: 0, centerY: 0 },
                         valueBinding: SC.Binding.from('CWB.projectController.description'),
-                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool()
+                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+                        isEditable: NO
                     })
                 }), // description
 
