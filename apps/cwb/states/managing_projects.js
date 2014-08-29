@@ -14,50 +14,6 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         CWB.getPath('mainPage.projectPane').remove();
     },
 
-    showCreateProjectPane: function() {
-        CWB.mainPage.set('createProjectPaneIsVisible', YES);
-        CWB.mainPage.set('createProjectPaneCallback', function (saved) {
-            if (saved) {
-
-                // create the new project
-                var project = CWB.store.createRecord(CWB.Project, {
-                    name: CWB.projectsController.newName,
-                    description: CWB.projectsController.newDescription,
-                    path: CWB.projectsController.newPath
-                });
-                project.commitRecord();
-                CWB.projectsController.selectObject(project);
-
-                // TODO handle errors?
-                // TODO fix project isn't able to be deleted until after reloading the page
-
-                // reset the Add Project form
-                CWB.projectsController.resetNewProject();
-            } else {
-                CWB.projectsController.resetNewProject();
-            }
-        });
-    },
-
-    showRemoveProjectAlert: function() {
-        SC.AlertPane.warn({
-            message: "Are you sure?",
-            description: "Removing this project is permanent and cannot be undone. Make sure you export the PIM before continuing.",
-            buttons: [
-                { title: "Remove", action: "removeProject", target: this },
-                { title: "Cancel" },
-            ]
-        });
-    },
-
-    removeProject: function() {
-        var projectID = CWB.projectController.get('id');
-        var project = CWB.store.find(CWB.Project, projectID);
-        project.destroy();
-        project.commitRecord();
-        CWB.projectsController.set('selection', null);
-    },
-
     createTerm: function() {
         var vocabularyID = CWB.termsController.get('vocabularyID');
         var vocabulary = CWB.store.find(CWB.Vocabulary, vocabularyID);

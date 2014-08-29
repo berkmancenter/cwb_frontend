@@ -310,6 +310,7 @@ CWB.mainPage = SC.Page.design({
 
     createProjectPaneIsVisible: NO,
     createProjectPaneCallback: null,
+    createProjectPaneMessage: '',
 
     createProjectPaneIsVisibleDidChange: function() {
         var pane = this.get('createProjectPane');
@@ -327,7 +328,7 @@ CWB.mainPage = SC.Page.design({
 
         contentView: SC.View.extend({
             layout: { top: 12, left: 12, bottom: 12, right: 12 },
-            childViews: 'name description path saveButton cancelButton'.w(),
+            childViews: 'name description path message saveButton cancelButton'.w(),
             isVisible: YES,
 
             name: SC.View.design({
@@ -372,12 +373,22 @@ CWB.mainPage = SC.Page.design({
                 })
             }),
 
+            message: SC.View.design({
+                layout: { left: 0, right: 0, bottom: 60, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, right: 0, height: 18, centerY: 0 },
+                    textAlign: SC.ALIGN_CENTER,
+                    isVisible: YES,
+                    valueBinding: SC.Binding.from('CWB.mainPage.createProjectPaneMessage')
+                })
+            }),
+
             saveButton: SC.ButtonView.extend({
                 controlSize: SC.HUGE_CONTROL_SIZE,
-                layout: { bottom: 20, right: 110, height: 30, width: 80 },
+                layout: { bottom: 20, left: 40, height: 30, width: 80 },
                 title: "Save",
                 action: function(unused) {
-                    CWB.mainPage.set('createProjectPaneIsVisible', NO);
                     var callback = CWB.mainPage.get('createProjectPaneCallback');
                     if (callback) {
                         return callback(YES);
@@ -385,14 +396,12 @@ CWB.mainPage = SC.Page.design({
                 },
                 isDefault: YES,
                 isEnabled: NO,
-                // isEnabledBinding: SC.Binding.from('CWB.projectsController.newProjectIsValid').bool()
-                isEnabledBinding: SC.Binding.oneWay('CWB.projectsController.newProjectIsValid').bool()
-                // isEnabledBinding: CWB.projectsController.get('newProjectIsValid')
+                isEnabledBinding: SC.Binding.oneWay('CWB.projectsController.enableSaveButton').bool()
             }),
 
             cancelButton: SC.ButtonView.extend({
                 controlSize: SC.HUGE_CONTROL_SIZE,
-                layout: { bottom: 20, right: 20, height: 30, width: 80 },
+                layout: { bottom: 20, right: 40, height: 30, width: 80 },
                 title: "Cancel",
                 action: function(unused) {
                     CWB.mainPage.set('createProjectPaneIsVisible', NO);

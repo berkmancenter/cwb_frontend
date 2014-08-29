@@ -79,6 +79,7 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             icon: sc_static('icons/add.png'),
             title: "Add Project",
             isEnabled: YES,
+            target: 'CWB.projectsController',
             action: 'showCreateProjectPane'
         }),
 
@@ -89,6 +90,7 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             title: "Remove Project",
             isEnabled: NO,
             isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+            target: 'CWB.projectsController',
             action: 'showRemoveProjectAlert'
         }),
 
