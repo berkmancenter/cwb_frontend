@@ -185,7 +185,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     field: SC.TextFieldView.design({
                         layout: { left: 112, height: 22, right: 0, centerY: 0 },
                         valueBinding: SC.Binding.from('CWB.projectController.name'),
-                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool()
+                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+                        isEditable: NO
                     })
                 }), // name
 
@@ -200,7 +201,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     field: SC.TextFieldView.design({
                         layout: { left: 112, height: 22, right: 0, centerY: 0 },
                         valueBinding: SC.Binding.from('CWB.projectController.description'),
-                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool()
+                        isEnabledBinding: SC.Binding.oneWay('CWB.projectController.id').bool(),
+                        isEditable: NO
                     })
                 }), // description
 
