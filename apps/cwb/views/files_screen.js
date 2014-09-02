@@ -334,48 +334,48 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               }),
 
               typeValue: SC.LabelView.design({
-                  layout: { top: 20, left: 120, width: 120, height: 18 },
+                  layout: { top: 20, left: 120, width: 120 },
                   valueBinding: 'CWB.fileController.type'
               }),
 
               sizeLabel: SC.LabelView.design({
-                  layout: { top: 44, left: 20, width: 80, height: 18 },
+                  layout: { top: 54, left: 20, width: 80, height: 18 },
                   value: 'Size:'
               }),
 
               sizeValue: SC.LabelView.design({
-                  layout: { top: 44, left: 120, width: 120, height: 18 },
+                  layout: { top: 54, left: 120, width: 120, height: 18 },
                   valueBinding: SC.Binding.number('bytes').from('CWB.fileController.size')
               }),
 
               createdLabel: SC.LabelView.design({
-                  layout: { top: 68, left: 20, width: 80, height: 18 },
+                  layout: { top: 78, left: 20, width: 80, height: 18 },
                   value: 'Date Created:'
               }),
 
               createdValue: SC.LabelView.design({
-                  layout: { top: 68, left: 120, width: 120, height: 18 },
+                  layout: { top: 78, left: 120, width: 120, height: 18 },
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.created')
               }),
 
               modifiedLabel: SC.LabelView.design({
-                  layout: { top: 92, left: 20, width: 80, height: 18 },
+                  layout: { top: 102, left: 20, width: 80, height: 18 },
                   value: 'Date Modified:'
               }),
 
               modifiedValue: SC.LabelView.design({
-                  layout: { top: 92, left: 120, width: 120, height: 18 },
+                  layout: { top: 102, left: 120, width: 120, height: 18 },
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.modified')
               }),
 
               pathLabel: SC.LabelView.design({
-                  layout: { top: 116, left: 20, width: 80, height: 18 },
+                  layout: { top: 126, left: 20, width: 80, height: 18 },
                   value: 'Path:'
               }),
 
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
-                  layout: { top: 116, left: 120, width: 120, height: 72 },
+                  layout: { top: 126, left: 120, width: 120, height: 72 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
                   //isTextArea: YES,
