@@ -374,10 +374,10 @@ CWB.mainPage = SC.Page.design({
             }),
 
             message: SC.View.design({
-                layout: { left: 0, right: 0, bottom: 60, height: 26 },
+                layout: { left: 0, right: 0, bottom: 60, height: 42 },
                 childViews: 'label field'.w(),
                 label: SC.LabelView.design({
-                    layout: { left: 0, right: 0, height: 18, centerY: 0 },
+                    layout: { left: 0, right: 0, height: 36, centerY: 0 },
                     textAlign: SC.ALIGN_CENTER,
                     isVisible: YES,
                     valueBinding: SC.Binding.from('CWB.mainPage.createProjectPaneMessage')

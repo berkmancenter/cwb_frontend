@@ -83,7 +83,7 @@ CWB.projectsController = SC.ArrayController.create({
 
 		savingProjectError: function(error) {
 			this.savingProjectRecord.destroy();
-			CWB.mainPage.set('createProjectPaneMessage', 'Unable to create project. Make sure Path is a valid directory.');
+			CWB.mainPage.set('createProjectPaneMessage', 'Unable to create project.\nPlease make sure Path is a valid directory.');
 			this.set('enableSaveButton', YES);
 			this.set('savingProjectRecord', null);
 		},
