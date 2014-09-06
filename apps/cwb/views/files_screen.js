@@ -200,14 +200,14 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                       var oldTags = node.get('tagIDs');
                       CWB.tagsController.set('content', node);
                       CWB.statechart.sendAction('showTagPane', function(result) {
-                          CWB.tagsController.set('content', null);
-                          // TODO commented out until the backend is ready to handle term CRUD
-                          // if (result) {
-                          //     node.commitRecord();
-                          // }
-                          // else {
-                          //     node.set('tagIDs', oldTags);
-                          // }
+                      CWB.tagsController.set('content', null);
+                        if (result) {
+                            // TODO hookup to file tagging endpoint when ready
+                            // node.commitRecord();
+                        }
+                        else {
+                            node.set('tagIDs', oldTags);
+                        }
                       });
                   },
 
