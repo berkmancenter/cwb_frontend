@@ -213,7 +213,20 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
                   starClick: function(evt) {
                       var node = this.get('content');
-                      node.set('isStarred', !node.get('isStarred'));
+
+                      var projectID = encodeURIComponent(CWB.projectController.get('id'));
+                      var fileID = encodeURIComponent(node.get('id'));
+                      var star_path = node.isStarred() ? "unstar_file" : "star_file";
+                      node.toggleStarred();
+
+                      // send star/unstar request to backend
+                      SC.Request.putUrl("/projects/" + projectID + "/" + star_path + "/" + fileID)
+                        .notify(this, function(response, file) {
+                          if (!SC.ok(response)) {
+                            SC.AlertPane.error('Sorry. We were unable to process your request.');
+                            file.toggleStarred();
+                          }
+                        }, node).json().send();
                   }
               }),
 
@@ -297,9 +310,30 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               titleBinding: SC.Binding.oneWay('CWB.filesController.starButtonTitle'),
               action: function(unused) {
                   var selectedSource = CWB.filesController.selectedSource;
-                  var isStarred = (selectedSource != 'starred');
+                  var doStar = (selectedSource != 'starred');
+
+                  var selectedIds = [];
+                  var oldStarStates = [];
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  selectedNodes.setEach('isStarred', isStarred);
+                  selectedNodes.forEach(function(file) {
+                    selectedIds.push(file.get('id'));
+                    oldStarStates.push(file.get('starred'));
+                    file.set('starred', doStar);
+                  });
+
+                  // send star/unstar request to backend
+                  var projectID = encodeURIComponent(CWB.projectController.get('id'));
+                  var star_path = doStar ? "star_files" : "unstar_files";
+                  SC.Request.putUrl("/projects/" + projectID + "/" + star_path, {'ids': selectedIds})
+                    .notify(this, function(response, files, oldStarStates) {
+                      if (!SC.ok(response)) {
+                        SC.AlertPane.error('Sorry. We were unable to process your request.');
+                        // something went wrong, set files back to original starred state
+                        files.forEach(function(file, i) {
+                          file.set('starred', oldStarStates[i]);
+                        });
+                      }
+                    }, selectedNodes, oldStarStates).json().send();
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           })
