@@ -113,5 +113,47 @@ CWB.filesController = SC.ArrayController.create({
       parameters: parameters,
       orderBy: orderBy
     })));
+  },
+
+  sendStarRequest: function(file) {
+    var projectID = encodeURIComponent(CWB.projectController.get('id'));
+    var fileID = encodeURIComponent(file.get('id'));
+    var star_path = file.isStarred() ? "unstar_file" : "star_file";
+
+    file.toggleStarred();
+
+    // send star/unstar request to backend
+    SC.Request.putUrl("/projects/" + projectID + "/" + star_path + "/" + fileID)
+      .notify(this, function(response) {
+        if (!SC.ok(response)) {
+          SC.AlertPane.error('Sorry. We were unable to process your request.');
+          file.toggleStarred();
+        }
+      }).json().send();
+  },
+
+  sendBatchStarRequest: function(selectedFiles, doStar) {
+    var selectedIds = [];
+    var oldStarStates = [];
+
+    selectedFiles.forEach(function(file) {
+      selectedIds.push(file.get('id'));
+      oldStarStates.push(file.get('starred'));
+      file.set('starred', doStar);
+    });
+
+    // send batch star/unstar request to backend
+    var projectID = encodeURIComponent(CWB.projectController.get('id'));
+    var star_path = doStar ? "star_files" : "unstar_files";
+    SC.Request.putUrl("/projects/" + projectID + "/" + star_path, {'ids': selectedIds})
+      .notify(this, function(response, files, oldStarStates) {
+        if (!SC.ok(response)) {
+          SC.AlertPane.error('Sorry. We were unable to process your request.');
+          // something went wrong, set files back to original starred state
+          files.forEach(function(file, i) {
+            file.set('starred', oldStarStates[i]);
+          });
+        }
+      }, selectedFiles, oldStarStates).json().send();
   }
 });
