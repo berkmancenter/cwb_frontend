@@ -50,8 +50,8 @@
 
     &.sel {
         .pill-left {
-            background-color: #555;
-            border: 1px #555 solid;
+            background-color: #ff7f00;
+            border: 1px #ff7f00 solid;
         }
         .pill-right {
             background-color: #333;
