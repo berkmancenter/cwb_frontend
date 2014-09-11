@@ -10,7 +10,7 @@ CWB.TermSourceListView = CWB.SourceListView.extend({
         contentIconKey: 'icon',
         renderLabel: function(context, label) {
             var term = this.get('content');
-            var toolTip = term.get('description');
+            var toolTip = term.description;
             context.push('<label title="').text(toolTip).push('">', label || '', '</label>');
         }
     }),
@@ -245,18 +245,18 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     nowShowing: 'CWB.Vocabulary1View',
                     tabLocation: SC.TOP_TOOLBAR_LOCATION,
                     items: [ // FIXME
-                        { title: "Format", value: 'CWB.Vocabulary1View', id: 1 },
-                        { title: "Document Type", value: 'CWB.Vocabulary2View', id: 2 },
-                        { title: "Zone", value: 'CWB.Vocabulary3View', id: 3 },
-                        { title: "Phase", value: 'CWB.Vocabulary4View', id: 4 },
-                        { title: "Architectural Discipline", value: 'CWB.Vocabulary5View', id: 5 },
-                        { title: "Rights", value: 'CWB.Vocabulary6View', id: 6 }
+                        { title: "Format", value: 'CWB.Vocabulary1View', index: 0 },
+                        { title: "Document Type", value: 'CWB.Vocabulary2View', index: 1 },
+                        { title: "Zone", value: 'CWB.Vocabulary3View', index: 2 },
+                        { title: "Phase", value: 'CWB.Vocabulary4View', index: 3 },
+                        { title: "Architectural Discipline", value: 'CWB.Vocabulary5View', index: 4 },
+                        { title: "Rights", value: 'CWB.Vocabulary6View', index: 5 }
                     ],
                     itemValueKey: 'value',
                     segmentedView: SC.SegmentedView.extend({
                         triggerItemAtIndex: function(index) {
                             var result = sc_super();
-                            CWB.termsController.set('vocabularyID', index + 1);
+                            CWB.termsController.set('vocabularyIndex', index);
                             return result;
                         }
                     })

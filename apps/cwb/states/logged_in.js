@@ -14,9 +14,9 @@ CWB.LOGGED_IN = SC.State.extend({
 
       CWB.SELECTED_FILES = CWB.store.find(CWB.SELECTED_FILES_QUERY);
 
-      for (var i = 1; i <= 6; i++) {
-          CWB.TERMS_IN_VOCABULARY[i] = CWB.store.find(CWB.TERMS_IN_VOCABULARY_QUERIES[i]);
-      }
+      // for (var i = 1; i <= 6; i++) {
+      //     CWB.TERMS_IN_VOCABULARY[i] = CWB.store.find(CWB.TERMS_IN_VOCABULARY_QUERIES[i]);
+      // }
   },
 
   exitState: function() {},

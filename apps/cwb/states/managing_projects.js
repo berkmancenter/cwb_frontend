@@ -3,8 +3,8 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
     termNo: 0,
 
     enterState: function() {
-        var vocabularyID = 1; // FIXME
-        CWB.termsController.set('vocabularyID', vocabularyID);
+        var vocabularyIndex = 0; // FIXME
+        CWB.termsController.set('vocabularyIndex', vocabularyIndex);
 
         CWB.getPath('mainPage.projectPane').append();
         CWB.routes.setRoute(''); //('projects');
@@ -15,17 +15,17 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
     },
 
     createTerm: function() {
-        var vocabularyID = CWB.termsController.get('vocabularyID');
-        var vocabulary = CWB.store.find(CWB.Vocabulary, vocabularyID);
+        var vocabularyIndex = CWB.termsController.get('vocabularyIndex');
+        var vocabulary = CWB.store.find(CWB.Vocabulary, vocabularyIndex);
         var projectID = vocabulary.getPath('project.id');
         var termID = -Math.floor(Math.random() * 99999999); /* a temporary identifier */
         var termNo = ++this.termNo;
         var term = CWB.store.createRecord(CWB.Term, {
             label: 'New Term #' + termNo,
             project: projectID,
-            vocabulary: vocabularyID
+            vocabulary: vocabularyIndex
         }, termID);
-        CWB.TERMS_IN_VOCABULARY[vocabularyID].reload();
+        CWB.TERMS_IN_VOCABULARY[vocabularyIndex].reload();
         CWB.termsController.selectObject(term);
         this.showTermEditPane(null, function(result) {
             if (!result) {

@@ -27,9 +27,9 @@ CWB.Term = CWB.Resource.extend(
   }.property().cacheable(),
 
   files: function() {
-    var vocabularyID = this.getPath('vocabulary.id');
+    var vocabularyIndex = this.getPath('vocabulary.id');
     return CWB.store.find(SC.Query.local(CWB.File, {
-      conditions: 'tag' + vocabularyID + ' = %@',
+      conditions: 'tag' + vocabularyIndex + ' = %@',
       parameters: [this.get('id')]
     }));
   }.property('vocabulary'),
