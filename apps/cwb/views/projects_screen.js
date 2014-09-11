@@ -16,7 +16,7 @@ CWB.TermSourceListView = CWB.SourceListView.extend({
     }),
 
     doubleClick: function(evt) {
-        CWB.statechart.sendAction('editTermFromDoubleClick', this);
+        CWB.statechart.sendAction('editTerm', this);
         return YES;
     }
 });

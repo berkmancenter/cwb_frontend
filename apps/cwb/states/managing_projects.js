@@ -16,45 +16,81 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
 
     createTerm: function() {
         var vocabularyIndex = CWB.termsController.get('vocabularyIndex');
-        var vocabulary = CWB.store.find(CWB.Vocabulary, vocabularyIndex);
-        var projectID = vocabulary.getPath('project.id');
-        var termID = -Math.floor(Math.random() * 99999999); /* a temporary identifier */
+        var vocabulary = CWB.VOCABULARIES[vocabularyIndex];
+        var projectID = CWB.projectController.get('id');
         var termNo = ++this.termNo;
         var term = CWB.store.createRecord(CWB.Term, {
             label: 'New Term #' + termNo,
             project: projectID,
             vocabulary: vocabularyIndex
-        }, termID);
-        CWB.TERMS_IN_VOCABULARY[vocabularyIndex].reload();
+        });
         CWB.termsController.selectObject(term);
         this.showTermEditPane(null, function(result) {
-            if (!result) {
+            if (result) {
+                // user clicked save
+                CWB.mainPage.set('tagEditPaneMessage', 'Saving term...');
+                SC.Request.postUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms", {'label':term.get('label'), 'description':term.get('description')})
+                    .notify(this, function(response, term) {
+                        if (SC.ok(response)) {
+                            CWB.mainPage.set('tagEditPaneMessage', '');
+                            CWB.mainPage.set('tagEditPaneIsVisible', NO);
+                            term.destroy();
+                            CWB.projectController.cacheVocabulariesForSelectedProject();
+                        } else {
+                            CWB.mainPage.set('tagEditPaneMessage', 'Unable to save term. Please try again.');
+                        }
+                    }, term).json().send();
+            } else {
+                // user canceled
                 term.destroy();
+                CWB.mainPage.set('tagEditPaneMessage', '');
+                CWB.termsController.selectObject(null);
             }
         });
     },
 
     removeTerm: function() {
         var termID = CWB.termController.get('id');
-        var term = CWB.store.find(CWB.Term, termID);
-        term.destroy();
+        var projectID = CWB.projectController.get('id');
+        var vocabularyIndex = CWB.termsController.get('vocabularyIndex');
+        var vocabulary = CWB.VOCABULARIES[vocabularyIndex];
+
+        SC.Request.deleteUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms/" + encodeURIComponent(termID))
+            .notify(this, function(response) {
+                if (SC.ok(response)) {
+                    CWB.projectController.cacheVocabulariesForSelectedProject();
+                } else {
+                    SC.AlertPane.error('Sorry. We were unable to process your request.');
+                }
+            }).json().send();
     },
 
-    editTerm: function(buttonView) {
-        var original = {label: CWB.termController.get('label'), description: CWB.termController.get('description')};
-        var listView = buttonView.getPath('parentView.parentView.contentView.contentView');
-        this.showTermEditPane(listView, function(result) {
-            if (!result) {
-                CWB.termController.set('label', original.label);
-                CWB.termController.set('description', original.description);
-            }
-        });
-    },
+    editTerm: function(view) {
+        var listView = (view.classNames.contains("sc-button-view")) ? view.getPath('parentView.parentView.contentView.contentView') : view;
+        var original = {id: CWB.termController.get('id'), label: CWB.termController.get('label'), description: CWB.termController.get('description')};
+        var projectID = CWB.projectController.get('id');
+        var vocabularyIndex = CWB.termsController.get('vocabularyIndex');
+        var vocabulary = CWB.VOCABULARIES[vocabularyIndex];
 
-    editTermFromDoubleClick: function(listView) {
-        var original = {label: CWB.termController.get('label'), description: CWB.termController.get('description')};
         this.showTermEditPane(listView, function(result) {
-            if (!result) {
+            if (result) {
+                // user clicked save
+                CWB.mainPage.set('tagEditPaneMessage', 'Saving term...');
+                var newLabel = CWB.termController.get('label');
+                var newDescription = CWB.termController.get('description');
+                SC.Request.putUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms/" + encodeURIComponent(original.id), {'label':newLabel, 'description':newDescription})
+                    .notify(this, function(response) {
+                        if (SC.ok(response)) {
+                            CWB.mainPage.set('tagEditPaneMessage', '');
+                            CWB.mainPage.set('tagEditPaneIsVisible', NO);
+                            CWB.projectController.cacheVocabulariesForSelectedProject();
+                        } else {
+                            CWB.mainPage.set('tagEditPaneMessage', 'Unable to save term. Please try again.');
+                        }
+                    }).json().send();
+            } else {
+                // user canceled
+                CWB.mainPage.set('tagEditPaneMessage', '');
                 CWB.termController.set('label', original.label);
                 CWB.termController.set('description', original.description);
             }
