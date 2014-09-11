@@ -213,7 +213,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
                   starClick: function(evt) {
                       var node = this.get('content');
-                      node.set('isStarred', !node.get('isStarred'));
+                      CWB.filesController.sendStarRequest(node);
                   }
               }),
 
@@ -296,10 +296,9 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               //title: "Mark Important",
               titleBinding: SC.Binding.oneWay('CWB.filesController.starButtonTitle'),
               action: function(unused) {
-                  var selectedSource = CWB.filesController.selectedSource;
-                  var isStarred = (selectedSource != 'starred');
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  selectedNodes.setEach('isStarred', isStarred);
+                  var doStar = (CWB.filesController.selectedSource != 'starred');
+                  CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           })
