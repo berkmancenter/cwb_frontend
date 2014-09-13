@@ -136,7 +136,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Format'
+                            value: 'Architectural Discipline'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -187,7 +187,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Zone'
+                            value: 'Format'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -233,7 +233,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Architectural Discipline'
+                            value: 'Rights'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -256,7 +256,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Rights'
+                            value: 'Zone'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({

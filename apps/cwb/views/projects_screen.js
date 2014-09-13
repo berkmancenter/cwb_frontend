@@ -244,13 +244,13 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
                     itemValueKey: 'value',
                     nowShowing: 'CWB.Vocabulary1View',
                     tabLocation: SC.TOP_TOOLBAR_LOCATION,
-                    items: [ // FIXME
-                        { title: "Format", value: 'CWB.Vocabulary1View', index: 0 },
+                    items: [
+                        { title: "Architectural Discipline", value: 'CWB.Vocabulary1View', index: 0 },
                         { title: "Document Type", value: 'CWB.Vocabulary2View', index: 1 },
-                        { title: "Zone", value: 'CWB.Vocabulary3View', index: 2 },
+                        { title: "Format", value: 'CWB.Vocabulary3View', index: 2 },
                         { title: "Phase", value: 'CWB.Vocabulary4View', index: 3 },
-                        { title: "Architectural Discipline", value: 'CWB.Vocabulary5View', index: 4 },
-                        { title: "Rights", value: 'CWB.Vocabulary6View', index: 5 }
+                        { title: "Rights", value: 'CWB.Vocabulary5View', index: 4 },
+                        { title: "Zone", value: 'CWB.Vocabulary6View', index: 5 },
                     ],
                     itemValueKey: 'value',
                     segmentedView: SC.SegmentedView.extend({
