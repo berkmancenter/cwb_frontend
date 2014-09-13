@@ -29,7 +29,9 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
             if (result) {
                 // user clicked save
                 CWB.mainPage.set('tagEditPaneMessage', 'Saving term...');
-                SC.Request.postUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms", {'label':term.get('label'), 'description':term.get('description')})
+                var label = term.get('label') || '';
+                var description = term.get('description') || '';
+                SC.Request.postUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms", {'label':label, 'description':description})
                     .notify(this, function(response, term) {
                         if (SC.ok(response)) {
                             CWB.mainPage.set('tagEditPaneMessage', '');
