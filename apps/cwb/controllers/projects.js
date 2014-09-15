@@ -4,8 +4,8 @@ CWB.projectsController = SC.ArrayController.create({
     allowsMultipleSelection: NO,
 
     selectionDidChange: function() {
-        var vocabularyID = CWB.termsController.get('vocabularyID');
-        CWB.termsController.set('content', CWB.TERMS_IN_VOCABULARY[vocabularyID]);
+        var vocabularyIndex = CWB.termsController.get('vocabularyIndex');
+        CWB.termsController.set('content', CWB.TERMS_IN_VOCABULARY[vocabularyIndex]);
     }.observes('selection'),
 
     newName: null,
