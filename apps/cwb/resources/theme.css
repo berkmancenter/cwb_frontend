@@ -30,8 +30,8 @@
         -ms-border-radius: 7px 0 0 7px;
         -o-border-radius: 7px 0 0 7px;
         border-radius: 7px 0 0 7px;
-        background-color: #aaa;
-        border: 1px #aaa solid;
+        background-color: #ff7f00;
+        border: 1px #ff7f00 solid;
         padding-left: 7px;
         padding-right: 2px;
     }
@@ -50,8 +50,8 @@
 
     &.sel {
         .pill-left {
-            background-color: #555;
-            border: 1px #555 solid;
+            background-color: #ff7f00;
+            border: 1px #ff7f00 solid;
         }
         .pill-right {
             background-color: #333;
