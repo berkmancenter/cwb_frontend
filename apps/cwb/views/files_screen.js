@@ -200,13 +200,25 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                       var oldTags = node.get('tagIDs');
                       CWB.tagsController.set('content', node);
                       CWB.statechart.sendAction('showTagPane', function(result) {
-                      CWB.tagsController.set('content', null);
+                        CWB.tagsController.set('content', null);
                         if (result) {
                             // TODO hookup to file tagging endpoint when ready
                             // node.commitRecord();
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
                         }
                         else {
-                            node.set('tagIDs', oldTags);
+                            // node.set('tagIDs', oldTags);
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
                         }
                       });
                   },
@@ -221,8 +233,31 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedSet = CWB.filesController.get('selection');
                   var selectedFile = selectedSet.firstObject();
                   if (selectedFile) {
-                      CWB.statechart.sendAction('showTagPane');
-                      return YES;
+                      // CWB.statechart.sendAction('showTagPane');
+                      // return YES;
+                      CWB.tagsController.set('content', selectedFile);
+                      CWB.statechart.sendAction('showTagPane', function(result) {
+                        CWB.tagsController.set('content', null);
+                        if (result) {
+                            // TODO hookup to file tagging endpoint when ready
+                            // selectedFile.commitRecord();
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
+                        }
+                        else {
+                            // selectedFile.set('tagIDs', oldTags);
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
+                        }
+                      });
                   }
                   return NO;
               },
@@ -279,11 +314,33 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
                   var newFile = CWB.store.createRecord(CWB.File, {});
                   CWB.tagsController.set('content', newFile);
+                  // CWB.statechart.sendAction('showTagPane', function(result) {
+                  //     var tags = newFile.get('tagIDs');
+                  //     CWB.tagsController.set('content', null);
+                  //     newFile.destroy();
+                  //     selectedNodes.setEach('tagIDs', tags);
+                  // });
                   CWB.statechart.sendAction('showTagPane', function(result) {
-                      var tags = newFile.get('tagIDs');
-                      CWB.tagsController.set('content', null);
-                      newFile.destroy();
-                      selectedNodes.setEach('tagIDs', tags);
+                    CWB.tagsController.set('content', null);
+                    if (result) {
+                        // TODO hookup to file tagging endpoint when ready
+                        // selectedFile.commitRecord();
+                        CWB.tagsController.tag1 = null;
+                        CWB.tagsController.tag2 = null;
+                        CWB.tagsController.tag3 = null;
+                        CWB.tagsController.tag4 = null;
+                        CWB.tagsController.tag5 = null;
+                        CWB.tagsController.tag6 = null;
+                    }
+                    else {
+                        // selectedFile.set('tagIDs', oldTags);
+                        CWB.tagsController.tag1 = null;
+                        CWB.tagsController.tag2 = null;
+                        CWB.tagsController.tag3 = null;
+                        CWB.tagsController.tag4 = null;
+                        CWB.tagsController.tag5 = null;
+                        CWB.tagsController.tag6 = null;
+                    }
                   });
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()

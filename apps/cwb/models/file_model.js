@@ -16,12 +16,12 @@ CWB.File = CWB.Node.extend(
 
   folder: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
 
-  tag1: SC.Record.attr(Number, { defaultValue: null }),
-  tag2: SC.Record.attr(Number, { defaultValue: null }),
-  tag3: SC.Record.attr(Number, { defaultValue: null }),
-  tag4: SC.Record.attr(Number, { defaultValue: null }),
-  tag5: SC.Record.attr(Number, { defaultValue: null }),
-  tag6: SC.Record.attr(Number, { defaultValue: null }),
+  tag1: SC.Record.attr(String, { defaultValue: null }),
+  tag2: SC.Record.attr(String, { defaultValue: null }),
+  tag3: SC.Record.attr(String, { defaultValue: null }),
+  tag4: SC.Record.attr(String, { defaultValue: null }),
+  tag5: SC.Record.attr(String, { defaultValue: null }),
+  tag6: SC.Record.attr(String, { defaultValue: null }),
 /*
   tag1: SC.Record.toOne('CWB.Term', { isMaster: NO }),
   tag2: SC.Record.toOne('CWB.Term', { isMaster: NO }),
