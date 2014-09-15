@@ -1,0 +1,63 @@
+#!/bin/sh
+
+TASK="$1"
+
+FORCED=false
+args=`getopt f $*`
+set -- $args
+for i
+do
+	if [ "$i" = "-f" ]; then
+		FORCED=true
+	fi
+done
+
+
+function help () {
+	echo "cwb - A script to help manage some of the cwb-specific SproutCore tasks";
+	echo "";
+	echo "tasks:";
+	echo "	cwb build	- build the cwb project";
+	echo "	cwb build-rails	- build the cwb project into the rails project";
+	echo "	cwb clear-cache	- clear the cached files in both projects";
+	echo "";
+	echo "options:";
+	echo "	-f		- remove old build result before rebuilding";
+}
+
+function destroyTmpFiles () {
+	echo "destroying './tmp'..."
+	rm -rf ./tmp
+}
+
+function destroyStaticFiles () {
+	echo "destroying '../cwb-rails/public/static'..."
+	rm -rf ../cwb-rails/public/static
+}
+
+case $TASK in
+	build)
+		if [ $FORCED = true ]; then
+			destroyTmpFiles
+		fi
+		
+		echo "building cwb project..."	
+		sc-build cwb	
+	;;
+	build-rails)
+		if [ $FORCED = true ]; then
+			destroyTmpFiles
+			destroyStaticFiles
+		fi
+
+		echo "building cwb project into rails project..."
+		sc-build cwb --buildroot ../cwb-rails/public	
+	;;
+	clear-cache)
+		destroyTmpFiles
+		destroyStaticFiles
+	;;
+	*)
+		help
+	;;
+esac
