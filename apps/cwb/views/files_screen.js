@@ -200,20 +200,32 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                       var oldTags = node.get('tagIDs');
                       CWB.tagsController.set('content', node);
                       CWB.statechart.sendAction('showTagPane', function(result) {
-                          CWB.tagsController.set('content', null);
-                          // TODO commented out until the backend is ready to handle term CRUD
-                          // if (result) {
-                          //     node.commitRecord();
-                          // }
-                          // else {
-                          //     node.set('tagIDs', oldTags);
-                          // }
+                        CWB.tagsController.set('content', null);
+                        if (result) {
+                            // TODO hookup to file tagging endpoint when ready
+                            // node.commitRecord();
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
+                        }
+                        else {
+                            // node.set('tagIDs', oldTags);
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
+                        }
                       });
                   },
 
                   starClick: function(evt) {
                       var node = this.get('content');
-                      node.set('isStarred', !node.get('isStarred'));
+                      CWB.filesController.sendStarRequest(node);
                   }
               }),
 
@@ -221,8 +233,31 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedSet = CWB.filesController.get('selection');
                   var selectedFile = selectedSet.firstObject();
                   if (selectedFile) {
-                      CWB.statechart.sendAction('showTagPane');
-                      return YES;
+                      // CWB.statechart.sendAction('showTagPane');
+                      // return YES;
+                      CWB.tagsController.set('content', selectedFile);
+                      CWB.statechart.sendAction('showTagPane', function(result) {
+                        CWB.tagsController.set('content', null);
+                        if (result) {
+                            // TODO hookup to file tagging endpoint when ready
+                            // selectedFile.commitRecord();
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
+                        }
+                        else {
+                            // selectedFile.set('tagIDs', oldTags);
+                            CWB.tagsController.tag1 = null;
+                            CWB.tagsController.tag2 = null;
+                            CWB.tagsController.tag3 = null;
+                            CWB.tagsController.tag4 = null;
+                            CWB.tagsController.tag5 = null;
+                            CWB.tagsController.tag6 = null;
+                        }
+                      });
                   }
                   return NO;
               },
@@ -279,11 +314,33 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
                   var newFile = CWB.store.createRecord(CWB.File, {});
                   CWB.tagsController.set('content', newFile);
+                  // CWB.statechart.sendAction('showTagPane', function(result) {
+                  //     var tags = newFile.get('tagIDs');
+                  //     CWB.tagsController.set('content', null);
+                  //     newFile.destroy();
+                  //     selectedNodes.setEach('tagIDs', tags);
+                  // });
                   CWB.statechart.sendAction('showTagPane', function(result) {
-                      var tags = newFile.get('tagIDs');
-                      CWB.tagsController.set('content', null);
-                      newFile.destroy();
-                      selectedNodes.setEach('tagIDs', tags);
+                    CWB.tagsController.set('content', null);
+                    if (result) {
+                        // TODO hookup to file tagging endpoint when ready
+                        // selectedFile.commitRecord();
+                        CWB.tagsController.tag1 = null;
+                        CWB.tagsController.tag2 = null;
+                        CWB.tagsController.tag3 = null;
+                        CWB.tagsController.tag4 = null;
+                        CWB.tagsController.tag5 = null;
+                        CWB.tagsController.tag6 = null;
+                    }
+                    else {
+                        // selectedFile.set('tagIDs', oldTags);
+                        CWB.tagsController.tag1 = null;
+                        CWB.tagsController.tag2 = null;
+                        CWB.tagsController.tag3 = null;
+                        CWB.tagsController.tag4 = null;
+                        CWB.tagsController.tag5 = null;
+                        CWB.tagsController.tag6 = null;
+                    }
                   });
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
@@ -296,10 +353,9 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               //title: "Mark Important",
               titleBinding: SC.Binding.oneWay('CWB.filesController.starButtonTitle'),
               action: function(unused) {
-                  var selectedSource = CWB.filesController.selectedSource;
-                  var isStarred = (selectedSource != 'starred');
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  selectedNodes.setEach('isStarred', isStarred);
+                  var doStar = (CWB.filesController.selectedSource != 'starred');
+                  CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           })
@@ -334,48 +390,48 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               }),
 
               typeValue: SC.LabelView.design({
-                  layout: { top: 20, left: 120, width: 120, height: 18 },
+                  layout: { top: 20, left: 120, width: 120 },
                   valueBinding: 'CWB.fileController.type'
               }),
 
               sizeLabel: SC.LabelView.design({
-                  layout: { top: 44, left: 20, width: 80, height: 18 },
+                  layout: { top: 54, left: 20, width: 80, height: 18 },
                   value: 'Size:'
               }),
 
               sizeValue: SC.LabelView.design({
-                  layout: { top: 44, left: 120, width: 120, height: 18 },
+                  layout: { top: 54, left: 120, width: 120, height: 18 },
                   valueBinding: SC.Binding.number('bytes').from('CWB.fileController.size')
               }),
 
               createdLabel: SC.LabelView.design({
-                  layout: { top: 68, left: 20, width: 80, height: 18 },
+                  layout: { top: 78, left: 20, width: 80, height: 18 },
                   value: 'Date Created:'
               }),
 
               createdValue: SC.LabelView.design({
-                  layout: { top: 68, left: 120, width: 120, height: 18 },
+                  layout: { top: 78, left: 120, width: 120, height: 18 },
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.created')
               }),
 
               modifiedLabel: SC.LabelView.design({
-                  layout: { top: 92, left: 20, width: 80, height: 18 },
+                  layout: { top: 102, left: 20, width: 80, height: 18 },
                   value: 'Date Modified:'
               }),
 
               modifiedValue: SC.LabelView.design({
-                  layout: { top: 92, left: 120, width: 120, height: 18 },
+                  layout: { top: 102, left: 120, width: 120, height: 18 },
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.modified')
               }),
 
               pathLabel: SC.LabelView.design({
-                  layout: { top: 116, left: 20, width: 80, height: 18 },
+                  layout: { top: 126, left: 20, width: 80, height: 18 },
                   value: 'Path:'
               }),
 
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
-                  layout: { top: 116, left: 120, width: 120, height: 72 },
+                  layout: { top: 126, left: 120, width: 120, height: 72 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
                   //isTextArea: YES,

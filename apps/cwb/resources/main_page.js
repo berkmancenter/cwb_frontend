@@ -26,11 +26,11 @@ CWB.mainPage = SC.Page.design({
     }),
 
     tagEditPane: SC.PanelPane.design({
-        layout: { width: 640, height: 144, centerX: 0, centerY: 0 },
+        layout: { width: 640, height: 174, centerX: 0, centerY: 0 },
 
         contentView: SC.View.extend({
             layout: { top: 12, left: 12, bottom: 12, right: 12 },
-            childViews: 'name description saveButton cancelButton'.w(),
+            childViews: 'name description message saveButton cancelButton'.w(),
 
             name: SC.View.design({
                 layout: { left: 0, right: 0, top: 0, height: 26 },
@@ -63,12 +63,22 @@ CWB.mainPage = SC.Page.design({
                 })
             }), // description
 
+            message: SC.View.design({
+                layout: { left: 0, right: 0, bottom: 40, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, right: 0, height: 18, centerY: 0 },
+                    textAlign: SC.ALIGN_CENTER,
+                    isVisible: YES,
+                    valueBinding: SC.Binding.from('CWB.mainPage.tagEditPaneMessage')
+                })
+            }),
+
             saveButton: SC.ButtonView.extend({
                 controlSize: SC.HUGE_CONTROL_SIZE,
-                layout: { bottom: 0, right: 90, height: 30, width: 80 },
+                layout: { bottom: 5, left: 200, height: 30, width: 80 },
                 title: "Save",
                 action: function(unused) {
-                    CWB.mainPage.set('tagEditPaneIsVisible', NO);
                     var callback = CWB.mainPage.get('tagEditPaneCallback');
                     if (callback) {
                         return callback(YES);
@@ -79,7 +89,7 @@ CWB.mainPage = SC.Page.design({
 
             cancelButton: SC.ButtonView.extend({
                 controlSize: SC.HUGE_CONTROL_SIZE,
-                layout: { bottom: 0, right: 0, height: 30, width: 80 },
+                layout: { bottom: 5, right: 200, height: 30, width: 80 },
                 title: "Cancel",
                 action: function(unused) {
                     CWB.mainPage.set('tagEditPaneIsVisible', NO);
@@ -95,6 +105,7 @@ CWB.mainPage = SC.Page.design({
 
     tagEditPaneIsVisible: NO,
     tagEditPaneCallback: null,
+    tagEditPaneMessage: '',
 
     tagEditPaneIsVisibleDidChange: function() {
         var pane = this.get('tagEditPane');
@@ -125,7 +136,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Format'
+                            value: 'Architectural Discipline'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -176,7 +187,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Zone'
+                            value: 'Format'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -222,7 +233,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Architectural Discipline'
+                            value: 'Rights'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -245,7 +256,7 @@ CWB.mainPage = SC.Page.design({
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
-                            value: 'Rights'
+                            value: 'Zone'
                         })
                     }),
                     contentView: SC.SegmentedView.extend({
@@ -374,10 +385,10 @@ CWB.mainPage = SC.Page.design({
             }),
 
             message: SC.View.design({
-                layout: { left: 0, right: 0, bottom: 60, height: 26 },
+                layout: { left: 0, right: 0, bottom: 60, height: 42 },
                 childViews: 'label field'.w(),
                 label: SC.LabelView.design({
-                    layout: { left: 0, right: 0, height: 18, centerY: 0 },
+                    layout: { left: 0, right: 0, height: 36, centerY: 0 },
                     textAlign: SC.ALIGN_CENTER,
                     isVisible: YES,
                     valueBinding: SC.Binding.from('CWB.mainPage.createProjectPaneMessage')

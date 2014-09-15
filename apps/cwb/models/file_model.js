@@ -16,12 +16,12 @@ CWB.File = CWB.Node.extend(
 
   folder: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
 
-  tag1: SC.Record.attr(Number, { defaultValue: null }),
-  tag2: SC.Record.attr(Number, { defaultValue: null }),
-  tag3: SC.Record.attr(Number, { defaultValue: null }),
-  tag4: SC.Record.attr(Number, { defaultValue: null }),
-  tag5: SC.Record.attr(Number, { defaultValue: null }),
-  tag6: SC.Record.attr(Number, { defaultValue: null }),
+  tag1: SC.Record.attr(String, { defaultValue: null }),
+  tag2: SC.Record.attr(String, { defaultValue: null }),
+  tag3: SC.Record.attr(String, { defaultValue: null }),
+  tag4: SC.Record.attr(String, { defaultValue: null }),
+  tag5: SC.Record.attr(String, { defaultValue: null }),
+  tag6: SC.Record.attr(String, { defaultValue: null }),
 /*
   tag1: SC.Record.toOne('CWB.Term', { isMaster: NO }),
   tag2: SC.Record.toOne('CWB.Term', { isMaster: NO }),
@@ -37,10 +37,24 @@ CWB.File = CWB.Node.extend(
   created: SC.Record.attr(SC.DateTime),
   modified: SC.Record.attr(SC.DateTime),
 
-  isStarred: SC.Record.attr(Boolean, { defaultValue: NO }),
+  starred: SC.Record.attr(String),
   isQueued: SC.Record.attr(Boolean, { defaultValue: NO }),
   isSelected: SC.Record.attr(Boolean, { defaultValue: NO }),
   //isSelected: NO,
+
+  isStarred: function() {
+    if (this.get('starred') == 'true')
+      return YES;
+    else
+      return NO;
+  }.property('starred').cacheable(),
+
+  toggleStarred: function() {
+    if (this.isStarred())
+      this.set('starred', 'false');
+    else
+      this.set('starred', 'true');
+  },
 
   isTagged: function() {
     if (this.get('tag1') != null) return YES;
@@ -116,7 +130,7 @@ CWB.File = CWB.Node.extend(
   }.property('isTagged').cacheable(),
 
   starIcon: function() {
-    return this.get('isStarred') ? sc_static('icons/star-on.png') : sc_static('icons/star-off.png');
+    return this.isStarred() ? sc_static('icons/star-on.png') : sc_static('icons/star-off.png');
   }.property('isStarred').cacheable(),
 
   previewURL: function() {

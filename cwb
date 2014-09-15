@@ -19,6 +19,7 @@ function help () {
 	echo "tasks:";
 	echo "	cwb build	- build the cwb project";
 	echo "	cwb build-rails	- build the cwb project into the rails project";
+	echo "	cwb clear-cache	- clear the cached files in both projects";
 	echo "";
 	echo "options:";
 	echo "	-f		- remove old build result before rebuilding";

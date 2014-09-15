@@ -4,8 +4,8 @@ CWB.projectsController = SC.ArrayController.create({
     allowsMultipleSelection: NO,
 
     selectionDidChange: function() {
-        var vocabularyID = CWB.termsController.get('vocabularyID');
-        CWB.termsController.set('content', CWB.TERMS_IN_VOCABULARY[vocabularyID]);
+        var vocabularyIndex = CWB.termsController.get('vocabularyIndex');
+        CWB.termsController.set('content', CWB.TERMS_IN_VOCABULARY[vocabularyIndex]);
     }.observes('selection'),
 
     newName: null,
@@ -83,7 +83,7 @@ CWB.projectsController = SC.ArrayController.create({
 
 		savingProjectError: function(error) {
 			this.savingProjectRecord.destroy();
-			CWB.mainPage.set('createProjectPaneMessage', 'Unable to create project. Make sure Path is a valid directory.');
+			CWB.mainPage.set('createProjectPaneMessage', 'Unable to create project.\nPlease make sure Path is a valid directory.');
 			this.set('enableSaveButton', YES);
 			this.set('savingProjectRecord', null);
 		},
