@@ -441,10 +441,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
               pathCopyButton: SC.ButtonView.design({
                   layout: { top: 126, left: 245, width: 18, height: 18 },
-                  action: function() {
-                      console.log('copying ' + CWB.fileController.get('path') + ' to clipboard');
-                      window.prompt("Copy to clipboard: Ctrl/Cmd+C, Enter", CWB.fileController.get('path'));
-                  }
+                  layerId: 'file-path-clip-button'
               })
           }),
 

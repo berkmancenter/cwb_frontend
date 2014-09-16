@@ -25,10 +25,26 @@ CWB.MANAGING_FILES = SC.State.extend({
     CWB.getPath('mainPage.mainPane').append();
     CWB.routes.setRoute('files');
 //    CWB.routes.setRoute("project/%@/files".fmt(encodeURIComponent(projectID)));
-      
+
+    CWB.zeroclient = new ZeroClipboard( document.getElementById("file-path-clip-button") );
+
+    CWB.zeroclient.on( "ready", function( readyEvent ) {
+        console.log( "ZeroClipboard SWF is ready!" );
+
+        CWB.zeroclient.on( 'copy', function(event) {
+            console.log( "ZeroClipboard copy called" );
+            event.clipboardData.setData('text/plain', CWB.fileController.get('path'));
+        });
+          
+        CWB.zeroclient.on( "aftercopy", function( event ) {
+            console.log("Copied text to clipboard: " + event.data["text/plain"] );
+        });
+    });
+
   },
 
   exitState: function() {
+    ZeroClipboard.destroy();
     CWB.getPath('mainPage.mainPane').remove();
   },
 
