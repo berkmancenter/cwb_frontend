@@ -14,17 +14,29 @@ sc_require('models/node_model');
 CWB.Folder = CWB.Node.extend(
 /** @scope CWB.Folder.prototype */ {
 
-//  parent: SC.Record.attr(Number, { defaultValue: 0 }), // FIXME
-  parent: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
-  files: SC.Record.toMany('CWB.File', { isMaster: YES, inverse: 'folder' }),
+  project: SC.Record.toOne('CWB.Project', { isMaster: NO, inverse: 'folders' }),
+  parent: SC.Record.attr(String),
+  files: SC.Record.toMany('CWB.File', { isMaster: NO, inverse: 'folder' }),
 
   name: SC.Record.attr(String),
 
-//  subfolders: function() {
-//    return CWB.store.find(SC.Query.local(CWB.Folder,
-//      { conditions: 'parent = %@', parameters: [this.get('id')], orderBy: 'name ASC' }));
-//  }.property().cacheable(),
-  subfolders: SC.Record.toMany('CWB.Folder', { isMaster: YES, inverse: 'parent'}),
+  subfolders: SC.Record.attr(Array, { defaultValue: [] }),
+  alreadyInstalledSubfolders: SC.Record.attr(Boolean, { defaultValue: false }),
+  installSubfolders: function() {
+      this.set('alreadyInstalledSubfolders', true);
+      var ret = CWB.store.find(SC.Query.local(CWB.Folder,
+          { conditions: 'parent = %@', parameters: [this.get('id')], orderBy: 'name ASC' }));
+      this.set('subfolders', ret);
+      return ret;
+  },
+
+  statusDidUpdate: function() {
+    if(this.get('status') & SC.Record.READY) {
+      if (!this.get('alreadyInstalledSubfolders')) {
+        this.installSubfolders();
+      }
+    }
+  }.observes('status'),
 
   treeItemIsExpanded: NO,
 
@@ -34,17 +46,9 @@ CWB.Folder = CWB.Node.extend(
 
   count: function() {
     return this.getPath('subfolders.length');
-  }.property('*subfolders.length').cacheable(),
+  }.property('subfolders.length').cacheable(),
 
-  path: function() {
-    var name = this.get('name');
-    var parentID = this.getPath('parent');
-    var parent = null;
-    if (parentID !== 0) {
-      parent = CWB.store.find(CWB.Folder, parentID);
-    }
-    return (parent != null) ? parent.get('path') + '/' + name : name;
-  }.property('name').cacheable(),
+  path: SC.Record.attr(String),
 
   typeTitle: function() {
     return 'Folder';

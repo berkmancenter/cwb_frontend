@@ -14,7 +14,8 @@ sc_require('models/node_model');
 CWB.File = CWB.Node.extend(
 /** @scope CWB.File.prototype */ {
 
-  folder: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
+  project: SC.Record.toOne('CWB.Project', { isMaster: NO, inverse: 'files' }),
+  folder: SC.Record.toOne('CWB.Folder', { isMaster: YES, inverse: 'files' }),
 
   tag1: SC.Record.attr(String, { defaultValue: null }),
   tag2: SC.Record.attr(String, { defaultValue: null }),
