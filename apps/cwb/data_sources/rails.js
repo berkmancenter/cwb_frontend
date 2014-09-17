@@ -68,14 +68,6 @@ CWB.RailsDataSource = SC.DataSource.extend({
             var records = response.get('body');
             store.loadRecords(recordType, records);
             store.dataSourceDidFetchQuery(query);
-
-            if(recordType === CWB.Project) {
-                var allProjects = CWB.store.find(CWB.Project);
-                CWB.projectsController.set('content', allProjects);
-                CWB.projectsController.selectObject(allProjects.firstObject());
-                CWB.store.find(CWB.FOLDERS_QUERY);
-                CWB.store.find(CWB.File);
-            }
         }
         else {
             store.dataSourceDidErrorQuery(query, response);

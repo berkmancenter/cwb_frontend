@@ -22,21 +22,20 @@ CWB.Folder = CWB.Node.extend(
 
   subfolders: SC.Record.attr(Array, { defaultValue: [] }),
   alreadyInstalledSubfolders: SC.Record.attr(Boolean, { defaultValue: false }),
-  installSubfolders: function() {
+  installSubfolders: function(force) {
+    if (!this.get('alreadyInstalledSubfolders') || !!force) {
       this.set('alreadyInstalledSubfolders', true);
       var ret = CWB.store.find(SC.Query.local(CWB.Folder,
           { conditions: 'parent = %@', parameters: [this.get('id')], orderBy: 'name ASC' }));
       this.set('subfolders', ret);
-      return ret;
+    }
   },
 
-  statusDidUpdate: function() {
-    if(this.get('status') & SC.Record.READY) {
-      if (!this.get('alreadyInstalledSubfolders')) {
-        this.installSubfolders();
-      }
-    }
-  }.observes('status'),
+  subfoldersDidUpdate: function() {
+    this.get('subfolders').forEach(function (folder) {
+      folder.installSubfolders();
+    });
+  }.observes('subfolders'),
 
   treeItemIsExpanded: NO,
 
