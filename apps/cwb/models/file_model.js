@@ -50,11 +50,19 @@ CWB.File = CWB.Node.extend(
       return NO;
   }.property('starred').cacheable(),
 
-  toggleStarred: function() {
-    if (this.isStarred())
+  toggleStarred: function(doStar) {
+    var folder = this.get('folder');
+    var old_count = folder.get('starred_count');
+
+    if (this.isStarred() && (doStar === undefined || !doStar)) {
+      // unstar the file
+      if (old_count >= 1) folder.set('starred_count', old_count - 1);
       this.set('starred', 'false');
-    else
+    } else if (!this.isStarred() && (doStar === undefined || !!doStar)) {
+      // star the file
+      folder.set('starred_count', old_count + 1);
       this.set('starred', 'true');
+    }
   },
 
   isTagged: function() {

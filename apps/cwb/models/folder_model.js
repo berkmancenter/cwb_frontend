@@ -61,15 +61,17 @@ CWB.Folder = CWB.Node.extend(
     return this.get('untaggedCount');
   }.property('untaggedCount'),
 
-  starredCount: function() {
-    var query = SC.Query.local(CWB.File, { conditions: 'folder.id = %@ AND isStarred = YES', parameters: [this.get('id')] });
-    var count = CWB.store.find(query).get('length');
-    return count;
-  }.property(),
+  starred_count: SC.Record.attr(Number, { defaultValue: null }),
+
+  cachedUnreadCount: SC.Record.attr(Number, { defaultValue: -1 }),
 
   untaggedCount: function() {
+    if (this.get('cachedUnreadCount') >= 0) {
+      return this.get('cachedUnreadCount');
+    }
     var query = SC.Query.local(CWB.File, { conditions: 'folder.id = %@ AND tag1 = null AND tag2 = null AND tag3 = null AND tag4 = null AND tag5 = null AND tag6 = null', parameters: [this.get('id')] });
     var count = CWB.store.find(query).get('length');
+    this.set('cachedUnreadCount', count);
     return count;
   }.property()
 });

@@ -19,14 +19,20 @@ CWB.FolderListItemView = SC.ListItemView.extend({
 
   renderCount: function(context, count) {
     var folder = this.get('content');
-    var starredCount = folder.get('starredCount') || 0;
+    var starred_count = folder.get('starred_count') || 0;
     var untaggedCount = folder.get('untaggedCount') || 0;
     context.push(
       '<span class="pill">',
-      '<span class="pill-inner pill-left">', starredCount, '</span>',
+      '<span class="pill-inner pill-left">', starred_count, '</span>',
       '<span class="pill-inner pill-right">', untaggedCount, '</span>',
       '</span>');
   },
+
+  doUpdateLayer: function() {
+    if (this.get('content').get('starred_count') !== null) {
+      this.updateLayer();
+    }
+  }.observes('*content.starred_count', '*content.cachedUnreadCount'),
 
   render: function(context, firstTime) {
     var folder = this.get('content'),

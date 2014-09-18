@@ -7,6 +7,8 @@ CWB.LOGGED_IN = SC.State.extend({
 
   enterState: function(context) {
       CWB.loginController.sessionToken = context.sessionToken;
+
+      CWB.SELECTED_FILES = CWB.store.find(CWB.SELECTED_FILES_QUERY);
   },
 
   exitState: function() {},
