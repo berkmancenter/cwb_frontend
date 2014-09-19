@@ -248,3 +248,7 @@
         right: 5px;
     }
 }
+
+.break-word-wrap {
+    word-wrap: break-word;
+}

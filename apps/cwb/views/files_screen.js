@@ -431,6 +431,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
+                  classNames: ['break-word-wrap'],
                   layout: { top: 126, left: 120, width: 120, height: 72 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
@@ -441,7 +442,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
           }),
 
           previewImage: SC.ImageView.extend({
-              layout: { left: 20, top: 180, bottom: 20, right: 20 }, // TODO
+              layout: { left: 20, top: 190, bottom: 20, right: 20 }, // TODO
               scale: SC.BEST_FIT
               // valueBinding: 'CWB.fileController.previewURL'
           })
