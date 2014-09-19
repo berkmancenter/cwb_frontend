@@ -6,12 +6,8 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         var vocabularyIndex = 0; // FIXME
         CWB.termsController.set('vocabularyIndex', vocabularyIndex);
 
-        // we should NOT have to do this... but this is sproutcore afterall
-        CWB.store.reset();
-
         var allProjects = CWB.store.find(CWB.PROJECTS_QUERY);
         CWB.projectsController.set('content', allProjects);
-        CWB.projectsController.selectObject(allProjects.firstObject());
         CWB.store.find(CWB.FOLDERS_QUERY);
         CWB.store.find(CWB.FILES_QUERY);
 
