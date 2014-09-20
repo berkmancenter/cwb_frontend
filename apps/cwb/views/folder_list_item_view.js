@@ -7,11 +7,11 @@ CWB.FolderListItemView = SC.ListItemView.extend({
   renderLabel: function(context, label) {
     var folder = this.get('content');
     var folderPath = folder.get('path');
-    var fileCount = folder.get('fileCount');
+    var file_count = folder.get('file_count');
     var subfolderCount = folder.get('count');
     var toolTip = '%@ contains %@ file%@ and %@ subfolder%@.'.fmt(folderPath,
-      (fileCount === 0) ? 'no' : fileCount,
-      (fileCount === 1) ? '' : 's',
+      (file_count === 0) ? 'no' : file_count,
+      (file_count === 1) ? '' : 's',
       (subfolderCount === 0) ? 'no' : subfolderCount,
       (subfolderCount === 1) ? '' : 's');
     context.push('<label title="').text(toolTip).push('">', label || '', '</label>');
@@ -32,7 +32,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
     if (this.get('content').get('starred_count') !== null) {
       this.updateLayer();
     }
-  }.observes('*content.starred_count', '*content.cachedUnreadCount'),
+  }.observes('*content.starred_count', '*content.untaggedCount'),
 
   render: function(context, firstTime) {
     var folder = this.get('content'),

@@ -27,7 +27,7 @@ CWB.FolderView = SC.View.extend({
       exampleView: CWB.FolderListItemView.extend({
         contentValueKey: 'name',
         contentIconKey: 'icon',
-        contentUnreadCountKey: 'fileCount'
+        contentUnreadCountKey: 'untaggedCount'
       })
     })
   })

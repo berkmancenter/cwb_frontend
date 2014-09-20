@@ -57,21 +57,9 @@ CWB.Folder = CWB.Node.extend(
     return sc_static('icons/files/folder.png');
   }.property('name').cacheable(),
 
-  fileCount: function() {
-    return this.get('untaggedCount');
-  }.property('untaggedCount'),
-
   starred_count: SC.Record.attr(Number, { defaultValue: null }),
 
-  cachedUnreadCount: SC.Record.attr(Number, { defaultValue: -1 }),
-
   untaggedCount: function() {
-    if (this.get('cachedUnreadCount') >= 0) {
-      return this.get('cachedUnreadCount');
-    }
-    var query = SC.Query.local(CWB.File, { conditions: 'folder.id = %@ AND tag1 = null AND tag2 = null AND tag3 = null AND tag4 = null AND tag5 = null AND tag6 = null', parameters: [this.get('id')] });
-    var count = CWB.store.find(query).get('length');
-    this.set('cachedUnreadCount', count);
-    return count;
+    return this.get('file_count') - this.get('tagged_count');
   }.property()
 });
