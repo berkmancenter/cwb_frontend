@@ -311,6 +311,12 @@ CWB.mainPage = SC.Page.design({
     tagPaneIsVisibleDidChange: function() {
         var pane = this.get('tagPane');
         if (this.get('tagPaneIsVisible')) {
+            pane.get('contentView').get('tagGroups').get('a').get('contentView').set('items', CWB.termsController.content1());
+            pane.get('contentView').get('tagGroups').get('b').get('contentView').set('items', CWB.termsController.content2());
+            pane.get('contentView').get('tagGroups').get('c').get('contentView').set('items', CWB.termsController.content3());
+            pane.get('contentView').get('tagGroups').get('d').get('contentView').set('items', CWB.termsController.content4());
+            pane.get('contentView').get('tagGroups').get('e').get('contentView').set('items', CWB.termsController.content5());
+            pane.get('contentView').get('tagGroups').get('f').get('contentView').set('items', CWB.termsController.content6());
             pane.append();
             // TODO: set focus using field.becomeFirstResponder();
         }
