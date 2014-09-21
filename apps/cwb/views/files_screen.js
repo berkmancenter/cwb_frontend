@@ -382,7 +382,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
-              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue modifiedLabel modifiedValue pathLabel pathValue pathCopyButton'.w(),
+              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue modifiedLabel modifiedValue dummyTF pathLabel pathValue pathCopyButton'.w(),
 
               typeLabel: SC.LabelView.design({
                   layout: { top: 20, left: 20, width: 80, height: 18 },
@@ -424,6 +424,10 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.modified')
               }),
 
+              dummyTF: SC.TextFieldView.design({
+                  layout: { top: 102, left: 245, width: 20, height: 18 }
+              }),
+
               pathLabel: SC.LabelView.design({
                   layout: { top: 126, left: 20, width: 80, height: 18 },
                   value: 'Path:'
@@ -441,7 +445,19 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
               pathCopyButton: SC.ButtonView.design({
                   layout: { top: 126, left: 245, width: 18, height: 18 },
-                  layerId: 'file-path-clip-button'
+                  icon: sc_static('icons/add.png'), // TODO need a proper icon
+                  layerId: 'file-path-clip-button',
+                  render: function(context) {
+                    sc_super();
+                    context.setAttr({
+                       'data-clipboard-text': CWB.fileController.get('path')
+                    });
+                  },
+
+                  didAppendToDocument: function() {
+                      console.log('didAppendToDocument - pathCopyButton')
+                      CWB.statechart.sendAction('setupclip');
+                  }
               })
           }),
 
