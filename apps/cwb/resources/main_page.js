@@ -119,7 +119,7 @@ CWB.mainPage = SC.Page.design({
     }.observes('tagEditPaneIsVisible'),
 
     tagPane: SC.PanelPane.design({
-        layout: { width: 640, height: 480, centerX: 0, centerY: 0 },
+        layout: { width: 760, height: 480, centerX: 0, centerY: 0 },
 
         contentView: SC.View.extend({
             childViews: 'tagGroups saveButton cancelButton'.w(),
@@ -129,13 +129,14 @@ CWB.mainPage = SC.Page.design({
                 childViews: 'a b c d e f'.w(),
 
                 a: SC.WorkspaceView.extend({
-                    layout: { width: 100, left: 20 },
+                    layout: { width: 120, left: 20 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
+                            textAlign: SC.ALIGN_CENTER,
                             value: 'Architectural Discipline'
                         })
                     }),
@@ -157,13 +158,14 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 b: SC.WorkspaceView.extend({
-                    layout: { width: 100, left: 120 },
+                    layout: { width: 120, left: 140 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
+                            textAlign: SC.ALIGN_CENTER,
                             value: 'Document Type'
                         })
                     }),
@@ -180,13 +182,14 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 c: SC.WorkspaceView.extend({
-                    layout: { width: 100, left: 220 },
+                    layout: { width: 120, left: 260 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
+                            textAlign: SC.ALIGN_CENTER,
                             value: 'Format'
                         })
                     }),
@@ -203,13 +206,14 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 d: SC.WorkspaceView.extend({
-                    layout: { width: 100, left: 320 },
+                    layout: { width: 120, left: 380 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
+                            textAlign: SC.ALIGN_CENTER,
                             value: 'Phase'
                         })
                     }),
@@ -226,13 +230,14 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 e: SC.WorkspaceView.extend({
-                    layout: { width: 100, left: 420 },
+                    layout: { width: 120, left: 500 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
+                            textAlign: SC.ALIGN_CENTER,
                             value: 'Rights'
                         })
                     }),
@@ -249,13 +254,14 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 f: SC.WorkspaceView.extend({
-                    layout: { width: 100, left: 520 },
+                    layout: { width: 120, left: 620 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
                         title: SC.LabelView.extend({
                             controlSize: SC.REGULAR_CONTROL_SIZE,
                             fontWeight: SC.BOLD_WEIGHT,
+                            textAlign: SC.ALIGN_CENTER,
                             value: 'Zone'
                         })
                     }),
@@ -311,6 +317,12 @@ CWB.mainPage = SC.Page.design({
     tagPaneIsVisibleDidChange: function() {
         var pane = this.get('tagPane');
         if (this.get('tagPaneIsVisible')) {
+            pane.get('contentView').get('tagGroups').get('a').get('contentView').set('items', CWB.termsController.content1());
+            pane.get('contentView').get('tagGroups').get('b').get('contentView').set('items', CWB.termsController.content2());
+            pane.get('contentView').get('tagGroups').get('c').get('contentView').set('items', CWB.termsController.content3());
+            pane.get('contentView').get('tagGroups').get('d').get('contentView').set('items', CWB.termsController.content4());
+            pane.get('contentView').get('tagGroups').get('e').get('contentView').set('items', CWB.termsController.content5());
+            pane.get('contentView').get('tagGroups').get('f').get('contentView').set('items', CWB.termsController.content6());
             pane.append();
             // TODO: set focus using field.becomeFirstResponder();
         }

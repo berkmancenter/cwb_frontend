@@ -14,7 +14,8 @@ sc_require('models/node_model');
 CWB.File = CWB.Node.extend(
 /** @scope CWB.File.prototype */ {
 
-  folder: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
+  project: SC.Record.toOne('CWB.Project', { isMaster: NO, inverse: 'files' }),
+  folder: SC.Record.toOne('CWB.Folder', { isMaster: YES, inverse: 'files' }),
 
   tag1: SC.Record.attr(String, { defaultValue: null }),
   tag2: SC.Record.attr(String, { defaultValue: null }),
@@ -49,11 +50,19 @@ CWB.File = CWB.Node.extend(
       return NO;
   }.property('starred').cacheable(),
 
-  toggleStarred: function() {
-    if (this.isStarred())
+  toggleStarred: function(doStar) {
+    var folder = this.get('folder');
+    var old_count = folder.get('starred_count');
+
+    if (this.isStarred() && (doStar === undefined || !doStar)) {
+      // unstar the file
+      if (old_count >= 1) folder.set('starred_count', old_count - 1);
       this.set('starred', 'false');
-    else
+    } else if (!this.isStarred() && (doStar === undefined || !!doStar)) {
+      // star the file
+      folder.set('starred_count', old_count + 1);
       this.set('starred', 'true');
+    }
   },
 
   isTagged: function() {

@@ -3,24 +3,8 @@ CWB.MANAGING_FILES = SC.State.extend({
     var vocabularyIndex = 0; // FIXME
     CWB.termsController.set('vocabularyIndex', vocabularyIndex);
 
+    CWB.projectController.fetchRootFolders();
     var projectID = CWB.projectController.get('id');
-
-    var rootFolders = CWB.store.find(SC.Query.local(CWB.Folder, {
-      conditions: 'project.id = %@ AND parent = null',
-      parameters: [projectID],
-      orderBy: 'name ASC'
-    }));
-
-    var rootNode = SC.Object.create(SC.TreeItemContent, {
-      treeItemIsGrouped: YES,
-      treeItemIsExpanded: YES,
-      treeItemChildren: rootFolders,
-      count: rootFolders.get('length')
-    });
-
-    CWB.filesController.set('content', null);
-    CWB.foldersController.set('content', rootNode);
-    CWB.foldersController.selectObject(rootFolders.firstObject());
 
     CWB.getPath('mainPage.mainPane').append();
     CWB.routes.setRoute('files');
@@ -29,6 +13,18 @@ CWB.MANAGING_FILES = SC.State.extend({
   },
 
   exitState: function() {
+    var folderIDs = [];
+    CWB.projectController.get('folders').forEach(function (folder) {
+      folderIDs.push(folder.get('id'));
+    });
+    CWB.store.refreshRecords(CWB.Folder, folderIDs);
+
+    var fileIDs = [];
+    CWB.projectController.get('files').forEach(function (file) {
+      fileIDs.push(file.get('id'));
+    });
+    CWB.store.refreshRecords(CWB.File, fileIDs);
+
     CWB.getPath('mainPage.mainPane').remove();
   },
 

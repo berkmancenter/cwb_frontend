@@ -138,8 +138,8 @@ CWB.filesController = SC.ArrayController.create({
 
     selectedFiles.forEach(function(file) {
       selectedIds.push(file.get('id'));
-      oldStarStates.push(file.get('starred'));
-      file.set('starred', doStar);
+      oldStarStates.push(file.isStarred());
+      file.toggleStarred(doStar);
     });
 
     // send batch star/unstar request to backend
@@ -151,7 +151,7 @@ CWB.filesController = SC.ArrayController.create({
           SC.AlertPane.error('Sorry. We were unable to process your request.');
           // something went wrong, set files back to original starred state
           files.forEach(function(file, i) {
-            file.set('starred', oldStarStates[i]);
+            file.toggleStarred(oldStarStates[i]);
           });
         }
       }, selectedFiles, oldStarStates).json().send();
