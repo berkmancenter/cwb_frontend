@@ -71,7 +71,7 @@ CWB.Vocabulary6View = CWB.VocabularyView.extend({});
 CWB.ProjectsScreen = SC.WorkspaceView.extend({
     topToolbar: SC.ToolbarView.extend({
         anchorLocation: SC.ANCHOR_TOP,
-        childViews: 'createProjectButton removeProjectButton titleLabel logoutButton filesButton'.w(),
+        childViews: 'createProjectButton removeProjectButton titleLabel profileButton logoutButton filesButton'.w(),
 
         createProjectButton: SC.ButtonView.extend({
             controlSize: SC.HUGE_CONTROL_SIZE,
@@ -96,10 +96,19 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
 
         titleLabel: SC.LabelView.extend({
             controlSize: SC.LARGE_CONTROL_SIZE,
-            layout: { centerY: 0, centerX: 0, height: 30, width: 200 },
+            layout: { centerY: 0, centerX: 0, height: 30, width: 100 },
             fontWeight: SC.BOLD_WEIGHT,
             textAlign: SC.ALIGN_CENTER,
             value: "CWB (v" + CWB.VERSION + ") - Projects"
+        }),
+
+        profileButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, right: 202, width: 90 },
+//            icon: sc_static('icons/logout.png'),
+            title: "Edit Profile",
+            action: 'editProfile',
+            isEnabled: YES
         }),
 
         logoutButton: SC.ButtonView.extend({
