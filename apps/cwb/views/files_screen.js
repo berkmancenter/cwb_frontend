@@ -455,7 +455,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   },
 
                   didAppendToDocument: function() {
-                      console.log('didAppendToDocument - pathCopyButton')
+                      console.log('didAppendToDocument - pathCopyButton');
                       CWB.statechart.sendAction('setupclip');
                   }
               })
