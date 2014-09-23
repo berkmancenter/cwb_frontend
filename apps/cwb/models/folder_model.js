@@ -61,5 +61,5 @@ CWB.Folder = CWB.Node.extend(
 
   untaggedCount: function() {
     return this.get('file_count') - this.get('tagged_count');
-  }.property()
+  }.property('file_count', 'tagged_count')
 });

@@ -155,5 +155,59 @@ CWB.filesController = SC.ArrayController.create({
           });
         }
       }, selectedFiles, oldStarStates).json().send();
+  },
+
+  startTaggingFiles: function(files) {
+    var fileIDs = [];
+    var oldTagIDs = [];
+    var oldTaggedCounts = [];
+
+    files.forEach(function(file, index) {
+        fileIDs.push(file.get('id'));
+        oldTagIDs.push(file.get('tagIDs'));
+        oldTaggedCounts.push(file.get('folder').get('tagged_count'));
+    });
+
+    var workingFile = CWB.store.createRecord(CWB.File, {});
+    workingFile.set('tagIDs', CWB.tagsController.findCommonTags(oldTagIDs));
+    CWB.tagsController.set('content', workingFile);
+    CWB.statechart.sendAction('showTagPane', function(result) {
+        CWB.tagsController.set('content', null);
+        if (result) {
+            // user clicked save
+            var projectID = encodeURIComponent(CWB.projectController.get('id'));
+            var newTagIDs = workingFile.get('tagIDs');
+
+            // update file tags and counts based on what was done to the workingFile
+            files.forEach(function(file, index) {
+                var folder = file.get('folder');
+                if (!file.get('isTagged') && workingFile.get('isTagged')) {
+                    file.get('folder').set('tagged_count', oldTaggedCounts[index] + 1);
+                } else if (file.get('isTagged') && !workingFile.get('isTagged')) {
+                    file.get('folder').set('tagged_count', oldTaggedCounts[index] - 1);
+                }
+                file.set('tagIDs', newTagIDs);
+            });
+            // done with the working file, set it free!
+            workingFile.destroy();
+
+            // send tagging request to backend
+            SC.Request.putUrl('/projects/' + projectID + '/tag_files', { 'ids': fileIDs, 'tags': newTagIDs })
+                .notify(this, function(response, files, oldTagIDs, oldTaggedCounts) {
+                    if (!SC.ok(response)) {
+                        SC.AlertPane.error('Sorry. We were unable to process your tag request.');
+                        // something went wrong, set files/folders back to original state
+                        files.forEach(function(file, index) {
+                          file.set('tagIDs', oldTagIDs[index]);
+                          file.get('folder').set('tagged_count', oldTaggedCounts[index]);
+                        });
+                    }
+                }, files, oldTagIDs, oldTaggedCounts).json().send();
+        }
+        else {
+            // user clicked cancel, destroy the working file and carry on
+            workingFile.destroy();
+        }
+    });
   }
 });

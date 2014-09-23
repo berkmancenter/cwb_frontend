@@ -98,6 +98,9 @@ CWB.projectController = SC.ObjectController.create({
 
 			CWB.filesController.set('content', null);
 			CWB.foldersController.set('content', rootNode);
+			// this is ugly and I'm not entirely sure why it works
+			// but the proper file events don't get triggered until the second folder selection
+			CWB.foldersController.selectObject(rootFolders.firstObject());
 			CWB.foldersController.selectObject(rootFolders.firstObject());
     }
 });
