@@ -437,4 +437,141 @@ CWB.mainPage = SC.Page.design({
             })
         })
     }),
+
+    editProfilePaneIsVisible: NO,
+    editProfilePaneCallback: null,
+    editProfilePaneMessage: '',
+
+    editProfilePaneIsVisibleDidChange: function() {
+        var pane = this.get('editProfilePane');
+        if (this.get('editProfilePaneIsVisible')) {
+            pane.append();
+            pane.get('contentView').get('name').get('field').becomeFirstResponder();
+        }
+        else {
+            pane.remove();
+        }
+    }.observes('editProfilePaneIsVisible'),
+
+    editProfilePane: SC.PanelPane.design({
+        layout: { width: 320, height: 308, centerX: 0, centerY: 0 },
+
+        contentView: SC.View.extend({
+            layout: { top: 12, left: 12, bottom: 12, right: 12 },
+            childViews: 'name username email password1 password2 message saveButton cancelButton'.w(),
+            isVisible: YES,
+
+            name: SC.View.design({
+                layout: { left: 0, right: 0, top: 0, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Name",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.loginController.newName')
+                })
+            }),
+
+            username: SC.View.design({
+                layout: { left: 0, right: 0, top: 34, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "User Name",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.loginController.newUsername')
+                })
+            }),
+
+            email: SC.View.design({
+                layout: { left: 0, right: 0, top: 68, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Email",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.loginController.newEmail')
+                })
+            }),
+
+            password1: SC.View.design({
+                layout: { left: 0, right: 0, top: 102, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Password",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    type: 'password',
+                    valueBinding: SC.Binding.from('CWB.loginController.newPassword1')
+                })
+            }),
+
+            password2: SC.View.design({
+                layout: { left: 0, right: 0, top: 136, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Confirm Password",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    type: 'password',
+                    valueBinding: SC.Binding.from('CWB.loginController.newPassword2')
+                })
+            }),
+
+            message: SC.View.design({
+                layout: { left: 0, right: 0, bottom: 60, height: 42 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, right: 0, height: 36, centerY: 0 },
+                    textAlign: SC.ALIGN_CENTER,
+                    isVisible: YES,
+                    valueBinding: SC.Binding.from('CWB.mainPage.editProfilePaneMessage')
+                })
+            }),
+
+            saveButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, left: 40, height: 30, width: 80 },
+                title: "Save",
+                action: function(unused) {
+                    var callback = CWB.mainPage.get('editProfilePaneCallback');
+                    if (callback) {
+                        return callback(YES);
+                    }
+                },
+                isDefault: YES,
+                isEnabled: NO,
+                isEnabledBinding: SC.Binding.oneWay('CWB.loginController.enableProfileSaveButton').bool()
+            }),
+
+            cancelButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, right: 40, height: 30, width: 80 },
+                title: "Cancel",
+                action: function(unused) {
+                    CWB.mainPage.set('editProfilePaneIsVisible', NO);
+                    var callback = CWB.mainPage.get('editProfilePaneCallback');
+                    if (callback) {
+                        return callback(NO);
+                    }
+                },
+                isCancel: YES
+            })
+        })
+    })
 });

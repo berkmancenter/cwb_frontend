@@ -107,7 +107,8 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             layout: { centerY: 0, height: 30, right: 202, width: 90 },
 //            icon: sc_static('icons/logout.png'),
             title: "Edit Profile",
-            action: 'editProfile',
+            target: 'CWB.loginController',
+            action: 'showEditProfilePane',
             isEnabled: YES
         }),
 
