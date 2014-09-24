@@ -102,22 +102,22 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             value: "CWB (v" + CWB.VERSION + ") - Projects"
         }),
 
-        profileButton: SC.ButtonView.extend({
-            controlSize: SC.HUGE_CONTROL_SIZE,
-            layout: { centerY: 0, height: 30, right: 202, width: 90 },
-//            icon: sc_static('icons/logout.png'),
-            title: "Edit Profile",
-            target: 'CWB.loginController',
-            action: 'showEditProfilePane',
-            isEnabled: YES
-        }),
-
         logoutButton: SC.ButtonView.extend({
             controlSize: SC.HUGE_CONTROL_SIZE,
-            layout: { centerY: 0, height: 30, right: 102, width: 90 },
+            layout: { centerY: 0, height: 30, right: 232, width: 90 },
             icon: sc_static('icons/logout.png'),
             title: "Log Out",
             action: 'logout',
+            isEnabled: YES
+        }),
+
+        profileButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, right: 102, width: 120 },
+            icon: sc_static('icons/edit.png'),
+            title: "Edit Profile",
+            target: 'CWB.loginController',
+            action: 'showEditProfilePane',
             isEnabled: YES
         }),
 
