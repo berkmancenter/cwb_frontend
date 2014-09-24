@@ -39,5 +39,17 @@ CWB.MANAGING_FILES = SC.State.extend({
 
   downloadTurtle: function() {
     window.location.href = '/download?choice=n3';
-  }
+  },
+
+    expandAll: function() {
+        CWB.foldersController.arrangedObjects().toArray().forEach(function(folder) {
+            folder.expandAll();
+        });
+    },
+
+    collapseAll: function() {
+        CWB.foldersController.arrangedObjects().toArray().forEach(function(folder) {
+            folder.collapseAll();
+        });
+    }
 });
