@@ -7,7 +7,7 @@ CWB.FolderView = SC.View.extend({
   childViews: 'titleLabel expandButton collapseButton listView'.w(),
 
     titleLabel: SC.LabelView.extend({
-        layout: { top: 16, left: 24, height: 24, right: 0 },
+        layout: { top: 15, left: 24, height: 24, right: 120 },
         controlSize: SC.REGULAR_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         value: 'FOLDERS',
@@ -15,7 +15,7 @@ CWB.FolderView = SC.View.extend({
     }),
 
     collapseButton: SC.ButtonView.extend({
-        layout: { top: 5, width: 100, height: 20, right: 5 },
+        layout: { top: 10, width: 85, height: 24, right: 5 },
         controlSize: SC.REGULAR_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         title: 'Collapse All',
@@ -24,7 +24,7 @@ CWB.FolderView = SC.View.extend({
     }),
 
     expandButton: SC.ButtonView.extend({
-        layout: { top: 5, width: 100, height: 20, right: 110 },
+        layout: { top: 10, width: 85, height: 24, right: 95 },
         controlSize: SC.REGULAR_CONTROL_SIZE,
         title: 'Expand All',
         backgroundColor: '#eee',
@@ -32,7 +32,7 @@ CWB.FolderView = SC.View.extend({
     }),
 
     listView: SC.ScrollView.extend({
-    layout: { top: 32, left: 0, bottom: 0, right: 0 },
+    layout: { top: 42, left: 0, bottom: 0, right: 0 },
     hasHorizontalScroller: NO,
 
     contentView: CWB.SourceListView.extend({
