@@ -446,6 +446,7 @@ CWB.mainPage = SC.Page.design({
         var pane = this.get('editProfilePane');
         if (this.get('editProfilePaneIsVisible')) {
             pane.append();
+            pane.get('contentView').get('saveButton').set('isEnabled', NO);
             pane.get('contentView').get('name').get('field').becomeFirstResponder();
         }
         else {
@@ -480,7 +481,7 @@ CWB.mainPage = SC.Page.design({
                 childViews: 'label field'.w(),
                 label: SC.LabelView.design({
                     layout: { left: 0, width: 110, height: 18, centerY: 0 },
-                    value: "User Name",
+                    value: "Username",
                     textAlign: SC.ALIGN_LEFT
                 }),
                 field: SC.TextFieldView.design({
