@@ -34,11 +34,11 @@ CWB.MANAGING_FILES = SC.State.extend({
   },
 
   downloadRDF: function() {
-    window.location.href = '/download?choice=rdfxml';
+    window.location.href = '/projects/' + encodeURIComponent(CWB.projectController.get('id')) + '/download?choice=rdfxml';
   },
 
   downloadTurtle: function() {
-    window.location.href = '/download?choice=n3';
+    window.location.href = '/projects/' + encodeURIComponent(CWB.projectController.get('id')) + '/download?choice=n3';
   },
 
     expandAll: function() {
