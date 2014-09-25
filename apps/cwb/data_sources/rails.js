@@ -191,12 +191,12 @@ CWB.RailsDataSource = SC.DataSource.extend({
 
     routeFor: function (recordType, store, storeKey) {
         SC.Logger.debug('        (routeFor) recordType: ' + recordType + ' store: ' + store + ' storeKey: ' + storeKey);
-        
+
         var recordID = (storeKey !== null && storeKey !== undefined ? store.idFor(storeKey) : null);
-        
-//        if (SC.kindOf(recordType, CWB.Account)) {
-//            return '/accounts' + (recordID !== null ? '/' + this.encodeID(recordID) : '');
-//        }
+
+        if (SC.kindOf(recordType, CWB.Account)) {
+           return '/accounts' + (recordID !== null ? '/' + this.encodeID(recordID) : '');
+        }
         if (SC.kindOf(recordType, CWB.Project)) {
             return '/projects' + (recordID !== null ? '/' + this.encodeID(recordID) : '');
         }

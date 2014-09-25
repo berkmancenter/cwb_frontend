@@ -1,17 +1,18 @@
 sc_require('core');
 
 CWB.loginController = SC.ObjectController.create({
-  id: '',
-  username: '',
-  password: '',
-  errorMessage: '',
-  isLoggingIn: NO,
-  sessionToken: false,
-  mainPane: 'mainPage.mainPane',
+    id: '',
+    username: '',
+    password: '',
+    errorMessage: '',
+    isLoggingIn: NO,
+    sessionToken: false,
+    mainPane: 'mainPage.mainPane',
 
     name: '',
     email: '',
-    
+    isAdmin: NO,
+
     newName: null,
     newUsername: null,
     newEmail: null,

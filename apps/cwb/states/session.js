@@ -13,7 +13,8 @@ CWB.SESSION = SC.State.extend({
                     id: body.id,
                     name: body.name,
                     username: body.username,
-                    email: body.email
+                    email: body.email,
+                    isAdmin: body.isAdmin
                 });
         } else {
             this.gotoState('LOGGED_OUT');
