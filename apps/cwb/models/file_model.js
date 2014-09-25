@@ -65,13 +65,23 @@ CWB.File = CWB.Node.extend(
     }
   },
 
+  statusDidChange: function() {
+    var status = this.get("status");
+    if (status === SC.Record.READY_CLEAN) {
+      if (this.get('tag').length > 0) {
+        var tagIdsFromStore = CWB.tagsController.setupTagVocabArray(this.get('tag'));
+        this.set('tagIDs', tagIdsFromStore);
+      }
+    }
+  }.observes('status'),
+
   isTagged: function() {
-    if (this.get('tag1') != null) return YES;
-    if (this.get('tag2') != null) return YES;
-    if (this.get('tag3') != null) return YES;
-    if (this.get('tag4') != null) return YES;
-    if (this.get('tag5') != null) return YES;
-    if (this.get('tag6') != null) return YES;
+    if (this.get('tag1') !== null) return YES;
+    if (this.get('tag2') !== null) return YES;
+    if (this.get('tag3') !== null) return YES;
+    if (this.get('tag4') !== null) return YES;
+    if (this.get('tag5') !== null) return YES;
+    if (this.get('tag6') !== null) return YES;
     return NO;
   }.property('tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6').cacheable(),
 
@@ -127,14 +137,14 @@ CWB.File = CWB.Node.extend(
 
   tagIcon: function() {
     var tagCount = 0;
-    if (this.get('tag1') != null) tagCount += 1;
-    if (this.get('tag2') != null) tagCount += 1;
-    if (this.get('tag3') != null) tagCount += 1;
-    if (this.get('tag4') != null) tagCount += 1;
-    if (this.get('tag5') != null) tagCount += 1;
-    if (this.get('tag6') != null) tagCount += 1;
-    if (tagCount == 0) return sc_static('icons/tag-off.png');
-    if (tagCount == 6) return sc_static('icons/tag-on.png');
+    if (this.get('tag1') !== null) tagCount += 1;
+    if (this.get('tag2') !== null) tagCount += 1;
+    if (this.get('tag3') !== null) tagCount += 1;
+    if (this.get('tag4') !== null) tagCount += 1;
+    if (this.get('tag5') !== null) tagCount += 1;
+    if (this.get('tag6') !== null) tagCount += 1;
+    if (tagCount === 0) return sc_static('icons/tag-off.png');
+    if (tagCount === 6) return sc_static('icons/tag-on.png');
     return sc_static('icons/tag-partial.png');
   }.property('isTagged').cacheable(),
 

@@ -61,23 +61,23 @@ CWB.Folder = CWB.Node.extend(
 
   untaggedCount: function() {
     return this.get('file_count') - this.get('tagged_count');
-  }.property(),
+  }.property('file_count', 'tagged_count'),
 
-    expandAll: function() {
-        this.set('treeItemIsExpanded', YES);
-        if(this.get('count') > 0) {
-            this.get('subfolders').toArray().forEach(function(folder) {
-               folder.expandAll();
-            });
-        }
-    },
+  expandAll: function() {
+      this.set('treeItemIsExpanded', YES);
+      if(this.get('count') > 0) {
+          this.get('subfolders').toArray().forEach(function(folder) {
+             folder.expandAll();
+          });
+      }
+  },
 
-    collapseAll: function() {
-        this.set('treeItemIsExpanded', NO);
-        if(this.get('count') > 0) {
-            this.get('subfolders').toArray().forEach(function(folder) {
-                folder.collapseAll();
-            });
-        }
-    }
+  collapseAll: function() {
+      this.set('treeItemIsExpanded', NO);
+      if(this.get('count') > 0) {
+          this.get('subfolders').toArray().forEach(function(folder) {
+              folder.collapseAll();
+          });
+      }
+  }
 });
