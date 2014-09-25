@@ -28,7 +28,8 @@ CWB.LOGGED_OUT = SC.State.extend({
                 id: body.id,
                 name: body.name,
                 username: body.username,
-                email: body.email
+                email: body.email,
+                isAdmin: body.isAdmin
             });
     } else if (response.status == 401) {
       SC.AlertPane.error('Incorrect username or password. Please try again.');

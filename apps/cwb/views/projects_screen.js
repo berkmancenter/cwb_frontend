@@ -71,7 +71,7 @@ CWB.Vocabulary6View = CWB.VocabularyView.extend({});
 CWB.ProjectsScreen = SC.WorkspaceView.extend({
     topToolbar: SC.ToolbarView.extend({
         anchorLocation: SC.ANCHOR_TOP,
-        childViews: 'createProjectButton removeProjectButton titleLabel profileButton logoutButton filesButton'.w(),
+        childViews: 'createProjectButton removeProjectButton manageAccountsButton titleLabel profileButton logoutButton filesButton'.w(),
 
         createProjectButton: SC.ButtonView.extend({
             controlSize: SC.HUGE_CONTROL_SIZE,
@@ -94,9 +94,21 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             action: 'showRemoveProjectAlert'
         }),
 
+        manageAccountsButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, left: 288, width: 150 },
+            icon: sc_static('icons/edit.png'),
+            title: "Manage Accounts",
+            action: 'gotoAccounts',
+            isEnabled: NO,
+            isEnabledBinding: SC.Binding.oneWay('CWB.loginController.isAdmin'),
+            isVisible: NO,
+            isVisibleBinding: SC.Binding.oneWay('CWB.loginController.isAdmin')
+        }),
+
         titleLabel: SC.LabelView.extend({
             controlSize: SC.LARGE_CONTROL_SIZE,
-            layout: { centerY: 0, centerX: 0, height: 30, width: 100 },
+            layout: { centerY: 0, centerX: 0, height: 30, width: 200 },
             fontWeight: SC.BOLD_WEIGHT,
             textAlign: SC.ALIGN_CENTER,
             value: "CWB (v" + CWB.VERSION + ") - Projects"

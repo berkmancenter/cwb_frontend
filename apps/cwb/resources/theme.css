@@ -252,3 +252,52 @@
 .break-word-wrap {
     word-wrap: break-word;
 }
+
+/* CWB.AccountListItemView */
+
+.account-toolbar {
+    text-align:center !important;
+
+    .account-header {
+        text-align:center !important;
+        display:inline-block;
+        position:static;
+        margin:0 !important;
+        padding:0 !important;
+        height:43px !important;
+        line-height:43px !important;
+        width:200px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+
+        &.email {
+            width:250px !important;
+        }
+    }
+}
+
+.cwb-account-list-item-view {
+    .sc-outline {
+        text-align:center;
+
+        span {
+            display:inline-block;
+            // top: 50%;
+            height: 32px;
+            line-height: 32px;
+            width:200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+
+            &.email {
+                width:250px;
+            }
+        }
+    }
+}
