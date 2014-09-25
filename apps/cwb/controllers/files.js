@@ -181,10 +181,11 @@ CWB.filesController = SC.ArrayController.create({
             // update file tags and counts based on what was done to the workingFile
             files.forEach(function(file, index) {
                 var folder = file.get('folder');
+                var tagged_count = folder.get('tagged_count');
                 if (!file.get('isTagged') && workingFile.get('isTagged')) {
-                    file.get('folder').set('tagged_count', oldTaggedCounts[index] + 1);
-                } else if (file.get('isTagged') && !workingFile.get('isTagged')) {
-                    file.get('folder').set('tagged_count', oldTaggedCounts[index] - 1);
+                    folder.set('tagged_count', tagged_count + 1);
+                } else if (file.get('isTagged') && !workingFile.get('isTagged') && tagged_count > 0) {
+                    folder.set('tagged_count', tagged_count - 1);
                 }
                 file.set('tagIDs', newTagIDs);
             });
