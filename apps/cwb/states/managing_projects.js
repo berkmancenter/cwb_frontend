@@ -72,6 +72,7 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         SC.Request.deleteUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms/" + encodeURIComponent(termID))
             .notify(this, function(response) {
                 if (SC.ok(response)) {
+                    CWB.filesController.updateTaggedFiles(termID);
                     CWB.projectController.cacheVocabulariesForSelectedProject();
                 } else {
                     SC.AlertPane.error('Sorry. We were unable to process your request.');
@@ -95,6 +96,7 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
                 SC.Request.putUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms/" + encodeURIComponent(original.id), {'label':newLabel, 'description':newDescription})
                     .notify(this, function(response) {
                         if (SC.ok(response)) {
+                            CWB.filesController.updateTaggedFiles(original.id, response.body().id);
                             CWB.mainPage.set('tagEditPaneMessage', '');
                             CWB.mainPage.set('tagEditPaneIsVisible', NO);
                             CWB.projectController.cacheVocabulariesForSelectedProject();

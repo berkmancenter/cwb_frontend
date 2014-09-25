@@ -210,5 +210,20 @@ CWB.filesController = SC.ArrayController.create({
             workingFile.destroy();
         }
     });
+  },
+
+  updateTaggedFiles: function(old_id, new_id) {
+      var affectedFiles = CWB.store.find(SC.Query.local(CWB.File, {
+          conditions: 'tagIDs CONTAINS {oldID}',
+          parameters: {'oldID': old_id},
+          orderBy: ''
+      }));
+
+      affectedFiles.toArray().forEach(function(file) {
+          var tagIds = file.get('tagIDs');
+          var index = tagIds.indexOf(old_id);
+          tagIds[index] = new_id || null;
+          file.set('tagIDs', tagIds);
+      });
   }
 });
