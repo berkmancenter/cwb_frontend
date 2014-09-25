@@ -12,6 +12,7 @@ CWB.accountFormController = SC.ObjectController.create({
     accountRecord: null,
     requirePassword: false,
     enableSaveButton: NO,
+    displayAdminCheckbox: true,
 
     clearAccount: function() {
         this.set('name', '');
@@ -22,6 +23,7 @@ CWB.accountFormController = SC.ObjectController.create({
         this.set('account_manager', null);
         this.set('accountRecord', null);
         this.set('requirePassword', false);
+        this.set('displayAdminCheckbox', true);
         CWB.mainPage.set('accountFormMessage', '');
     },
 

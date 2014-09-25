@@ -1,7 +1,6 @@
 CWB.MANAGING_ACCOUNTS = SC.State.extend({
     enterState: function() {
-        var allAccounts = CWB.store.find(CWB.Account).refresh();
-        CWB.accountsController.set('content', allAccounts);
+        CWB.accountsController.get('content').refresh();
 
         CWB.getPath('mainPage.accountsPane').append();
         CWB.routes.setRoute('accounts');

@@ -15,6 +15,9 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         CWB.filesController.set('content', null);
         CWB.foldersController.set('content', null);
 
+        var allAccounts = CWB.store.find(CWB.Account);
+        CWB.accountsController.set('content', allAccounts);
+
         CWB.getPath('mainPage.projectPane').append();
         CWB.routes.setRoute(''); //('projects');
     },
