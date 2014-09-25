@@ -7,11 +7,6 @@ sc_require('views/projects_screen');
 
 // This page describes the main user interface for the application.
 CWB.mainPage = SC.Page.design({
-//    accountPane: SC.MainPane.design({
-//        childViews: 'accountsScreen'.w(),
-//        accountsScreen: CWB.AccountsScreen.design()
-//    }),
-
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
@@ -19,6 +14,11 @@ CWB.mainPage = SC.Page.design({
        childViews: 'filesScreen'.w(),
        filesScreen: CWB.FilesScreen.design()
    }),
+
+    accountsPane: SC.MainPane.design({
+        childViews: 'accountsScreen'.w(),
+        accountsScreen: CWB.AccountsScreen.design(),
+    }),
 
     projectPane: SC.MainPane.design({
         childViews: 'projectsScreen'.w(),
@@ -437,4 +437,157 @@ CWB.mainPage = SC.Page.design({
             })
         })
     }),
+
+    accountFormIsVisible: NO,
+    accountFormCallback: null,
+    accountFormMessage: '',
+
+    accountFormIsVisibleDidChange: function() {
+        var pane = this.get('accountForm');
+        if (this.get('accountFormIsVisible')) {
+            pane.append();
+            pane.get('contentView').get('saveButton').set('isEnabled', NO);
+            pane.get('contentView').get('name').get('field').becomeFirstResponder();
+        }
+        else {
+            pane.remove();
+        }
+    }.observes('accountFormIsVisible'),
+
+    accountForm: SC.PanelPane.design({
+        layout: { width: 320, height: 334, centerX: 0, centerY: 0 },
+
+        contentView: SC.View.extend({
+            layout: { top: 12, left: 12, bottom: 12, right: 12 },
+            childViews: 'name username email password1 password2 accountManager message saveButton cancelButton'.w(),
+            isVisible: YES,
+
+            name: SC.View.design({
+                layout: { left: 0, right: 0, top: 0, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Name",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.accountFormController.name')
+                })
+            }),
+
+            username: SC.View.design({
+                layout: { left: 0, right: 0, top: 34, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Username",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.accountFormController.username')
+                })
+            }),
+
+            email: SC.View.design({
+                layout: { left: 0, right: 0, top: 68, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Email",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.accountFormController.email')
+                })
+            }),
+
+            password1: SC.View.design({
+                layout: { left: 0, right: 0, top: 102, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Password",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    type: 'password',
+                    valueBinding: SC.Binding.from('CWB.accountFormController.password1')
+                })
+            }),
+
+            password2: SC.View.design({
+                layout: { left: 0, right: 0, top: 136, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Confirm Password",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.TextFieldView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    type: 'password',
+                    valueBinding: SC.Binding.from('CWB.accountFormController.password2')
+                })
+            }),
+
+            accountManager: SC.View.design({
+                layout: { left: 0, right: 0, top: 170, height: 26 },
+                childViews: 'label field'.w(),
+                isVisibleBinding: SC.Binding.oneWay('CWB.accountFormController.displayAdminCheckbox').bool(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, width: 110, height: 18, centerY: 0 },
+                    value: "Account Manager",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.CheckboxView.design({
+                    layout: { left: 112, height: 22, right: 0, centerY: 0 },
+                    valueBinding: SC.Binding.from('CWB.accountFormController.account_manager')
+                })
+            }),
+
+            message: SC.View.design({
+                layout: { left: 0, right: 0, bottom: 60, height: 42 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, right: 0, height: 36, centerY: 0 },
+                    textAlign: SC.ALIGN_CENTER,
+                    isVisible: YES,
+                    valueBinding: SC.Binding.from('CWB.mainPage.accountFormMessage')
+                })
+            }),
+
+            saveButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, left: 40, height: 30, width: 80 },
+                title: "Save",
+                action: function(unused) {
+                    var callback = CWB.mainPage.get('accountFormCallback');
+                    if (callback) {
+                        return callback(YES);
+                    }
+                },
+                isDefault: YES,
+                isEnabled: NO,
+                isEnabledBinding: SC.Binding.oneWay('CWB.accountFormController.enableSaveButton').bool()
+            }),
+
+            cancelButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, right: 40, height: 30, width: 80 },
+                title: "Cancel",
+                action: function(unused) {
+                    CWB.mainPage.set('accountFormIsVisible', NO);
+                    var callback = CWB.mainPage.get('accountFormCallback');
+                    if (callback) {
+                        return callback(NO);
+                    }
+                },
+                isCancel: YES
+            })
+        })
+    })
 });
