@@ -5,7 +5,7 @@ sc_require('views/source_list_view');
 CWB.TermSourceListView = CWB.SourceListView.extend({
     exampleView: SC.ListItemView.extend({
         hasContentIcon: YES,
-        contentUnreadCountKey: 'fileCount',
+        contentUnreadCountKey: 'tagged_count',
         contentValueKey: 'label',
         contentIconKey: 'icon',
         renderLabel: function(context, label) {
@@ -71,7 +71,7 @@ CWB.Vocabulary6View = CWB.VocabularyView.extend({});
 CWB.ProjectsScreen = SC.WorkspaceView.extend({
     topToolbar: SC.ToolbarView.extend({
         anchorLocation: SC.ANCHOR_TOP,
-        childViews: 'createProjectButton removeProjectButton titleLabel logoutButton filesButton'.w(),
+        childViews: 'createProjectButton removeProjectButton manageAccountsButton titleLabel profileButton logoutButton filesButton'.w(),
 
         createProjectButton: SC.ButtonView.extend({
             controlSize: SC.HUGE_CONTROL_SIZE,
@@ -94,6 +94,18 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
             action: 'showRemoveProjectAlert'
         }),
 
+        manageAccountsButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, left: 288, width: 150 },
+            icon: sc_static('icons/edit.png'),
+            title: "Manage Accounts",
+            action: 'gotoAccounts',
+            isEnabled: NO,
+            isEnabledBinding: SC.Binding.oneWay('CWB.loginController.isAdmin'),
+            isVisible: NO,
+            isVisibleBinding: SC.Binding.oneWay('CWB.loginController.isAdmin')
+        }),
+
         titleLabel: SC.LabelView.extend({
             controlSize: SC.LARGE_CONTROL_SIZE,
             layout: { centerY: 0, centerX: 0, height: 30, width: 200 },
@@ -104,10 +116,20 @@ CWB.ProjectsScreen = SC.WorkspaceView.extend({
 
         logoutButton: SC.ButtonView.extend({
             controlSize: SC.HUGE_CONTROL_SIZE,
-            layout: { centerY: 0, height: 30, right: 102, width: 90 },
+            layout: { centerY: 0, height: 30, right: 232, width: 90 },
             icon: sc_static('icons/logout.png'),
             title: "Log Out",
             action: 'logout',
+            isEnabled: YES
+        }),
+
+        profileButton: SC.ButtonView.extend({
+            controlSize: SC.HUGE_CONTROL_SIZE,
+            layout: { centerY: 0, height: 30, right: 102, width: 120 },
+            icon: sc_static('icons/edit.png'),
+            title: "Edit Profile",
+            target: 'CWB.loginController',
+            action: 'showEditProfilePane',
             isEnabled: YES
         }),
 

@@ -7,11 +7,11 @@ CWB.FolderListItemView = SC.ListItemView.extend({
   renderLabel: function(context, label) {
     var folder = this.get('content');
     var folderPath = folder.get('path');
-    var fileCount = folder.get('fileCount');
-    var subfolderCount = folder.getPath('subfolders.length');
+    var file_count = folder.get('file_count');
+    var subfolderCount = folder.get('count');
     var toolTip = '%@ contains %@ file%@ and %@ subfolder%@.'.fmt(folderPath,
-      (fileCount === 0) ? 'no' : fileCount,
-      (fileCount === 1) ? '' : 's',
+      (file_count === 0) ? 'no' : file_count,
+      (file_count === 1) ? '' : 's',
       (subfolderCount === 0) ? 'no' : subfolderCount,
       (subfolderCount === 1) ? '' : 's');
     context.push('<label title="').text(toolTip).push('">', label || '', '</label>');
@@ -19,17 +19,23 @@ CWB.FolderListItemView = SC.ListItemView.extend({
 
   renderCount: function(context, count) {
     var folder = this.get('content');
-    var starredCount = folder.get('starredCount') || 0;
+    var starred_count = folder.get('starred_count') || 0;
     var untaggedCount = folder.get('untaggedCount') || 0;
     context.push(
       '<span class="pill">',
-      '<span class="pill-inner pill-left">', starredCount, '</span>',
+      '<span class="pill-inner pill-left">', starred_count, '</span>',
       '<span class="pill-inner pill-right">', untaggedCount, '</span>',
       '</span>');
   },
 
+  doUpdateLayer: function() {
+    if (this.get('content').get('starred_count') !== null) {
+      this.updateLayer();
+    }
+  }.observes('*content.starred_count', '*content.untaggedCount'),
+
   render: function(context, firstTime) {
-    var content = this.get('content'),
+    var folder = this.get('content'),
         del     = this.displayDelegate,
         level   = this.get('outlineLevel'),
         indent  = this.get('outlineIndent'),
@@ -48,7 +54,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
 
     // handle disclosure triangle:
     value = this.get('disclosureState');
-    if (value !== SC.LEAF_NODE) {
+    if (value !== SC.LEAF_NODE && folder.count() != 0) {
       this.renderDisclosure(working, value);
       classArray.push('has-disclosure');
     }
@@ -56,7 +62,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
     // handle checkbox:
     key = this.getDelegateProperty('contentCheckboxKey', del);
     if (key) {
-      value = content ? (content.get ? content.get(key) : content[key]) : NO;
+      value = folder ? (folder.get ? folder.get(key) : folder[key]) : NO;
       if (value !== null) {
         this.renderCheckbox(working, value);
         classArray.push('has-checkbox');
@@ -66,7 +72,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
     // handle icon:
     if (this.getDelegateProperty('hasContentIcon', del)) {
       key = this.getDelegateProperty('contentIconKey', del);
-      value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
+      value = (key && folder) ? (folder.get ? folder.get(key) : folder[key]) : null;
       if (value) {
         this.renderIcon(working, value, 'icon');
         classArray.push('has-icon');
@@ -80,7 +86,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
 
     // handle label -- always invoke:
     key = this.getDelegateProperty('contentValueKey', del);
-    value = (key && content) ? (content.get ? content.get(key) : content[key]) : content;
+    value = (key && folder) ? (folder.get ? folder.get(key) : folder[key]) : folder;
     if (value && SC.typeOf(value) !== SC.T_STRING) {
       value = value.toString();
     }
@@ -92,14 +98,14 @@ CWB.FolderListItemView = SC.ListItemView.extend({
     // handle size:
     if (this.getDelegateProperty('hasContentSize', del)) {
       key = this.getDelegateProperty('contentSizeKey', del);
-      value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
+      value = (key && folder) ? (folder.get ? folder.get(key) : folder[key]) : null;
       this.renderSize(working, value);
       classArray.push('has-size');
     }
 
     // handle unread count:
     key = this.getDelegateProperty('contentUnreadCountKey', del);
-    value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
+    value = (key && folder) ? (folder.get ? folder.get(key) : folder[key]) : null;
     if (!SC.none(value)) {
       this.renderCount(working, value);
 /*
@@ -113,7 +119,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
 
     // handle action:
     key = this.getDelegateProperty('listItemActionProperty', del);
-    value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
+    value = (key && folder) ? (folder.get ? folder.get(key) : folder[key]) : null;
     if (value) {
       this.renderAction(working, value);
       classArray.push('has-action');
@@ -122,7 +128,7 @@ CWB.FolderListItemView = SC.ListItemView.extend({
     // handle branch:
     if (this.getDelegateProperty('hasContentBranch', del)) {
       key = this.getDelegateProperty('contentIsBranchKey', del);
-      value = (key && content) ? (content.get ? content.get(key) : content[key]) : NO;
+      value = (key && folder) ? (folder.get ? folder.get(key) : folder[key]) : NO;
       this.renderBranch(working, value);
       classArray.push('has-branch');
     }

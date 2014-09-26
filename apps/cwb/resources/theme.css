@@ -1,3 +1,13 @@
+@font-face{
+    font-family: 'Apercu';
+    src: url('resources/fonts/apercu-webfonts/apercu_light-web.eot');
+    src: url('resources/fonts/apercu-webfonts/apercu_light-web.eot?#iefix') format('embedded-opentype'),
+         url('resources/fonts/apercu-webfonts/apercu_light-web.woff') format('woff'),
+         url('resources/fonts/apercu-webfonts/apercu_light-web.ttf') format('truetype'),
+         url('resources/fonts/apercu-webfonts/apercu_light-web.svg#webfont') format('svg');
+}
+
+
 /* CWB.FolderListItemView */
 
 .sc-list-item-view {
@@ -146,9 +156,47 @@
     }
 }
 
-.login-pane {
-    -webkit-border-radius: 5px;
-    border: 1px solid #cAcEd4 !important;
+.login-page {
+    background-color:#FFFFFF;
+
+    .login-box-view {
+        background-color:#DADEE4;
+        -webkit-border-radius: 5px;
+        border: 1px solid #cAcEd4 !important;
+    }
+
+    .login-footer {
+        .footer-hr {
+            margin-top:0;
+            margin-bottom:0;
+
+            hr {
+                height:2px;
+                width:940px;
+                background:#000;
+                border:0;
+                margin-top:0;
+                margin-bottom:0;
+                align:center;
+            }
+        }
+
+        .footer-logo {
+
+        }
+
+        .footer-credits {
+            text-align:center;
+
+            div {
+                position: relative;
+                font-size:14px;
+                line-height:30px;
+                margin-top:-8px;
+                font-family: 'Apercu', 'Helvetica';
+            }
+        }
+    }
 }
 
 /* CWB.SearchField */
@@ -246,5 +294,58 @@
         position: absolute;
         top: 50%;
         right: 5px;
+    }
+}
+
+.break-word-wrap {
+    word-wrap: break-word;
+}
+
+/* CWB.AccountListItemView */
+
+.account-toolbar {
+    text-align:center !important;
+
+    .account-header {
+        text-align:center !important;
+        display:inline-block;
+        position:static;
+        margin:0 !important;
+        padding:0 !important;
+        height:43px !important;
+        line-height:43px !important;
+        width:200px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+
+        &.email {
+            width:250px !important;
+        }
+    }
+}
+
+.cwb-account-list-item-view {
+    .sc-outline {
+        text-align:center;
+
+        span {
+            display:inline-block;
+            // top: 50%;
+            height: 32px;
+            line-height: 32px;
+            width:200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+
+            &.email {
+                width:250px;
+            }
+        }
     }
 }

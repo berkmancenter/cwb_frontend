@@ -14,7 +14,8 @@ sc_require('models/node_model');
 CWB.File = CWB.Node.extend(
 /** @scope CWB.File.prototype */ {
 
-  folder: SC.Record.toOne('CWB.Folder', { isMaster: NO }),
+  project: SC.Record.toOne('CWB.Project', { isMaster: NO, inverse: 'files' }),
+  folder: SC.Record.toOne('CWB.Folder', { isMaster: YES, inverse: 'files' }),
 
   tag1: SC.Record.attr(String, { defaultValue: null }),
   tag2: SC.Record.attr(String, { defaultValue: null }),
@@ -36,6 +37,8 @@ CWB.File = CWB.Node.extend(
   type: SC.Record.attr(String, { defaultValue: 'application/octet-stream' }),
   created: SC.Record.attr(SC.DateTime),
   modified: SC.Record.attr(SC.DateTime),
+  last_modified_by: SC.Record.attr(String),
+  last_tag_change: SC.Record.attr(SC.DateTime),
 
   starred: SC.Record.attr(String),
   isQueued: SC.Record.attr(Boolean, { defaultValue: NO }),
@@ -49,20 +52,38 @@ CWB.File = CWB.Node.extend(
       return NO;
   }.property('starred').cacheable(),
 
-  toggleStarred: function() {
-    if (this.isStarred())
+  toggleStarred: function(doStar) {
+    var folder = this.get('folder');
+    var old_count = folder.get('starred_count');
+
+    if (this.isStarred() && (doStar === undefined || !doStar)) {
+      // unstar the file
+      if (old_count >= 1) folder.set('starred_count', old_count - 1);
       this.set('starred', 'false');
-    else
+    } else if (!this.isStarred() && (doStar === undefined || !!doStar)) {
+      // star the file
+      folder.set('starred_count', old_count + 1);
       this.set('starred', 'true');
+    }
   },
 
+  statusDidChange: function() {
+    var status = this.get("status");
+    if (status === SC.Record.READY_CLEAN) {
+      if (this.get('tag').length > 0) {
+        var tagIdsFromStore = CWB.tagsController.setupTagVocabArray(this.get('tag'));
+        this.set('tagIDs', tagIdsFromStore);
+      }
+    }
+  }.observes('status'),
+
   isTagged: function() {
-    if (this.get('tag1') != null) return YES;
-    if (this.get('tag2') != null) return YES;
-    if (this.get('tag3') != null) return YES;
-    if (this.get('tag4') != null) return YES;
-    if (this.get('tag5') != null) return YES;
-    if (this.get('tag6') != null) return YES;
+    if (this.get('tag1') !== null) return YES;
+    if (this.get('tag2') !== null) return YES;
+    if (this.get('tag3') !== null) return YES;
+    if (this.get('tag4') !== null) return YES;
+    if (this.get('tag5') !== null) return YES;
+    if (this.get('tag6') !== null) return YES;
     return NO;
   }.property('tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6').cacheable(),
 
@@ -118,14 +139,14 @@ CWB.File = CWB.Node.extend(
 
   tagIcon: function() {
     var tagCount = 0;
-    if (this.get('tag1') != null) tagCount += 1;
-    if (this.get('tag2') != null) tagCount += 1;
-    if (this.get('tag3') != null) tagCount += 1;
-    if (this.get('tag4') != null) tagCount += 1;
-    if (this.get('tag5') != null) tagCount += 1;
-    if (this.get('tag6') != null) tagCount += 1;
-    if (tagCount == 0) return sc_static('icons/tag-off.png');
-    if (tagCount == 6) return sc_static('icons/tag-on.png');
+    if (this.get('tag1') !== null) tagCount += 1;
+    if (this.get('tag2') !== null) tagCount += 1;
+    if (this.get('tag3') !== null) tagCount += 1;
+    if (this.get('tag4') !== null) tagCount += 1;
+    if (this.get('tag5') !== null) tagCount += 1;
+    if (this.get('tag6') !== null) tagCount += 1;
+    if (tagCount === 0) return sc_static('icons/tag-off.png');
+    if (tagCount === 6) return sc_static('icons/tag-on.png');
     return sc_static('icons/tag-partial.png');
   }.property('isTagged').cacheable(),
 

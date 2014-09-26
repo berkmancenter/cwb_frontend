@@ -13,6 +13,8 @@
 CWB.Term = CWB.Resource.extend(
 /** @scope CWB.Term.prototype */ {
 
+  tagged_count: SC.Record.attr(Number, { defaultValue: 0}),
+
   project: function() {
     return this.getPath('vocabulary.project');
   }.property('vocabulary').cacheable(),
@@ -33,8 +35,4 @@ CWB.Term = CWB.Resource.extend(
       parameters: [this.get('id')]
     }));
   }.property('vocabulary'),
-
-  fileCount: function() {
-    return this.getPath('files.length');
-  }.property('files').cacheable()
 });

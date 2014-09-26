@@ -196,31 +196,8 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   contentStarIconKey: 'starIcon',
 
                   tagClick: function(evt) {
-                      var node = this.get('content');
-                      var oldTags = node.get('tagIDs');
-                      CWB.tagsController.set('content', node);
-                      CWB.statechart.sendAction('showTagPane', function(result) {
-                        CWB.tagsController.set('content', null);
-                        if (result) {
-                            // TODO hookup to file tagging endpoint when ready
-                            // node.commitRecord();
-                            CWB.tagsController.tag1 = null;
-                            CWB.tagsController.tag2 = null;
-                            CWB.tagsController.tag3 = null;
-                            CWB.tagsController.tag4 = null;
-                            CWB.tagsController.tag5 = null;
-                            CWB.tagsController.tag6 = null;
-                        }
-                        else {
-                            // node.set('tagIDs', oldTags);
-                            CWB.tagsController.tag1 = null;
-                            CWB.tagsController.tag2 = null;
-                            CWB.tagsController.tag3 = null;
-                            CWB.tagsController.tag4 = null;
-                            CWB.tagsController.tag5 = null;
-                            CWB.tagsController.tag6 = null;
-                        }
-                      });
+                      var files = [this.get('content')];
+                      CWB.filesController.startTaggingFiles(files);
                   },
 
                   starClick: function(evt) {
@@ -233,31 +210,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedSet = CWB.filesController.get('selection');
                   var selectedFile = selectedSet.firstObject();
                   if (selectedFile) {
-                      // CWB.statechart.sendAction('showTagPane');
-                      // return YES;
-                      CWB.tagsController.set('content', selectedFile);
-                      CWB.statechart.sendAction('showTagPane', function(result) {
-                        CWB.tagsController.set('content', null);
-                        if (result) {
-                            // TODO hookup to file tagging endpoint when ready
-                            // selectedFile.commitRecord();
-                            CWB.tagsController.tag1 = null;
-                            CWB.tagsController.tag2 = null;
-                            CWB.tagsController.tag3 = null;
-                            CWB.tagsController.tag4 = null;
-                            CWB.tagsController.tag5 = null;
-                            CWB.tagsController.tag6 = null;
-                        }
-                        else {
-                            // selectedFile.set('tagIDs', oldTags);
-                            CWB.tagsController.tag1 = null;
-                            CWB.tagsController.tag2 = null;
-                            CWB.tagsController.tag3 = null;
-                            CWB.tagsController.tag4 = null;
-                            CWB.tagsController.tag5 = null;
-                            CWB.tagsController.tag6 = null;
-                        }
-                      });
+                      CWB.filesController.startTaggingFiles([selectedFile]);
                   }
                   return NO;
               },
@@ -312,36 +265,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               title: "Add Tags",
               action: function(unused) {
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  var newFile = CWB.store.createRecord(CWB.File, {});
-                  CWB.tagsController.set('content', newFile);
-                  // CWB.statechart.sendAction('showTagPane', function(result) {
-                  //     var tags = newFile.get('tagIDs');
-                  //     CWB.tagsController.set('content', null);
-                  //     newFile.destroy();
-                  //     selectedNodes.setEach('tagIDs', tags);
-                  // });
-                  CWB.statechart.sendAction('showTagPane', function(result) {
-                    CWB.tagsController.set('content', null);
-                    if (result) {
-                        // TODO hookup to file tagging endpoint when ready
-                        // selectedFile.commitRecord();
-                        CWB.tagsController.tag1 = null;
-                        CWB.tagsController.tag2 = null;
-                        CWB.tagsController.tag3 = null;
-                        CWB.tagsController.tag4 = null;
-                        CWB.tagsController.tag5 = null;
-                        CWB.tagsController.tag6 = null;
-                    }
-                    else {
-                        // selectedFile.set('tagIDs', oldTags);
-                        CWB.tagsController.tag1 = null;
-                        CWB.tagsController.tag2 = null;
-                        CWB.tagsController.tag3 = null;
-                        CWB.tagsController.tag4 = null;
-                        CWB.tagsController.tag5 = null;
-                        CWB.tagsController.tag6 = null;
-                    }
-                  });
+                  CWB.filesController.startTaggingFiles(selectedNodes);
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           }),
@@ -382,7 +306,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
-              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue modifiedLabel modifiedValue dummyTF pathLabel pathValue pathCopyButton'.w(),
+              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue dummyTF pathLabel pathValue pathCopyButton'.w(),
 
               typeLabel: SC.LabelView.design({
                   layout: { top: 20, left: 20, width: 80, height: 18 },
@@ -414,14 +338,24 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.created')
               }),
 
-              modifiedLabel: SC.LabelView.design({
+              lastModifiedLabel: SC.LabelView.design({
                   layout: { top: 102, left: 20, width: 80, height: 18 },
-                  value: 'Date Modified:'
+                  value: 'Last Modified:'
               }),
 
-              modifiedValue: SC.LabelView.design({
+              lastModifiedValue: SC.LabelView.design({
                   layout: { top: 102, left: 120, width: 120, height: 18 },
-                  valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.modified')
+                  valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.last_tag_change')
+              }),
+
+              modifiedByLabel: SC.LabelView.design({
+                  layout: { top: 126, left: 20, width: 80, height: 18 },
+                  value: 'Modified by:'
+              }),
+
+              modifiedByValue: SC.LabelView.design({
+                  layout: { top: 126, left: 120, width: 120, height: 18 },
+                  valueBinding: 'CWB.fileController.last_modified_by'
               }),
 
               dummyTF: SC.TextFieldView.design({
@@ -429,13 +363,14 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               }),
 
               pathLabel: SC.LabelView.design({
-                  layout: { top: 126, left: 20, width: 80, height: 18 },
+                  layout: { top: 150, left: 20, width: 80, height: 18 },
                   value: 'Path:'
               }),
 
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
-                  layout: { top: 126, left: 120, width: 120, height: 18 },
+                  classNames: ['break-word-wrap'],
+                  layout: { top: 150, left: 120, width: 120, height: 72 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
                   //isTextArea: YES,
@@ -462,7 +397,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
           }),
 
           previewImage: SC.ImageView.extend({
-              layout: { left: 20, top: 180, bottom: 20, right: 20 }, // TODO
+              layout: { left: 20, top: 254, bottom: 20, right: 20 }, // TODO
               scale: SC.BEST_FIT
               // valueBinding: 'CWB.fileController.previewURL'
           })

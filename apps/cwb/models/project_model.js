@@ -14,21 +14,19 @@ CWB.Project = CWB.Resource.extend(
 
         vocabularies: SC.Record.toMany('CWB.Vocabulary', { isMaster: YES, inverse: 'project' }),
 
-        nodes: SC.Record.toMany('CWB.Node', { isMaster: YES, inverse: 'project' }),
-
         folders: function() {
             return CWB.store.find(SC.Query.local(CWB.Folder, {
                 conditions: 'project.id = %@',
                 parameters: [this.get('id')]
             }));
-        }.property('nodes').cacheable(),
+        }.property('folders').cacheable(),
 
         files: function() {
             return CWB.store.find(SC.Query.local(CWB.File, {
                 conditions: 'project.id = %@',
                 parameters: [this.get('id')]
             }));
-        }.property('nodes').cacheable(),
+        }.property('files').cacheable(),
 
         name: SC.Record.attr(String),
         description: SC.Record.attr(String),

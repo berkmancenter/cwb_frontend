@@ -14,8 +14,6 @@ sc_require('models/resource_model');
 CWB.Node = CWB.Resource.extend(SC.TreeItemContent,
 /** @scope CWB.Node.prototype */ {
 
-  project: SC.Record.toOne('CWB.Project', { isMaster: NO }),
-
   treeItemIsExpanded: NO,
   treeItemChildren: [],
   count: 0,

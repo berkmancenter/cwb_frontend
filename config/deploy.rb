@@ -3,7 +3,7 @@ lock '3.2.1'
 
 set :application, 'cwb-sc'
 set :repo_url, 'git@git.metabahn.net:client/cwb-sc.git'
-set :branch, :develop
+# set :branch, :develop
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -24,5 +24,5 @@ namespace :deploy do
     end
   end
 
-  after :updated, :sc_release
+  # after :updated, :sc_release
 end

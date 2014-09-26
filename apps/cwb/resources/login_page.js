@@ -5,11 +5,12 @@
 
 CWB.loginPage = SC.Page.design({
   loginPane: SC.MainPane.design({
-    layout: { width: 360, height: 155, centerX: 0, centerY: 0 },
-    classNames: ['login-pane'],
-    childViews: 'boxView'.w(),
+    classNames: ['login-page'],
+    childViews: 'boxView footer'.w(),
 
     boxView: SC.View.design({
+      classNames: ['login-box-view'],
+      layout: { width: 360, height: 155, centerX: 0, centerY: -100 },
       childViews: 'appTitle username password loginButton loadingImage errorMessage'.w(),
 
       appTitle: SC.LabelView.design({
@@ -73,6 +74,34 @@ CWB.loginPage = SC.Page.design({
         classNames: ['error-message'],
         valueBinding: 'CWB.loginController.errorMessage'
       }) // errorMessage
-    }) // boxView
-  }) // loginPane
+    }), // boxView
+
+    footer: SC.View.design({
+      classNames: ['login-footer'],
+      layout: { left: 20, right: 20, bottom: 20, height: 170 },
+      childViews: 'divider logo credits'.w(),
+
+      divider: SC.SeparatorView.design({
+        classNames: ['footer-hr'],
+        render: function (context) {
+          context.push('<hr>');
+        }
+      }),
+
+      logo: SC.ImageView.design({
+        classNames: ['footer-logo'],
+        layout: { centerX: 0, height: 46, width: 36, top: 32 },
+        value: sc_static('images/LL_mini.png'),
+      }),
+
+      credits: SC.LabelView.design({
+        classNames: ['footer-credits'],
+        layout: { top: 112, width: 940, centerX: 0 },
+        textAlign: SC.ALIGN_CENTER,
+        render: function (context) {
+          context.push("<div>Thanks to the generous support of the <a href='http://lab.library.harvard.edu/' target='_blank'>Harvard Library Lab</a>, the <a href='https://osc.hul.harvard.edu/' target='_blank'>Harvard Library Office for Scholarly Communication</a>,<br />the <a href='http://cyber.law.harvard.edu/' target='_blank'>Berkman Center for Internet & Society</a> and the <a href='http://www.arcadiafund.org.uk/' target='_blank'>Arcadia Fund</a>.</div>");
+        }
+      })
+    })
+  }), // loginPane
 }); // loginPage

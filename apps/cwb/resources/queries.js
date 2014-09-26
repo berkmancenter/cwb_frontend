@@ -8,6 +8,12 @@ sc_require('models/term_model');
 CWB.PROJECTS_QUERY =
     SC.Query.local(CWB.Project, {orderBy: 'name ASC'});
 
+CWB.FOLDERS_QUERY =
+    SC.Query.local(CWB.Folder);
+
+CWB.FILES_QUERY =
+    SC.Query.local(CWB.File);
+
 CWB.SELECTED_NODES_QUERY =
    SC.Query.local(CWB.Node, 'isSelected = YES');
 

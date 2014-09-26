@@ -3,8 +3,17 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
     termNo: 0,
 
     enterState: function() {
-        var vocabularyIndex = 0; // FIXME
-        CWB.termsController.set('vocabularyIndex', vocabularyIndex);
+        var allProjects = CWB.store.find(CWB.PROJECTS_QUERY);
+        CWB.projectsController.set('content', allProjects);
+        CWB.store.find(CWB.FOLDERS_QUERY);
+        CWB.store.find(CWB.FILES_QUERY);
+
+        CWB.projectController.set('rootFolders', []);
+        CWB.filesController.set('content', null);
+        CWB.foldersController.set('content', null);
+
+        var allAccounts = CWB.store.find(CWB.Account);
+        CWB.accountsController.set('content', allAccounts);
 
         CWB.getPath('mainPage.projectPane').append();
         CWB.routes.setRoute(''); //('projects');
@@ -60,6 +69,7 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         SC.Request.deleteUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms/" + encodeURIComponent(termID))
             .notify(this, function(response) {
                 if (SC.ok(response)) {
+                    CWB.filesController.updateTaggedFiles(termID);
                     CWB.projectController.cacheVocabulariesForSelectedProject();
                 } else {
                     SC.AlertPane.error('Sorry. We were unable to process your request.');
@@ -83,6 +93,7 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
                 SC.Request.putUrl("/projects/" + encodeURIComponent(projectID) + "/vocabularies/" + encodeURIComponent(vocabulary.id) + "/terms/" + encodeURIComponent(original.id), {'label':newLabel, 'description':newDescription})
                     .notify(this, function(response) {
                         if (SC.ok(response)) {
+                            CWB.filesController.updateTaggedFiles(original.id, response.body().id);
                             CWB.mainPage.set('tagEditPaneMessage', '');
                             CWB.mainPage.set('tagEditPaneIsVisible', NO);
                             CWB.projectController.cacheVocabulariesForSelectedProject();
