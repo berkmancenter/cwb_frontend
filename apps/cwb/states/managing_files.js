@@ -29,24 +29,26 @@ CWB.MANAGING_FILES = SC.State.extend({
   },
 
     setupclip: function() {
-        CWB.zeroclient.destroy();
-        CWB.zeroclient = new ZeroClipboard( document.getElementById("file-path-clip-button") );
-        CWB.zeroclient.on( "ready", function( readyEvent ) {
-            console.log( "ZeroClipboard SWF is ready!" );
+        var selectedFile = CWB.filesController.get('selection').firstObject();
+        if (selectedFile) {
+            CWB.zeroclient.destroy();
+            var copyBtn = document.getElementById("file-path-clip-button");
+            copyBtn.setAttribute('data-clipboard-text', selectedFile.get('path'));
+            CWB.zeroclient = new ZeroClipboard( copyBtn );
+            CWB.zeroclient.on( "ready", function( readyEvent ) {
+                CWB.zeroclient.on( "error", function( event ) {
+                    console.log("ZeroClipboard: Error: " + event.message );
+                });
 
-//            CWB.zeroclient.on( "copy", function(event) {
-//                console.log("ZeroClipboard: Copying text to clipboard: " + event.data["text/plain"] );
-//                event.clipboardData.setData('text/plain', CWB.fileController.get('path'));
-//            });
+                CWB.zeroclient.on( "aftercopy", function( event ) {
+                    console.log("ZeroClipboard: Copied text to clipboard: " + event.data["text/plain"] );
+                });
 
-            CWB.zeroclient.on( "aftercopy", function( event ) {
-                console.log("ZeroClipboard: Copied text to clipboard: " + event.data["text/plain"] );
+                CWB.zeroclient.on( "destroy", function( event ) {
+                    console.log("ZeroClipboard destroyed");
+                });
             });
-
-            CWB.zeroclient.on( "destroy", function( event ) {
-                console.log("ZeroClipboard destroyed");
-            });
-        });
+        }
     },
     
   showTagPane: function(callback) {

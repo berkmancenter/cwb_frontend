@@ -378,21 +378,19 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   //backgroundColor: '#eee'
               }),
 
+              // pathCopyButton: SC.ButtonView.design({
+              //     layout: { top: 126, left: 245, width: 18, height: 18 },
+              //     action: function() {
+              //         console.log('copying ' + CWB.fileController.get('path') + ' to clipboard');
+              //         window.prompt("Copy to clipboard: Ctrl/Cmd+C, Enter", CWB.fileController.get('path'));
+              //     }
+              // })
+
               pathCopyButton: SC.ButtonView.design({
-                  layout: { top: 126, left: 245, width: 18, height: 18 },
+                  layout: { top: 150, left: 245, width: 18, height: 18 },
                   icon: sc_static('icons/add.png'), // TODO need a proper icon
                   layerId: 'file-path-clip-button',
-                  render: function(context) {
-                    sc_super();
-                    context.setAttr({
-                       'data-clipboard-text': CWB.fileController.get('path')
-                    });
-                  },
-
-                  didAppendToDocument: function() {
-                      console.log('didAppendToDocument - pathCopyButton');
-                      CWB.statechart.sendAction('setupclip');
-                  }
+                  classNames: ['file-path-clip-button'],
               })
           }),
 
