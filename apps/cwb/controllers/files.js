@@ -196,6 +196,10 @@ CWB.filesController = SC.ArrayController.create({
             SC.Request.putUrl('/projects/' + projectID + '/tag_files', { 'ids': fileIDs, 'tags': newTagIDs })
                 .notify(this, function(response, files, oldTagIDs, oldTaggedCounts) {
                     if (SC.ok(response)) {
+                        files.forEach(function(file) {
+                          file.set('last_modified_by', CWB.loginController.get('username'));
+                          file.set('last_tag_change', SC.DateTime.create());
+                        });
                         // go ahead and recache the vocabs and terms
                         // really only need the updated tagged_counts, but also makes sure we stay current
                         CWB.projectController.cacheVocabulariesForSelectedProject();

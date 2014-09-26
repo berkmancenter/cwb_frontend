@@ -37,6 +37,8 @@ CWB.File = CWB.Node.extend(
   type: SC.Record.attr(String, { defaultValue: 'application/octet-stream' }),
   created: SC.Record.attr(SC.DateTime),
   modified: SC.Record.attr(SC.DateTime),
+  last_modified_by: SC.Record.attr(String),
+  last_tag_change: SC.Record.attr(SC.DateTime),
 
   starred: SC.Record.attr(String),
   isQueued: SC.Record.attr(Boolean, { defaultValue: NO }),

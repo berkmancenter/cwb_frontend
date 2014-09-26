@@ -306,7 +306,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
-              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue modifiedLabel modifiedValue pathLabel pathValue'.w(),
+              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue pathLabel pathValue'.w(),
 
               typeLabel: SC.LabelView.design({
                   layout: { top: 20, left: 20, width: 80, height: 18 },
@@ -338,25 +338,35 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.created')
               }),
 
-              modifiedLabel: SC.LabelView.design({
+              lastModifiedLabel: SC.LabelView.design({
                   layout: { top: 102, left: 20, width: 80, height: 18 },
-                  value: 'Date Modified:'
+                  value: 'Last Modified:'
               }),
 
-              modifiedValue: SC.LabelView.design({
+              lastModifiedValue: SC.LabelView.design({
                   layout: { top: 102, left: 120, width: 120, height: 18 },
-                  valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.modified')
+                  valueBinding: SC.Binding.dateTime('%Y-%m-%d %H:%M:%S').from('CWB.fileController.last_tag_change')
+              }),
+
+              modifiedByLabel: SC.LabelView.design({
+                  layout: { top: 126, left: 20, width: 80, height: 18 },
+                  value: 'Modified by:'
+              }),
+
+              modifiedByValue: SC.LabelView.design({
+                  layout: { top: 126, left: 120, width: 120, height: 18 },
+                  valueBinding: 'CWB.fileController.last_modified_by'
               }),
 
               pathLabel: SC.LabelView.design({
-                  layout: { top: 126, left: 20, width: 80, height: 18 },
+                  layout: { top: 150, left: 20, width: 80, height: 18 },
                   value: 'Path:'
               }),
 
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
                   classNames: ['break-word-wrap'],
-                  layout: { top: 126, left: 120, width: 120, height: 72 },
+                  layout: { top: 150, left: 120, width: 120, height: 72 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
                   //isTextArea: YES,
@@ -366,7 +376,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
           }),
 
           previewImage: SC.ImageView.extend({
-              layout: { left: 20, top: 190, bottom: 20, right: 20 }, // TODO
+              layout: { left: 20, top: 254, bottom: 20, right: 20 }, // TODO
               scale: SC.BEST_FIT
               // valueBinding: 'CWB.fileController.previewURL'
           })
