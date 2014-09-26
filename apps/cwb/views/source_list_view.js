@@ -72,11 +72,6 @@ CWB.SourceListView = SC.SourceListView.extend({
      */
     mouseDown: function(evt) {
         if (!this._isInsideElementWithClassName('sc-collection-item', evt)) {
-            if (evt.target.id === "global-zeroclipboard-flash-bridge") {
-                console.info('has file-path-clip-button class!');
-                // don't deselect
-                return YES;
-            }
             this.set('selection', null);
             return YES;
         }

@@ -71,10 +71,6 @@ CWB.filesController = SC.ArrayController.create({
     }
   }.observes('CWB.foldersController.selection'),
 
-  fileDidChange: function() {
-    CWB.statechart.sendAction('setupclip');
-  }.observes('CWB.filesController.selection'),
-
   reload: function() {
     var selectedSource = this.get('selectedSource');
     var selectedFolder = this.get('selectedFolder');

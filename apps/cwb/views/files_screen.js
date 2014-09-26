@@ -306,7 +306,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
-              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue dummyTF pathLabel pathValue pathCopyButton'.w(),
+              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue pathLabel pathValue pathCopyButton'.w(),
 
               typeLabel: SC.LabelView.design({
                   layout: { top: 20, left: 20, width: 80, height: 18 },
@@ -358,10 +358,6 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   valueBinding: 'CWB.fileController.last_modified_by'
               }),
 
-              dummyTF: SC.TextFieldView.design({
-                  layout: { top: 102, left: 245, width: 20, height: 18 }
-              }),
-
               pathLabel: SC.LabelView.design({
                   layout: { top: 150, left: 20, width: 80, height: 18 },
                   value: 'Path:'
@@ -378,19 +374,13 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   //backgroundColor: '#eee'
               }),
 
-              // pathCopyButton: SC.ButtonView.design({
-              //     layout: { top: 126, left: 245, width: 18, height: 18 },
-              //     action: function() {
-              //         console.log('copying ' + CWB.fileController.get('path') + ' to clipboard');
-              //         window.prompt("Copy to clipboard: Ctrl/Cmd+C, Enter", CWB.fileController.get('path'));
-              //     }
-              // })
-
               pathCopyButton: SC.ButtonView.design({
-                  layout: { top: 150, left: 245, width: 18, height: 18 },
-                  icon: sc_static('icons/add.png'), // TODO need a proper icon
-                  layerId: 'file-path-clip-button',
-                  classNames: ['file-path-clip-button'],
+                  layout: { top: 170, left: 20, width: 80, height: 23 },
+                  title: 'Copy Path',
+                  action: function() {
+                      var modifier = (navigator.platform.toUpperCase().indexOf('MAC') >= 0) ? 'Cmd' : 'Ctrl';
+                      window.prompt("Copy to clipboard: " + modifier + "+C, Enter", CWB.fileController.get('path'));
+                  }
               })
           }),
 
