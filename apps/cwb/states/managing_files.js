@@ -1,8 +1,5 @@
 CWB.MANAGING_FILES = SC.State.extend({
   enterState: function() {
-    var vocabularyIndex = 0; // FIXME
-    CWB.termsController.set('vocabularyIndex', vocabularyIndex);
-
     CWB.projectController.fetchRootFolders();
     var projectID = CWB.projectController.get('id');
 

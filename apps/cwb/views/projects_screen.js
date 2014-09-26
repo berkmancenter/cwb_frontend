@@ -5,7 +5,7 @@ sc_require('views/source_list_view');
 CWB.TermSourceListView = CWB.SourceListView.extend({
     exampleView: SC.ListItemView.extend({
         hasContentIcon: YES,
-        contentUnreadCountKey: 'fileCount',
+        contentUnreadCountKey: 'tagged_count',
         contentValueKey: 'label',
         contentIconKey: 'icon',
         renderLabel: function(context, label) {

@@ -3,9 +3,6 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
     termNo: 0,
 
     enterState: function() {
-        var vocabularyIndex = 0; // FIXME
-        CWB.termsController.set('vocabularyIndex', vocabularyIndex);
-
         var allProjects = CWB.store.find(CWB.PROJECTS_QUERY);
         CWB.projectsController.set('content', allProjects);
         CWB.store.find(CWB.FOLDERS_QUERY);

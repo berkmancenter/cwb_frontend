@@ -195,7 +195,11 @@ CWB.filesController = SC.ArrayController.create({
             // send tagging request to backend
             SC.Request.putUrl('/projects/' + projectID + '/tag_files', { 'ids': fileIDs, 'tags': newTagIDs })
                 .notify(this, function(response, files, oldTagIDs, oldTaggedCounts) {
-                    if (!SC.ok(response)) {
+                    if (SC.ok(response)) {
+                        // go ahead and recache the vocabs and terms
+                        // really only need the updated tagged_counts, but also makes sure we stay current
+                        CWB.projectController.cacheVocabulariesForSelectedProject();
+                    } else {
                         SC.AlertPane.error('Sorry. We were unable to process your tag request.');
                         // something went wrong, set files/folders back to original state
                         files.forEach(function(file, index) {

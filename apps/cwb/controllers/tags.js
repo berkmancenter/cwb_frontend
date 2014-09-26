@@ -15,15 +15,34 @@ CWB.tagsController = SC.ObjectController.create({
 
   findTagIndex: function(tagId) {
     for(var i = 0; i <= 5; i++) {
-      var result = $.grep(CWB.TERMS_IN_VOCABULARY[i], function(term) {
-        return term.id === tagId;
-      });
+      var vocab = CWB.TERMS_IN_VOCABULARY[i];
+      if (vocab) {
+        var result = $.grep(vocab, function(term) {
+          return term.id === tagId;
+        });
 
-      if (result.length > 0) {
-        return i;
+        if (result.length > 0) {
+          return i;
+        }
       }
     }
     return -1;
+  },
+
+  findTag: function(tagId) {
+    for(var i = 0; i <= 5; i++) {
+      var vocab = CWB.TERMS_IN_VOCABULARY[i];
+      if (vocab) {
+        var result = $.grep(vocab, function(t) {
+          return t.id === tagId;
+        });
+
+        if (result.length > 0) {
+          return result[0];
+        }
+      }
+    }
+    return;
   },
 
   findCommonTags: function (tagArrays) {
