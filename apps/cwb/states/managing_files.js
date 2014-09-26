@@ -6,7 +6,6 @@ CWB.MANAGING_FILES = SC.State.extend({
     CWB.getPath('mainPage.mainPane').append();
     CWB.routes.setRoute('files');
 //    CWB.routes.setRoute("project/%@/files".fmt(encodeURIComponent(projectID)));
-      
   },
 
   exitState: function() {

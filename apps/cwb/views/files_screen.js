@@ -306,7 +306,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
-              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue pathLabel pathValue'.w(),
+              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue pathLabel pathValue pathCopyButton'.w(),
 
               typeLabel: SC.LabelView.design({
                   layout: { top: 20, left: 20, width: 80, height: 18 },
@@ -372,6 +372,15 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   //isTextArea: YES,
                   //shouldRenderBorder: NO,
                   //backgroundColor: '#eee'
+              }),
+
+              pathCopyButton: SC.ButtonView.design({
+                  layout: { top: 170, left: 20, width: 80, height: 23 },
+                  title: 'Copy Path',
+                  action: function() {
+                      var modifier = (navigator.platform.toUpperCase().indexOf('MAC') >= 0) ? 'Cmd' : 'Ctrl';
+                      window.prompt("Copy to clipboard: " + modifier + "+C, Enter", CWB.fileController.get('path'));
+                  }
               })
           }),
 
