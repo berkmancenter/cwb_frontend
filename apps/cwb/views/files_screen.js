@@ -52,13 +52,15 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
     childViews: ['c1', 'c2', 'c3'],
 
     c1: CWB.SourceView.extend(SC.SplitChild, {
-      size: 350
+      classNames: ['file-source-pane'],
+      size: 350,
+      minimumSize: 260,
       //contentBinding: 'CWB.foldersController.arrangedObjects',
       //selectionBinding: 'CWB.foldersController.selection'
     }),
 
     c2: SC.WorkspaceView.extend(SC.SplitChild, {
-      size: 840,
+      classNames: ['file-list-pane'],
       topToolbar: SC.ToolbarView.extend({
           anchorLocation: SC.ANCHOR_TOP,
           childViews: 'selectionSelect sortSelect filterSelect searchField'.w(),
@@ -287,6 +289,9 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       }),
 
     c3: SC.WorkspaceView.extend(SC.SplitChild, {
+      classNames: ['file-details-pane'],
+      size: 250,
+      minimumSize: 250,
       topToolbar: SC.ToolbarView.extend({
           childViews: ['titleLabel'],
 

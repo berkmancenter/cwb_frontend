@@ -166,15 +166,7 @@ CWB.FileListItemView = SC.ListItemView.extend({
     if (this.get('escapeHTML')) {
       value = SC.RenderContext.escapeHTML(value);
     }
-    this.renderLabel(working, value);
-
-    // handle size:
-    if (this.getDelegateProperty('hasContentSize', del)) {
-      key = this.getDelegateProperty('contentSizeKey', del);
-      value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
-      this.renderSize(working, value);
-      classArray.push('has-size');
-    }
+    this.renderSpan(working, value, 'name file-details');
 
     // handle type:
     if (this.getDelegateProperty('hasContentType', del)) {
@@ -182,6 +174,14 @@ CWB.FileListItemView = SC.ListItemView.extend({
       value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
       this.renderType(working, value);
       classArray.push('has-type');
+    }
+
+    // handle size:
+    if (this.getDelegateProperty('hasContentSize', del)) {
+      key = this.getDelegateProperty('contentSizeKey', del);
+      value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
+      this.renderSize(working, value);
+      classArray.push('has-size');
     }
 
     // handle tag icon:
@@ -237,18 +237,18 @@ CWB.FileListItemView = SC.ListItemView.extend({
       var sizePowers = ['KB', 'MB', 'GB', 'TB', 'PB'];
       size /= Math.pow(1024, sizePower);
       size = size.toFixed(1) + ' ' + sizePowers[sizePower - 1];
-      this.renderSpan(context, size, 'size');
+      this.renderSpan(context, size, 'size file-details');
     }
     else if (size > 0) {
-      this.renderSpan(context, '1 KB', 'size');
+      this.renderSpan(context, '1 KB', 'size file-details');
     }
     else {
-      this.renderSpan(context, '0 KB', 'size');
+      this.renderSpan(context, '0 KB', 'size file-details');
     }
   },
 
   renderType: function(context, type) {
-    this.renderSpan(context, type, 'type');
+    this.renderSpan(context, type, 'type file-details');
   },
 
   renderSpan: function(context, value, className) {
