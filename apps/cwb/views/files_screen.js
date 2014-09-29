@@ -307,7 +307,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       contentView: SC.View.extend({
           isVisible: NO,
           isVisibleBinding: SC.Binding.oneWay('CWB.fileController.id').bool(),
-          childViews: 'infoBox previewImage'.w(),
+          childViews: 'infoBox previewImage previewPlaceHolder'.w(),
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
@@ -390,9 +390,24 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
           }),
 
           previewImage: SC.ImageView.extend({
-              layout: { left: 20, top: 254, bottom: 20, right: 20 }, // TODO
-              scale: SC.BEST_FIT
-              // valueBinding: 'CWB.fileController.previewURL'
+              classNames: ['preview-image'],
+              layout: { left: 20, top: 254, bottom: 20, right: 20, zIndex: 10 },
+              scale: SC.BEST_FIT,
+              valueBinding: 'CWB.fileController.previewURL',
+              didLoad: function(image) {
+                CWB.fileController.set('previewPlaceHolder', '');
+                return sc_super();
+              },
+              didError: function(error) {
+                CWB.fileController.set('previewPlaceHolder', 'Preview not available');
+              }
+          }),
+
+          previewPlaceHolder: SC.LabelView.design({
+              classNames: ['preview-placeholder'],
+              layout: { left: 20, top: 254, right: 20, height:18, zIndex: 9 },
+              textAlign: SC.ALIGN_CENTER,
+              valueBinding: 'CWB.fileController.previewPlaceHolder'
           })
       })
       })

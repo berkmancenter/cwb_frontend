@@ -155,9 +155,10 @@ CWB.File = CWB.Node.extend(
   }.property('isStarred').cacheable(),
 
   previewURL: function() {
-    //return 'http://showcase.sproutcore.com/static/showcase/en/0dbf2f1989cd4b4345e346425fedf590c45f9453/source/resources/images/sproutcore-logo.png'; // TODO
-    return '/static/cwb/en/current/source/resources/previews/' + this.get('path'); // FIXME
+    return '/projects/' + encodeURIComponent(CWB.projectController.get('id')) + '/files/' + encodeURIComponent(this.get('id')) + '/thumb';
   }.property('folder', 'name').cacheable(),
+
+  previewPlaceHolder: 'Loading preview...',
 
   isSelectedDidChange: function() {
     CWB.SELECTED_FILES.reload();
