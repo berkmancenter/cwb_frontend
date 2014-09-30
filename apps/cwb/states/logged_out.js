@@ -1,5 +1,7 @@
 CWB.LOGGED_OUT = SC.State.extend({
   enterState: function() {
+    CWB.loginController.set('username', '');
+    CWB.loginController.set('password', '');
     CWB.getPath('loginPage.loginPane').append();
     CWB.getPath('loginPage.loginPane.boxView.username.field').becomeFirstResponder();
     CWB.routes.setRoute('login');
