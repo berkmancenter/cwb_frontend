@@ -76,9 +76,12 @@ CWB.projectsController = SC.ArrayController.create({
 		savingProjectRecord: null,
 
 		savingProjectSuccess: function (project) {
+            var project_name = project.get('name');
+            project.destroy();
 			CWB.mainPage.set('createProjectPaneIsVisible', NO);
-			CWB.projectsController.selectObject(this.savingProjectRecord);
+            CWB.projectsController.set('selection', null);
 			CWB.projectsController.resetNewProject();
+            SC.AlertPane.info("Your project (" + project_name+ ") is being created. You'll receive an email at " + CWB.loginController.email + " once it is ready.");
 		},
 
 		savingProjectError: function(error) {
@@ -93,7 +96,7 @@ CWB.projectsController = SC.ArrayController.create({
 			if (project !== null) {
 				var status = project.get("status");
 				if (status === SC.Record.READY_CLEAN) {
-					this.savingProjectSuccess();
+					this.savingProjectSuccess(project);
 				} else if (project.get('isError')) {
 					this.savingProjectError(project.get('errorObject'));
 				}
