@@ -319,7 +319,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               }),
 
               typeValue: SC.LabelView.design({
-                  layout: { top: 20, left: 120, width: 120 },
+                  layout: { top: 20, left: 120, width: 120, height: 36 },
                   valueBinding: 'CWB.fileController.type'
               }),
 
