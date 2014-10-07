@@ -192,7 +192,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   contentCheckboxKey: 'isSelected',
                   contentIconKey: 'typeIcon',
                   contentValueKey: 'name',
-                  contentSizeKey: 'size',
+                  contentSizeKey: 'sizeString',
                   contentTypeKey: 'type',
                   contentTagIconKey: 'tagIcon',
                   contentStarIconKey: 'starIcon',
@@ -330,7 +330,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
               sizeValue: SC.LabelView.design({
                   layout: { top: 54, left: 120, width: 120, height: 18 },
-                  valueBinding: SC.Binding.number('bytes').from('CWB.fileController.size')
+                  valueBinding: 'CWB.fileController.sizeString'
               }),
 
               createdLabel: SC.LabelView.design({

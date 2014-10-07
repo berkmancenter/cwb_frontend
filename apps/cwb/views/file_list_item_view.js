@@ -24,7 +24,7 @@ CWB.FileListItemView = SC.ListItemView.extend({
     contentCheckboxKey: 'checkbox',
     contentIconKey:  'icon',
     contentValueKey: 'title',
-    contentSizeKey: 'size',
+    contentSizeKey: 'sizeString',
     contentTypeKey: 'type',
     contentTagIconKey: 'tagIcon',
     contentStarIconKey: 'starIcon',
@@ -180,7 +180,7 @@ CWB.FileListItemView = SC.ListItemView.extend({
     if (this.getDelegateProperty('hasContentSize', del)) {
       key = this.getDelegateProperty('contentSizeKey', del);
       value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
-      this.renderSize(working, value);
+      this.renderSpan(working, value, 'size file-details');
       classArray.push('has-size');
     }
 
@@ -229,22 +229,6 @@ CWB.FileListItemView = SC.ListItemView.extend({
     }
     context.addClass(classArray);
     context = working.end();
-  },
-
-  renderSize: function(context, size) {
-    if (size && size > 1024) {
-      var sizePower = Math.floor(Math.log(size) / Math.log(1024));
-      var sizePowers = ['KB', 'MB', 'GB', 'TB', 'PB'];
-      size /= Math.pow(1024, sizePower);
-      size = size.toFixed(1) + ' ' + sizePowers[sizePower - 1];
-      this.renderSpan(context, size, 'size file-details');
-    }
-    else if (size > 0) {
-      this.renderSpan(context, '1 KB', 'size file-details');
-    }
-    else {
-      this.renderSpan(context, '0 KB', 'size file-details');
-    }
   },
 
   renderType: function(context, type) {

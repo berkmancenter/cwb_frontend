@@ -154,6 +154,23 @@ CWB.File = CWB.Node.extend(
     return this.isStarred() ? sc_static('icons/star-on.png') : sc_static('icons/star-off.png');
   }.property('isStarred').cacheable(),
 
+  sizeString: function() {
+    var size = this.get('size');
+    if (size && size > 1024) {
+      var sizePower = Math.floor(Math.log(size) / Math.log(1024));
+      var sizePowers = ['KB', 'MB', 'GB', 'TB', 'PB'];
+      size /= Math.pow(1024, sizePower);
+      size = size.toFixed(1) + ' ' + sizePowers[sizePower - 1];
+    }
+    else if (size > 0) {
+      size = '1 KB';
+    }
+    else {
+      size = '0 KB';
+    }
+    return size;
+  }.property('size').cacheable(),
+
   previewURL: function() {
     return '/projects/' + encodeURIComponent(CWB.projectController.get('id')) + '/files/' + encodeURIComponent(this.get('id')) + '/thumb';
   }.property('folder', 'name').cacheable(),
