@@ -119,7 +119,7 @@ CWB.mainPage = SC.Page.design({
     }.observes('tagEditPaneIsVisible'),
 
     tagPane: SC.PanelPane.design({
-        layout: { width: 760, height: 480, centerX: 0, centerY: 0 },
+        layout: { width: 940, height: 480, centerX: 0, centerY: 0 },
 
         contentView: SC.View.extend({
             childViews: 'tagGroups saveButton cancelButton'.w(),
@@ -129,7 +129,7 @@ CWB.mainPage = SC.Page.design({
                 childViews: 'a b c d e f'.w(),
 
                 a: SC.WorkspaceView.extend({
-                    layout: { width: 120, left: 20 },
+                    layout: { width: 150, left: 20 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
@@ -158,7 +158,7 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 b: SC.WorkspaceView.extend({
-                    layout: { width: 120, left: 140 },
+                    layout: { width: 150, left: 170 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
@@ -182,7 +182,7 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 c: SC.WorkspaceView.extend({
-                    layout: { width: 120, left: 260 },
+                    layout: { width: 150, left: 320 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
@@ -206,7 +206,7 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 d: SC.WorkspaceView.extend({
-                    layout: { width: 120, left: 380 },
+                    layout: { width: 150, left: 470 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
@@ -230,7 +230,7 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 e: SC.WorkspaceView.extend({
-                    layout: { width: 120, left: 500 },
+                    layout: { width: 150, left: 620 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
@@ -254,7 +254,7 @@ CWB.mainPage = SC.Page.design({
                 }),
 
                 f: SC.WorkspaceView.extend({
-                    layout: { width: 120, left: 620 },
+                    layout: { width: 150, left: 770 },
                     topToolbar: SC.ToolbarView.extend({
                         layout: { height: 50 },
                         childViews: ['title'],
