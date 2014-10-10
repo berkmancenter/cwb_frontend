@@ -143,12 +143,13 @@ CWB.mainPage = SC.Page.design({
                     contentView: SC.SegmentedView.extend({
                         layoutDirection: SC.LAYOUT_VERTICAL,
                         allowsEmptySelection: YES,
+                        allowsMultipleSelection: YES,
                         itemValueKey: 'id',
                         itemTitleKey: 'label',
                         //items: CWB.TERMS_IN_VOCABULARY[1],
                         itemsBinding: 'CWB.termsController.content1',
                         //contentValueKey: 'id',
-                        valueBinding: 'CWB.tagsController.tag1',
+                        valueBinding: 'CWB.tagsController.tagSet1',
                         segmentViewClass: SC.SegmentView.extend({
                             toolTip: function() {
                                 return ''; // TODO
@@ -172,12 +173,13 @@ CWB.mainPage = SC.Page.design({
                     contentView: SC.SegmentedView.extend({
                         layoutDirection: SC.LAYOUT_VERTICAL,
                         allowsEmptySelection: YES,
+                        allowsMultipleSelection: YES,
                         itemValueKey: 'id',
                         itemTitleKey: 'label',
                         //items: CWB.TERMS_IN_VOCABULARY[2],
                         itemsBinding: 'CWB.termsController.content2',
                         //contentValueKey: 'id',
-                        valueBinding: 'CWB.tagsController.tag2'
+                        valueBinding: 'CWB.tagsController.tagSet2'
                     })
                 }),
 
@@ -196,12 +198,13 @@ CWB.mainPage = SC.Page.design({
                     contentView: SC.SegmentedView.extend({
                         layoutDirection: SC.LAYOUT_VERTICAL,
                         allowsEmptySelection: YES,
+                        allowsMultipleSelection: YES,
                         itemValueKey: 'id',
                         itemTitleKey: 'label',
                         //items: CWB.TERMS_IN_VOCABULARY[3],
                         itemsBinding: 'CWB.termsController.content3',
                         //contentValueKey: 'id',
-                        valueBinding: 'CWB.tagsController.tag3'
+                        valueBinding: 'CWB.tagsController.tagSet3'
                     })
                 }),
 
@@ -220,12 +223,13 @@ CWB.mainPage = SC.Page.design({
                     contentView: SC.SegmentedView.extend({
                         layoutDirection: SC.LAYOUT_VERTICAL,
                         allowsEmptySelection: YES,
+                        allowsMultipleSelection: YES,
                         itemValueKey: 'id',
                         itemTitleKey: 'label',
                         //items: CWB.TERMS_IN_VOCABULARY[4],
                         itemsBinding: 'CWB.termsController.content4',
                         //contentValueKey: 'id',
-                        valueBinding: 'CWB.tagsController.tag4'
+                        valueBinding: 'CWB.tagsController.tagSet4'
                     })
                 }),
 
@@ -244,12 +248,13 @@ CWB.mainPage = SC.Page.design({
                     contentView: SC.SegmentedView.extend({
                         layoutDirection: SC.LAYOUT_VERTICAL,
                         allowsEmptySelection: YES,
+                        allowsMultipleSelection: YES,
                         itemValueKey: 'id',
                         itemTitleKey: 'label',
                         //items: CWB.TERMS_IN_VOCABULARY[5],
                         itemsBinding: 'CWB.termsController.content5',
                         //contentValueKey: 'id',
-                        valueBinding: 'CWB.tagsController.tag5'
+                        valueBinding: 'CWB.tagsController.tagSet5'
                     })
                 }),
 
@@ -268,12 +273,13 @@ CWB.mainPage = SC.Page.design({
                     contentView: SC.SegmentedView.extend({
                         layoutDirection: SC.LAYOUT_VERTICAL,
                         allowsEmptySelection: YES,
+                        allowsMultipleSelection: YES,
                         itemValueKey: 'id',
                         itemTitleKey: 'label',
                         //items: CWB.TERMS_IN_VOCABULARY[6],
                         itemsBinding: 'CWB.termsController.content6',
                         //contentValueKey: 'id',
-                        valueBinding: 'CWB.tagsController.tag6'
+                        valueBinding: 'CWB.tagsController.tagSet6'
                     })
                 })
             }),

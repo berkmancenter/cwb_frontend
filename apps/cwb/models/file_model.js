@@ -17,20 +17,12 @@ CWB.File = CWB.Node.extend(
   project: SC.Record.toOne('CWB.Project', { isMaster: NO, inverse: 'files' }),
   folder: SC.Record.toOne('CWB.Folder', { isMaster: YES, inverse: 'files' }),
 
-  tag1: SC.Record.attr(String, { defaultValue: null }),
-  tag2: SC.Record.attr(String, { defaultValue: null }),
-  tag3: SC.Record.attr(String, { defaultValue: null }),
-  tag4: SC.Record.attr(String, { defaultValue: null }),
-  tag5: SC.Record.attr(String, { defaultValue: null }),
-  tag6: SC.Record.attr(String, { defaultValue: null }),
-/*
-  tag1: SC.Record.toOne('CWB.Term', { isMaster: NO }),
-  tag2: SC.Record.toOne('CWB.Term', { isMaster: NO }),
-  tag3: SC.Record.toOne('CWB.Term', { isMaster: NO }),
-  tag4: SC.Record.toOne('CWB.Term', { isMaster: NO }),
-  tag5: SC.Record.toOne('CWB.Term', { isMaster: NO }),
-  tag6: SC.Record.toOne('CWB.Term', { isMaster: NO }),
-*/
+  tagSet1: SC.Record.attr(Array, { defaultValue: [] }),
+  tagSet2: SC.Record.attr(Array, { defaultValue: [] }),
+  tagSet3: SC.Record.attr(Array, { defaultValue: [] }),
+  tagSet4: SC.Record.attr(Array, { defaultValue: [] }),
+  tagSet5: SC.Record.attr(Array, { defaultValue: [] }),
+  tagSet6: SC.Record.attr(Array, { defaultValue: [] }),
 
   name: SC.Record.attr(String),
   size: SC.Record.attr(Number, { defaultValue: 0 }),
@@ -78,27 +70,27 @@ CWB.File = CWB.Node.extend(
   }.observes('status'),
 
   isTagged: function() {
-    if (this.get('tag1') !== null) return YES;
-    if (this.get('tag2') !== null) return YES;
-    if (this.get('tag3') !== null) return YES;
-    if (this.get('tag4') !== null) return YES;
-    if (this.get('tag5') !== null) return YES;
-    if (this.get('tag6') !== null) return YES;
+    if (this.get('tagSet1').length > 0 ) return YES;
+    if (this.get('tagSet2').length > 0 ) return YES;
+    if (this.get('tagSet3').length > 0 ) return YES;
+    if (this.get('tagSet4').length > 0 ) return YES;
+    if (this.get('tagSet5').length > 0 ) return YES;
+    if (this.get('tagSet6').length > 0 ) return YES;
     return NO;
-  }.property('tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6').cacheable(),
+  }.property('tagSet1', 'tagSet2', 'tagSet3', 'tagSet4', 'tagSet5', 'tagSet6').cacheable(),
 
   tagIDs: function(key, value) {
     if (value !== undefined) {
-      this.set('tag1', value[0]);
-      this.set('tag2', value[1]);
-      this.set('tag3', value[2]);
-      this.set('tag4', value[3]);
-      this.set('tag5', value[4]);
-      this.set('tag6', value[5]);
+      this.set('tagSet1', value[0] || []);
+      this.set('tagSet2', value[1] || []);
+      this.set('tagSet3', value[2] || []);
+      this.set('tagSet4', value[3] || []);
+      this.set('tagSet5', value[4] || []);
+      this.set('tagSet6', value[5] || []);
     }
-    return [this.get('tag1'), this.get('tag2'), this.get('tag3'),
-            this.get('tag4'), this.get('tag5'), this.get('tag6')];
-  }.property('tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6').cacheable(),
+    return [this.get('tagSet1'), this.get('tagSet2'), this.get('tagSet3'),
+            this.get('tagSet4'), this.get('tagSet5'), this.get('tagSet6')];
+  }.property('tagSet1', 'tagSet2', 'tagSet3', 'tagSet4', 'tagSet5', 'tagSet6').cacheable(),
 
   path: function() {
     return this.getPath('folder.path') + '/' + this.get('name');
@@ -139,12 +131,12 @@ CWB.File = CWB.Node.extend(
 
   tagIcon: function() {
     var tagCount = 0;
-    if (this.get('tag1') !== null) tagCount += 1;
-    if (this.get('tag2') !== null) tagCount += 1;
-    if (this.get('tag3') !== null) tagCount += 1;
-    if (this.get('tag4') !== null) tagCount += 1;
-    if (this.get('tag5') !== null) tagCount += 1;
-    if (this.get('tag6') !== null) tagCount += 1;
+    if (this.get('tagSet1').length > 0) tagCount += 1;
+    if (this.get('tagSet2').length > 0) tagCount += 1;
+    if (this.get('tagSet3').length > 0) tagCount += 1;
+    if (this.get('tagSet4').length > 0) tagCount += 1;
+    if (this.get('tagSet5').length > 0) tagCount += 1;
+    if (this.get('tagSet6').length > 0) tagCount += 1;
     if (tagCount === 0) return sc_static('icons/tag-off.png');
     if (tagCount === 6) return sc_static('icons/tag-on.png');
     return sc_static('icons/tag-partial.png');
