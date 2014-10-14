@@ -227,8 +227,14 @@ CWB.filesController = SC.ArrayController.create({
 
       affectedFiles.toArray().forEach(function(file) {
           var tagIds = file.get('tagIDs');
-          var index = tagIds.indexOf(old_id);
-          tagIds[index] = new_id || null;
+          for(var i = 0, tagSet; tagSet = tagIds[i]; i++) {
+            var index = tagSet.indexOf(old_id);
+            if (index >= 0) {
+              tagSet[index] = new_id || null;
+              break;
+            }
+          }
+
           file.set('tagIDs', tagIds);
       });
   }
