@@ -1,14 +1,62 @@
 sc_require('core');
 
-CWB.tagsController = SC.ObjectController.create({
+CWB.tagsController = SC.ArrayController.create({
   content: null,
+  allowsMultipleSelection: YES,
+
+  tagSet1: [],
+  tagSet2: [],
+  tagSet3: [],
+  tagSet4: [],
+  tagSet5: [],
+  tagSet6: [],
+
+  contentDidChange: function() {
+    var content = this.get('content');
+    if (!!content) {
+      this.set('tagSet1', content[0] || []);
+      this.set('tagSet2', content[1] || []);
+      this.set('tagSet3', content[2] || []);
+      this.set('tagSet4', content[3] || []);
+      this.set('tagSet5', content[4] || []);
+      this.set('tagSet6', content[5] || []);
+    } else {
+      this.set('tagSet1', []);
+      this.set('tagSet2', []);
+      this.set('tagSet3', []);
+      this.set('tagSet4', []);
+      this.set('tagSet5', []);
+      this.set('tagSet6', []);
+    }
+  }.observes('content'),
+
+  getTagSets: function() {
+    return [
+      this.get('tagSet1'),
+      this.get('tagSet2'),
+      this.get('tagSet3'),
+      this.get('tagSet4'),
+      this.get('tagSet5'),
+      this.get('tagSet6')
+    ];
+  },
+
+  isTagged: function() {
+    if (this.get('tagSet1').length > 0 ) return YES;
+    if (this.get('tagSet2').length > 0 ) return YES;
+    if (this.get('tagSet3').length > 0 ) return YES;
+    if (this.get('tagSet4').length > 0 ) return YES;
+    if (this.get('tagSet5').length > 0 ) return YES;
+    if (this.get('tagSet6').length > 0 ) return YES;
+    return NO;
+  },
 
   setupTagVocabArray: function(tagIds) {
     var that = this;
-    var tagArray = [null, null, null, null, null, null];
+    var tagArray = [[], [], [], [], [], []];
     tagIds.forEach(function (tagId) {
       var index = that.findTagIndex(tagId);
-      if (index >= 0 && index <= 5) tagArray[index] = tagId;
+      if (index >= 0 && index <= 5) tagArray[index].push(tagId);
     });
     return tagArray;
   },
@@ -45,27 +93,32 @@ CWB.tagsController = SC.ObjectController.create({
     return;
   },
 
-  findCommonTags: function (tagArrays) {
+  findCommonTags: function (filesArray) {
     var common = [];
     var cntObj = {};
-    var array, item, cnt;
-    // for each array passed as an argument to the function
-    for (var i = 0; i < tagArrays.length; i++) {
-        array = tagArrays[i];
-        // for each element in the array
-        for (var j = 0; j < array.length; j++) {
-            item = "-" + array[j];
-            cnt = cntObj[item] || 0;
-            // if cnt is exactly the number of previous arrays, 
-            // then increment by one so we count only one per array
-            if (cnt == i) {
-                cntObj[item] = cnt + 1;
+    var vocabsArray, tagsArray, item, cnt;
+    // for each file
+    for (var i = 0; i < filesArray.length; i++) {
+        vocabsArray = filesArray[i];
+        // for each vocab of the current file
+        for (var j = 0; j < vocabsArray.length; j++) {
+            tagsArray = vocabsArray[j];
+            // for each tag within the vocab
+            for(var k = 0; k < tagsArray.length; k++) {
+              item = "-" + tagsArray[k];
+              cnt = cntObj[item] || 0;
+              // if cnt is exactly the number of files,
+              // then increment by one so we count only one per array
+              if (cnt == i) {
+                  cntObj[item] = cnt + 1;
+              }
             }
         }
     }
+
     // now collect all results that are in all arrays
     for (item in cntObj) {
-        if (cntObj.hasOwnProperty(item) && cntObj[item] === tagArrays.length) {
+        if (cntObj.hasOwnProperty(item) && cntObj[item] === filesArray.length) {
             common.push(item.substring(1));
         }
     }

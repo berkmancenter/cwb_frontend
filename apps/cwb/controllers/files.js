@@ -168,32 +168,30 @@ CWB.filesController = SC.ArrayController.create({
         oldTaggedCounts.push(file.get('folder').get('tagged_count'));
     });
 
-    var workingFile = CWB.store.createRecord(CWB.File, {});
-    workingFile.set('tagIDs', CWB.tagsController.findCommonTags(oldTagIDs));
-    CWB.tagsController.set('content', workingFile);
+    var commonTags = CWB.tagsController.findCommonTags(oldTagIDs);
+    CWB.tagsController.set('content', commonTags);
     CWB.statechart.sendAction('showTagPane', function(result) {
-        CWB.tagsController.set('content', null);
         if (result) {
             // user clicked save
             var projectID = encodeURIComponent(CWB.projectController.get('id'));
-            var newTagIDs = workingFile.get('tagIDs');
+            var newTagIDs = CWB.tagsController.getTagSets();
 
             // update file tags and counts based on what was done to the workingFile
             files.forEach(function(file, index) {
                 var folder = file.get('folder');
                 var tagged_count = folder.get('tagged_count');
-                if (!file.get('isTagged') && workingFile.get('isTagged')) {
+                if (!file.get('isTagged') && CWB.tagsController.isTagged()) {
                     folder.set('tagged_count', tagged_count + 1);
-                } else if (file.get('isTagged') && !workingFile.get('isTagged') && tagged_count > 0) {
+                } else if (file.get('isTagged') && !CWB.tagsController.isTagged() && tagged_count > 0) {
                     folder.set('tagged_count', tagged_count - 1);
                 }
                 file.set('tagIDs', newTagIDs);
             });
-            // done with the working file, set it free!
-            workingFile.destroy();
+
+            var flattenedIDs = Array.prototype.concat.apply([], newTagIDs);
 
             // send tagging request to backend
-            SC.Request.putUrl('/projects/' + projectID + '/tag_files', { 'ids': fileIDs, 'tags': newTagIDs })
+            SC.Request.putUrl('/projects/' + projectID + '/tag_files', { 'ids': fileIDs, 'tags': flattenedIDs })
                 .notify(this, function(response, files, oldTagIDs, oldTaggedCounts) {
                     if (SC.ok(response)) {
                         files.forEach(function(file) {
@@ -214,9 +212,9 @@ CWB.filesController = SC.ArrayController.create({
                 }, files, oldTagIDs, oldTaggedCounts).json().send();
         }
         else {
-            // user clicked cancel, destroy the working file and carry on
-            workingFile.destroy();
+            // user clicked cancel, nothing to do here
         }
+        CWB.tagsController.set('content', null);
     });
   },
 
@@ -229,8 +227,14 @@ CWB.filesController = SC.ArrayController.create({
 
       affectedFiles.toArray().forEach(function(file) {
           var tagIds = file.get('tagIDs');
-          var index = tagIds.indexOf(old_id);
-          tagIds[index] = new_id || null;
+          for(var i = 0, tagSet; tagSet = tagIds[i]; i++) {
+            var index = tagSet.indexOf(old_id);
+            if (index >= 0) {
+              tagSet[index] = new_id || null;
+              break;
+            }
+          }
+
           file.set('tagIDs', tagIds);
       });
   }
