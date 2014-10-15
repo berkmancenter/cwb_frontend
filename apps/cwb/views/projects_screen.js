@@ -46,7 +46,7 @@ CWB.VocabularyView = SC.WorkspaceView.extend({
             icon: sc_static('icons/edit.png'),
             title: "Edit Term",
             isEnabled: NO,
-            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
+            isEnabledBinding: SC.Binding.oneWay('CWB.termController.isEditable'),
             action: 'editTerm'
         }),
         removeTermButton: SC.ButtonView.extend({
@@ -55,7 +55,7 @@ CWB.VocabularyView = SC.WorkspaceView.extend({
             icon: sc_static('icons/remove.png'),
             title: "Remove Term",
             isEnabled: NO,
-            isEnabledBinding: SC.Binding.oneWay('CWB.termController.id').bool(),
+            isEnabledBinding: SC.Binding.oneWay('CWB.termController.isEditable'),
             action: 'removeTerm'
         })
     })

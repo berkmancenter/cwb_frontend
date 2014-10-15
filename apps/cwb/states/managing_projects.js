@@ -31,7 +31,8 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
         var term = CWB.store.createRecord(CWB.Term, {
             label: 'New Term #' + termNo,
             project: projectID,
-            vocabulary: vocabularyIndex
+            vocabulary: vocabularyIndex,
+            locked: 'false'
         });
         CWB.termsController.selectObject(term);
         this.showTermEditPane(null, function(result) {
@@ -78,6 +79,16 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
     },
 
     editTerm: function(view) {
+        if (!CWB.termController.get('id')) {
+            // don't display edit pane if a term isn't selected
+            return;
+        }
+        else if (!CWB.termController.isEditable) {
+            // don't display edit pane if term is locked
+            SC.AlertPane.warn('Default terms cannot be edited.');
+            return;
+        }
+
         var listView = (view.classNames.contains("sc-button-view")) ? view.getPath('parentView.parentView.contentView.contentView') : view;
         var original = {id: CWB.termController.get('id'), label: CWB.termController.get('label'), description: CWB.termController.get('description')};
         var projectID = CWB.projectController.get('id');

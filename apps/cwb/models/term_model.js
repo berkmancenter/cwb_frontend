@@ -14,6 +14,7 @@ CWB.Term = CWB.Resource.extend(
 /** @scope CWB.Term.prototype */ {
 
   tagged_count: SC.Record.attr(Number, { defaultValue: 0}),
+  locked: SC.Record.attr(String),
 
   project: function() {
     return this.getPath('vocabulary.project');
