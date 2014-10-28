@@ -31,7 +31,7 @@ CWB.File = CWB.Node.extend(
   modified: SC.Record.attr(SC.DateTime),
   last_modified_by: SC.Record.attr(String),
   last_tag_change: SC.Record.attr(SC.DateTime),
-
+  derivative: SC.Record.attr(String),
   starred: SC.Record.attr(String),
   isQueued: SC.Record.attr(Boolean, { defaultValue: NO }),
   isSelected: SC.Record.attr(Boolean, { defaultValue: NO }),
@@ -58,6 +58,21 @@ CWB.File = CWB.Node.extend(
       this.set('starred', 'true');
     }
   },
+
+  isDerivative: function() {
+    if (this.get('derivative') == 'false')
+      return NO;
+    else
+      return YES;
+  }.property('derivative').cacheable(),
+
+  prettyDerivative: function() {
+    if (this.get('isDerivative')) {
+      return this.get('derivative');
+    } else {
+      return 'N/A';
+    }
+  }.property('derivative').cacheable(),
 
   statusDidChange: function() {
     var status = this.get("status");
