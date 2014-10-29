@@ -270,6 +270,10 @@ CWB.filesController = SC.ArrayController.create({
                   CWB.foldersController.selectObject(selectedFolder);
                   CWB.filesController.selectObject(selectedFile);
 
+                  // go ahead and manually update folder untagged count
+                  var tagged_count = selectedFolder.get('tagged_count');
+                  selectedFolder.set('tagged_count', tagged_count - 1);
+
                   // close form and reset data
                   CWB.filesController.set('enableSaveDerivativeButtons', YES);
                   CWB.mainPage.set('addDerivativePaneMessage', '');
