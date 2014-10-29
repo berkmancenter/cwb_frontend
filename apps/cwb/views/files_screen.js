@@ -27,21 +27,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       valueBinding: 'CWB.projectController.versionPlusName'
     }),
 
-    downloadLabel: SC.LabelView.design({
-      layout: { centerY: 0, height: 20, right: 150, width: 100 },
-      value: 'Download PIM:',
-      textAlign: SC.ALIGN_RIGHT
-    }),
-
-    downloadMenu: SC.SegmentedView.design({
-      layout: { centerY: 0, height: 30, right: 12, width: 130 },
-      items: [
-        {title:'RDF/XML', action:'downloadRDF'},
-        {title:'Turtle', action:'downloadTurtle'},
-      ],
-      itemTitleKey:'title',
-      itemActionKey:'action',
-      itemTargetKey:'target'
+    downloadMenu: SC.PopupButtonView.extend({
+      controlSize: SC.HUGE_CONTROL_SIZE,
+      layout: { centerY: 0, height: 30, right: 12, width: 100 },
+      title: 'Download',
+      icon: sc_static('icons/download.png'),
+      menu: SC.MenuPane.extend({
+        layout: { width: 130 },
+        itemTitleKey:'title',
+        itemActionKey:'action',
+        itemTargetKey:'target',
+        items: [
+          {title:'RDF/XML PIM', action:'downloadRDF'},
+          {title:'Turtle PIM', action:'downloadTurtle'},
+          {title:'Derivatives ZIP', action:'downloadDerivatives'},
+        ],
+      })
     })
   }),
 
