@@ -239,12 +239,14 @@ CWB.filesController = SC.ArrayController.create({
       });
   },
 
-  enableSaveDerivativeButton: YES,
+  enableSaveDerivativeButtons: YES,
 
   showAddDerivativePane: function() {
       CWB.mainPage.set('addDerivativePaneIsVisible', YES);
       CWB.mainPage.set('addDerivativePaneCallback', function (saved) {
           if (saved) {
+            CWB.filesController.set('enableSaveDerivativeButtons', NO);
+            CWB.mainPage.set('addDerivativePaneMessage', 'Uploading...');
             var projectID = encodeURIComponent(CWB.projectController.get('id'));
             var fileID = encodeURIComponent(CWB.fileController.get('id'));
             var url = '/projects/' + projectID + '/files/' + fileID + '/upload_derivative';
@@ -269,23 +271,31 @@ CWB.filesController = SC.ArrayController.create({
                   CWB.filesController.selectObject(selectedFile);
 
                   // close form and reset data
+                  CWB.filesController.set('enableSaveDerivativeButtons', YES);
+                  CWB.mainPage.set('addDerivativePaneMessage', '');
                   CWB.mainPage.set('addDerivativePaneIsVisible', NO);
                   fileSelect.value = null;
                 } else {
-                  SC.AlertPane.error('Sorry. We were unable to process your derivative request.');
+                  SC.AlertPane.error('Sorry. We were unable to upload your derivative.');
+                  CWB.filesController.set('enableSaveDerivativeButtons', YES);
+                  CWB.mainPage.set('addDerivativePaneMessage', '');
                 }
               };
 
               // send the data
               xhr.send(formData);
             } else {
-              SC.AlertPane.error('Please select an image.');
+              SC.AlertPane.error('Please select a file.');
+              CWB.filesController.set('enableSaveDerivativeButtons', YES);
+              CWB.mainPage.set('addDerivativePaneMessage', '');
             }
           } else {
             // user clicked cancel
             CWB.mainPage.set('addDerivativePaneIsVisible', YES);
             document.querySelector('#newDerivativeData').value = null;
             CWB.mainPage.set('addDerivativePaneIsVisible', NO);
+            CWB.filesController.set('enableSaveDerivativeButtons', YES);
+            CWB.mainPage.set('addDerivativePaneMessage', '');
           }
       });
   },

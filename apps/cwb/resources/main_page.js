@@ -339,6 +339,7 @@ CWB.mainPage = SC.Page.design({
 
     addDerivativePaneIsVisible: NO,
     addDerivativePaneCallback: null,
+    addDerivativePaneMessage: '',
 
     addDerivativePaneIsVisibleDidChange: function() {
         var pane = this.get('addDerivativePane');
@@ -356,7 +357,7 @@ CWB.mainPage = SC.Page.design({
 
         contentView: SC.View.extend({
             layout: { top: 12, left: 12, bottom: 12, right: 12 },
-            childViews: 'file saveButton cancelButton'.w(),
+            childViews: 'file message saveButton cancelButton'.w(),
             isVisible: YES,
 
             file: SC.View.design({
@@ -375,6 +376,17 @@ CWB.mainPage = SC.Page.design({
                 })
             }),
 
+            message: SC.View.design({
+                layout: { left: 0, right: 0, top: 30, height: 42 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 0, right: 0, height: 36, centerY: 0 },
+                    textAlign: SC.ALIGN_CENTER,
+                    isVisible: YES,
+                    valueBinding: SC.Binding.from('CWB.mainPage.addDerivativePaneMessage')
+                })
+            }),
+
             saveButton: SC.ButtonView.extend({
                 controlSize: SC.HUGE_CONTROL_SIZE,
                 layout: { bottom: 20, left: 40, height: 30, width: 80 },
@@ -387,7 +399,7 @@ CWB.mainPage = SC.Page.design({
                 },
                 isDefault: YES,
                 isEnabled: NO,
-                isEnabledBinding: SC.Binding.oneWay('CWB.filesController.enableSaveDerivativeButton').bool()
+                isEnabledBinding: SC.Binding.oneWay('CWB.filesController.enableSaveDerivativeButtons').bool()
             }),
 
             cancelButton: SC.ButtonView.extend({
@@ -401,7 +413,8 @@ CWB.mainPage = SC.Page.design({
                         return callback(NO);
                     }
                 },
-                isCancel: YES
+                isCancel: YES,
+                isEnabledBinding: SC.Binding.oneWay('CWB.filesController.enableSaveDerivativeButtons').bool()
             })
         })
     }),
