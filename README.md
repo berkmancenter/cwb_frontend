@@ -48,7 +48,7 @@ After logging in, you'll see the projects screen. Here users can add and remove 
 
 Directly below the project managment buttons is the list of projects that have been created. Selecting a project will populate the right side of the screen with the project's metadata and vocabularies.
 
-Select a vocabulary to view a list of the terms it contains, and use the buttons at the bottom of the screen to create, edit, or delete terms. Note that modifying these terms will only affect the selected project.
+Select a vocabulary to view a list of the terms it contains, and use the buttons at the bottom of the screen to create, edit, or delete terms. Please note that you cannot edit or delete the default terms and that creating a new term will make it available to the selected project only.
 
 #### Tagging Files
 
@@ -62,6 +62,8 @@ You can open the tagging pane for a single file by double clicking the file or b
 
 You can add tags to multiple files at once by toggling the checkbox on for a set of files and then clicking the "Add Tags" button. In this case, the highlighted terms are terms that every selected file (in the current folder) has already been tagged with. When you click save, each file will be tagged with the new set of terms you selected and any pre-existing tags will be removed.
 
+There are no restrictions on the number of tags you can apply.
+
 **Mark Important**
 
 You can "star" a specific file as important by clicking its star icon. Or you can star multiple files at once by toggling their checkboxes on and then clicking the "Mark as Important" button. To view a list of all starred files simply click the "Important Files" folder in the top left corner.
@@ -71,6 +73,33 @@ You can "star" a specific file as important by clicking its star icon. Or you ca
 You can add files to the work queue by toggling their checkboxes on and then clicking the "Add to Work Queue" button. To view the work queue simply click the "Work Queue" folder in the top left corner.
 
 Note: the work queue is tied to your current tagging session only (unlike tags and stars). If you leave and come back the work queue will be empty.
+
+#### Image Previews
+
+When you create a project, image previews will be generated for the following file types:
+
+- .jpeg
+- .jpg
+- .png
+- .gif
+- .pdf
+- .tif
+
+#### Derivatives
+
+From the files screen, you can upload a derivative by selecting a file and then clicking the "Add Derivative" button at the bottom of the file details pane. Once uploaded, the derivative file will be visible in the same folder as its parent. It will have a preview image (if applicable) and you'll be able to perform the same actions as with a normal file (e.g. tagging, starring).
+
+See the "Export Data" section for info on downloading your project's derivatives.
+
+#### Export Data
+
+You have the following options for exporting your project's data:
+
+- RDF/XML PIM
+- Turtle PIM
+- Derivatives ZIP
+
+To do so, navigate to your project's files screen and click the "Download" button in the top right corner of the window.
 
 #### Managing Accounts (admin only)
 
