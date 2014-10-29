@@ -237,5 +237,56 @@ CWB.filesController = SC.ArrayController.create({
 
           file.set('tagIDs', tagIds);
       });
-  }
+  },
+
+  enableSaveDerivativeButton: YES,
+
+  showAddDerivativePane: function() {
+      CWB.mainPage.set('addDerivativePaneIsVisible', YES);
+      CWB.mainPage.set('addDerivativePaneCallback', function (saved) {
+          if (saved) {
+            var projectID = encodeURIComponent(CWB.projectController.get('id'));
+            var fileID = encodeURIComponent(CWB.fileController.get('id'));
+            var url = '/projects/' + projectID + '/files/' + fileID + '/upload_derivative';
+
+            var fileSelect = document.querySelector('#newDerivativeData');
+            var file = fileSelect.files[0];
+            if (file) {
+              var formData = new FormData();
+              formData.append('upload', file, file.name);
+
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', url, true);
+              xhr.onload = function () {
+                if (xhr.status === 200) {
+                  // derivative uploaded
+
+                  // reselect folder and file to repaint view
+                  var selectedFolder = CWB.foldersController.get('selection').firstObject();
+                  var selectedFile = CWB.filesController.get('selection').firstObject();
+                  CWB.foldersController.selectObject(null);
+                  CWB.foldersController.selectObject(selectedFolder);
+                  CWB.filesController.selectObject(selectedFile);
+
+                  // close form and reset data
+                  CWB.mainPage.set('addDerivativePaneIsVisible', NO);
+                  fileSelect.value = null;
+                } else {
+                  SC.AlertPane.error('Sorry. We were unable to process your derivative request.');
+                }
+              };
+
+              // send the data
+              xhr.send(formData);
+            } else {
+              SC.AlertPane.error('Please select an image.');
+            }
+          } else {
+            // user clicked cancel
+            CWB.mainPage.set('addDerivativePaneIsVisible', YES);
+            document.querySelector('#newDerivativeData').value = null;
+            CWB.mainPage.set('addDerivativePaneIsVisible', NO);
+          }
+      });
+  },
 });

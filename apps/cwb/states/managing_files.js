@@ -37,6 +37,10 @@ CWB.MANAGING_FILES = SC.State.extend({
     window.location.href = '/projects/' + encodeURIComponent(CWB.projectController.get('id')) + '/download?choice=n3';
   },
 
+  downloadDerivatives: function() {
+    window.location.href = '/projects/' + encodeURIComponent(CWB.projectController.get('id')) + '/derivatives_download';
+  },
+
     expandAll: function() {
         CWB.foldersController.arrangedObjects().toArray().forEach(function(folder) {
             folder.expandAll();

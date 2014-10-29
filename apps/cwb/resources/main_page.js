@@ -337,6 +337,75 @@ CWB.mainPage = SC.Page.design({
         }
     }.observes('tagPaneIsVisible'),
 
+    addDerivativePaneIsVisible: NO,
+    addDerivativePaneCallback: null,
+
+    addDerivativePaneIsVisibleDidChange: function() {
+        var pane = this.get('addDerivativePane');
+        if (this.get('addDerivativePaneIsVisible')) {
+            pane.append();
+            pane.get('contentView').get('file').get('field').becomeFirstResponder();
+        }
+        else {
+            pane.remove();
+        }
+    }.observes('addDerivativePaneIsVisible'),
+
+    addDerivativePane: SC.PanelPane.design({
+        layout: { width: 320, height: 140, centerX: 0, centerY: 0 },
+
+        contentView: SC.View.extend({
+            layout: { top: 12, left: 12, bottom: 12, right: 12 },
+            childViews: 'file saveButton cancelButton'.w(),
+            isVisible: YES,
+
+            file: SC.View.design({
+                layout: { left: 0, right: 0, top: 0, height: 26 },
+                childViews: 'label field'.w(),
+                label: SC.LabelView.design({
+                    layout: { left: 10, width: 110, height: 18, centerY: 0 },
+                    value: "Derivative:",
+                    textAlign: SC.ALIGN_LEFT
+                }),
+                field: SC.View.design({
+                    layout: {left: 102, height: 22, right: 0, centerY: 0 },
+                    render: function (context) {
+                      context.push("<input type='file' name='newDerivativeData' id='newDerivativeData' />");
+                    }
+                })
+            }),
+
+            saveButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, left: 40, height: 30, width: 80 },
+                title: "Save",
+                action: function(unused) {
+                    var callback = CWB.mainPage.get('addDerivativePaneCallback');
+                    if (callback) {
+                        return callback(YES);
+                    }
+                },
+                isDefault: YES,
+                isEnabled: NO,
+                isEnabledBinding: SC.Binding.oneWay('CWB.filesController.enableSaveDerivativeButton').bool()
+            }),
+
+            cancelButton: SC.ButtonView.extend({
+                controlSize: SC.HUGE_CONTROL_SIZE,
+                layout: { bottom: 20, right: 40, height: 30, width: 80 },
+                title: "Cancel",
+                action: function(unused) {
+                    CWB.mainPage.set('addDerivativePaneIsVisible', NO);
+                    var callback = CWB.mainPage.get('addDerivativePaneCallback');
+                    if (callback) {
+                        return callback(NO);
+                    }
+                },
+                isCancel: YES
+            })
+        })
+    }),
+
     createProjectPaneIsVisible: NO,
     createProjectPaneCallback: null,
     createProjectPaneMessage: '',

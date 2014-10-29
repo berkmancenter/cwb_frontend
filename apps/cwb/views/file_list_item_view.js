@@ -188,7 +188,7 @@ CWB.FileListItemView = SC.ListItemView.extend({
     if (this.getDelegateProperty('hasContentTagIcon', del)) {
       key = this.getDelegateProperty('contentTagIconKey', del);
       value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
-      this.renderIcon(working, value, 'tag-icon');
+      this.renderIcon(working, value, 'tag-icon', 'Manage Tags');
       classArray.push('has-tag-icon');
     }
 
@@ -196,7 +196,7 @@ CWB.FileListItemView = SC.ListItemView.extend({
     if (this.getDelegateProperty('hasContentStarIcon', del)) {
       key = this.getDelegateProperty('contentStarIconKey', del);
       value = (key && content) ? (content.get ? content.get(key) : content[key]) : null;
-      this.renderIcon(working, value, 'star-icon');
+      this.renderIcon(working, value, 'star-icon', 'Mark Important');
       classArray.push('has-star-icon');
     }
 
@@ -239,7 +239,7 @@ CWB.FileListItemView = SC.ListItemView.extend({
     context.push('<span class="' + className + '">', value || '', '</span>');
   },
 
-  renderIcon: function(context, icon, cssName) {
+  renderIcon: function(context, icon, cssName, titleText) {
     // get a class name and URL to include if relevant
     var url = null, className = null, classArray = [];
     if (icon && SC.ImageView.valueIsUrl(icon)) {
@@ -252,7 +252,8 @@ CWB.FileListItemView = SC.ListItemView.extend({
     }
 
     // generate the img element...
+    titleText = titleText || 'icon';
     classArray.push(cssName, className);
-    context.begin('img').addClass(classArray).attr('src', url).end();
+    context.begin('img').addClass(classArray).attr('src', url).attr('title', titleText).end();
   }
 });

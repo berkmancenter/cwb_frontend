@@ -27,21 +27,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       valueBinding: 'CWB.projectController.versionPlusName'
     }),
 
-    downloadLabel: SC.LabelView.design({
-      layout: { centerY: 0, height: 20, right: 150, width: 100 },
-      value: 'Download PIM:',
-      textAlign: SC.ALIGN_RIGHT
-    }),
-
-    downloadMenu: SC.SegmentedView.design({
-      layout: { centerY: 0, height: 30, right: 12, width: 130 },
-      items: [
-        {title:'RDF/XML', action:'downloadRDF'},
-        {title:'Turtle', action:'downloadTurtle'},
-      ],
-      itemTitleKey:'title',
-      itemActionKey:'action',
-      itemTargetKey:'target'
+    downloadMenu: SC.PopupButtonView.extend({
+      controlSize: SC.HUGE_CONTROL_SIZE,
+      layout: { centerY: 0, height: 30, right: 12, width: 100 },
+      title: 'Download',
+      icon: sc_static('icons/download.png'),
+      menu: SC.MenuPane.extend({
+        layout: { width: 130 },
+        itemTitleKey:'title',
+        itemActionKey:'action',
+        itemTargetKey:'target',
+        items: [
+          {title:'RDF/XML PIM', action:'downloadRDF'},
+          {title:'Turtle PIM', action:'downloadTurtle'},
+          {title:'Derivatives ZIP', action:'downloadDerivatives'},
+        ],
+      })
     })
   }),
 
@@ -307,11 +308,11 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
       contentView: SC.View.extend({
           isVisible: NO,
           isVisibleBinding: SC.Binding.oneWay('CWB.fileController.id').bool(),
-          childViews: 'infoBox previewImage previewPlaceHolder'.w(),
+          childViews: 'infoBox derivativeBox previewImage previewPlaceHolder addDerivativeButton'.w(),
 
           infoBox: SC.View.extend({
               backgroundColor: '#eee',
-              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue pathLabel pathValue pathCopyButton'.w(),
+              childViews: 'typeLabel typeValue sizeLabel sizeValue createdLabel createdValue lastModifiedLabel lastModifiedValue modifiedByLabel modifiedByValue pathLabel pathValue pathCopyButton derivativeLabel derivativeValue'.w(),
 
               typeLabel: SC.LabelView.design({
                   layout: { top: 20, left: 20, width: 80, height: 18 },
@@ -371,7 +372,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
                   classNames: ['break-word-wrap'],
-                  layout: { top: 150, left: 120, width: 120, height: 72 },
+                  layout: { top: 150, left: 120, width: 120, height: 62 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
                   //isTextArea: YES,
@@ -386,12 +387,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                       var modifier = (navigator.platform.toUpperCase().indexOf('MAC') >= 0) ? 'Cmd' : 'Ctrl';
                       window.prompt("Copy to clipboard: " + modifier + "+C, Enter", CWB.fileController.get('path'));
                   }
-              })
+              }),
+
+              derivativeLabel: SC.LabelView.design({
+                  layout: { top: 220, left: 20, width: 80, height: 18 },
+                  value: 'Derivative of:'
+              }),
+
+              derivativeValue: SC.LabelView.design({
+                  layout: { top: 220, left: 120, width: 120, height: 62 },
+                  valueBinding: 'CWB.fileController.prettyDerivative'
+              }),
           }),
 
           previewImage: SC.ImageView.extend({
               classNames: ['preview-image'],
-              layout: { left: 20, top: 254, bottom: 20, right: 20, zIndex: 10 },
+              layout: { left: 20, top: 280, bottom: 40, right: 20, zIndex: 10 },
               scale: SC.BEST_FIT,
               valueBinding: 'CWB.fileController.previewURL',
               didLoad: function(image) {
@@ -405,10 +416,19 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
 
           previewPlaceHolder: SC.LabelView.design({
               classNames: ['preview-placeholder'],
-              layout: { left: 20, top: 254, right: 20, height:18, zIndex: 9 },
+              layout: { left: 20, top: 300, right: 20, height:18, zIndex: 9 },
               textAlign: SC.ALIGN_CENTER,
               valueBinding: 'CWB.fileController.previewPlaceHolder'
-          })
+          }),
+
+          addDerivativeButton: SC.ButtonView.design({
+              controlSize: SC.HUGE_CONTROL_SIZE,
+              layout: { bottom: 6, left: 20, right: 20, height: 30 },
+              title: 'Add Derivative',
+              icon: sc_static('icons/add.png'),
+              target: 'CWB.filesController',
+              action: 'showAddDerivativePane'
+          }),
       })
       })
   })
