@@ -367,7 +367,7 @@ CWB.mainPage = SC.Page.design({
                     value: "Derivative:",
                     textAlign: SC.ALIGN_LEFT
                 }),
-                field: SC.FieldView.design({
+                field: SC.View.design({
                     layout: {left: 102, height: 22, right: 0, centerY: 0 },
                     render: function (context) {
                       context.push("<input type='file' name='newDerivativeData' id='newDerivativeData' />");
