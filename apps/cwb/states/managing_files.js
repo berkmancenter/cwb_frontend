@@ -14,18 +14,10 @@ CWB.MANAGING_FILES = SC.State.extend({
   },
 
   exitState: function() {
-    var folderIDs = [];
-    CWB.projectController.get('folders').forEach(function (folder) {
-      folderIDs.push(folder.get('id'));
-    });
-    CWB.store.refreshRecords(CWB.Folder, folderIDs);
-
-    var fileIDs = [];
-    CWB.projectController.get('files').forEach(function (file) {
-      fileIDs.push(file.get('id'));
-    });
-    CWB.store.refreshRecords(CWB.File, fileIDs);
-
+    // trash the current store and recreate
+    // this solves a myriad of performance problems because of the state SC keeps around
+    CWB.store = SC.Store.create().from('CWB.RailsDataSource');
+    
     CWB.getPath('mainPage.mainPane').remove();
   },
 

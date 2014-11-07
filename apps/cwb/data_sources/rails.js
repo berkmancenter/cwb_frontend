@@ -11,7 +11,7 @@ CWB.RailsDataSource = SC.DataSource.extend({
     headers: {'Accept': 'application/json'},
 
     fetch: function (store, query) {
-        if (typeof window.hasFetchedData === 'undefined') {
+        if (typeof window.hasFetchedData === 'undefined' || !window.hasFetchedData) {
             window.hasFetchedData = {};
         }
 
@@ -21,10 +21,10 @@ CWB.RailsDataSource = SC.DataSource.extend({
 
         var recordType = query.get('recordType');
         if(window.currentProject && window.hasFetchedData[window.currentProject][recordType]) {
-            console.log('hijacked! ' + recordType + ' ' + window.currentProject);
+            // console.log('hijacked! ' + recordType + ' ' + window.currentProject);
             return YES;
         } else {
-            console.log('fetching! ' + recordType + ' ' + window.currentProject);
+            // console.log('fetching! ' + recordType + ' ' + window.currentProject);
         }
         
         if(recordType === CWB.Term) {

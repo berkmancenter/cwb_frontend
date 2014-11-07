@@ -268,6 +268,7 @@ CWB.filesController = SC.ArrayController.create({
                   CWB.store.createRecord(CWB.File, data.object);
 
                   // go ahead and manually update folder untagged count
+                  var selectedFolder = CWB.foldersController.get('selection').firstObject();
                   var tagged_count = selectedFolder.get('tagged_count');
                   selectedFolder.set('tagged_count', tagged_count - 1);
 
