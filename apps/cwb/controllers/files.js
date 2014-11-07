@@ -259,16 +259,13 @@ CWB.filesController = SC.ArrayController.create({
 
               var xhr = new XMLHttpRequest();
               xhr.open('POST', url, true);
-              xhr.onload = function () {
+              xhr.onload = function (data) {
                 if (xhr.status === 200) {
                   // derivative uploaded
 
-                  // reselect folder and file to repaint view
-                  var selectedFolder = CWB.foldersController.get('selection').firstObject();
-                  var selectedFile = CWB.filesController.get('selection').firstObject();
-                  CWB.foldersController.selectObject(null);
-                  CWB.foldersController.selectObject(selectedFolder);
-                  CWB.filesController.selectObject(selectedFile);
+                  // tell the store about the new file
+                  var data = JSON.parse(xhr.responseText);
+                  CWB.store.createRecord(CWB.File, data.object);
 
                   // go ahead and manually update folder untagged count
                   var tagged_count = selectedFolder.get('tagged_count');
