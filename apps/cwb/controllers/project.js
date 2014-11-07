@@ -11,6 +11,8 @@ CWB.projectController = SC.ObjectController.create({
 
 			// go ahead and cache vocabs and terms for this project
 			this.cacheVocabulariesForSelectedProject();
+
+      window.currentProject = CWB.projectController.get('id');
     }.observes('id'),
 
     cacheVocabulariesForSelectedProject: function() {

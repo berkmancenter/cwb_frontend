@@ -1,5 +1,10 @@
 CWB.MANAGING_FILES = SC.State.extend({
   enterState: function() {
+    if (typeof window.hasFetchedData !== 'undefined' && window.currentProject) {
+      console.log('cleaning up project state');
+      delete window.hasFetchedData[window.currentProject];
+    }
+
     CWB.projectController.fetchRootFolders();
     var projectID = CWB.projectController.get('id');
 

@@ -11,7 +11,21 @@ CWB.RailsDataSource = SC.DataSource.extend({
     headers: {'Accept': 'application/json'},
 
     fetch: function (store, query) {
+        if (typeof window.hasFetchedData === 'undefined') {
+            window.hasFetchedData = {};
+        }
+
+        if (window.currentProject && typeof window.hasFetchedData[window.currentProject] === 'undefined') {
+            window.hasFetchedData[window.currentProject] = {};
+        }
+
         var recordType = query.get('recordType');
+        if(window.currentProject && window.hasFetchedData[window.currentProject][recordType]) {
+            console.log('hijacked! ' + recordType + ' ' + window.currentProject);
+            return YES;
+        } else {
+            console.log('fetching! ' + recordType + ' ' + window.currentProject);
+        }
         
         if(recordType === CWB.Term) {
             SC.Logger.debug('    (Term) recordType: ' + recordType + ' conditions: ' + query.conditions + ' parameters: ' + query.parameters);
@@ -24,26 +38,14 @@ CWB.RailsDataSource = SC.DataSource.extend({
                 .notify(this, 'fetchDidCompleteWithRecordType', store, query, CWB.Term)
                 .json().send();
 
+            if (window.currentProject) {
+                window.hasFetchedData[window.currentProject][recordType] = true;
+            }
             return YES;
         }
 
         SC.Logger.debug('CWB.RailsDataSource.fetch - recordType: ' + recordType + ' conditions: ' + query.conditions + ' parameters: ' + query.parameters);
 
-//        if (query === CWB.ACCOUNTS_QUERY) {
-//            SC.Request.getUrl(this.routeFor(recordType, store)).header(this.headers)
-//                .notify(this, 'fetchDidComplete', store, query)
-//                .json().send();
-//            return YES;
-//        }
-
-        // TODO Why not just let the general CWB.Resource clause handle projects
-        // Will only comment out for now; delete when sure we don't need this
-//        if (query === CWB.PROJECTS_QUERY) {
-//            SC.Request.getUrl(this.routeFor(recordType, store)).header(this.headers)
-//                .notify(this, 'fetchDidComplete', store, query)
-//                .json().send();
-//            return YES;
-//        }
         if (query === CWB.SELECTED_NODES_QUERY) {
             return NO; // TODO
         }
@@ -56,6 +58,10 @@ CWB.RailsDataSource = SC.DataSource.extend({
             SC.Request.getUrl(this.routeFor(recordType, store)).header(this.headers)
                 .notify(this, 'fetchDidComplete', store, query)
                 .json().send();
+
+            if (window.currentProject) {
+                window.hasFetchedData[window.currentProject][recordType] = true;
+            }
             return YES;
         }
         return NO;
@@ -95,6 +101,7 @@ CWB.RailsDataSource = SC.DataSource.extend({
             SC.Request.getUrl(this.routeFor(recordType, store, storeKey)).header(this.headers)
                 .notify(this, 'retrieveRecordDidComplete', store, storeKey)
                 .json().send();
+
             return YES;
         }
         return NO;

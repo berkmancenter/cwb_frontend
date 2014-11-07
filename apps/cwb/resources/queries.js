@@ -5,6 +5,9 @@ sc_require('models/term_model');
 //CWB.ACCOUNTS_QUERY =
 //    SC.Query.local(CWB.Account, {orderBy: 'nick ASC'});
 
+CWB.ACCOUNTS_QUERY =
+    SC.Query.local(CWB.Account);
+
 CWB.PROJECTS_QUERY =
     SC.Query.local(CWB.Project, {orderBy: 'name ASC'});
 
