@@ -417,7 +417,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               pathValue: SC.LabelView.design({ // FIXME
                   //pathValue: SC.TextFieldView.design({
                   classNames: ['break-word-wrap'],
-                  layout: { top: 150, left: 120, width: 120, height: 62 },
+                  layout: { top: 150, left: 120, width: 120, height: 64 },
                   valueBinding: 'CWB.fileController.path'
                   //isEditable: NO,
                   //isTextArea: YES,
@@ -440,7 +440,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               }),
 
               derivativeValue: SC.LabelView.design({
-                  layout: { top: 220, left: 120, width: 120, height: 62 },
+                  layout: { top: 220, left: 120, width: 120, height: 64 },
                   valueBinding: 'CWB.fileController.prettyDerivative'
               }),
           }),
