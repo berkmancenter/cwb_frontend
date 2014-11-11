@@ -245,7 +245,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedSource = CWB.filesController.selectedSource;
                   var isQueued = (selectedSource != 'queued');
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  selectedNodes.setEach('isQueued', isQueued);
+                  var totalSelectedCount = CWB.SELECTED_FILES.get('length');
+
+                  if (selectedNodes.length() == totalSelectedCount) {
+                    selectedNodes.setEach('isQueued', isQueued);
+                  } else {
+                    SC.AlertPane.warn({
+                        message: "Are you sure?",
+                        description: "There are files from multiple folders currently selected, but this action will only be applied to files within the selected folder.",
+                        buttons: [
+                            { title: "Okay", action: function() {
+                              selectedNodes.setEach('isQueued', isQueued);
+                            }},
+                            { title: "Cancel" },
+                        ]
+                    });
+                  }
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           }),
@@ -268,7 +283,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               title: "Add Tags",
               action: function(unused) {
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  CWB.filesController.startTaggingFiles(selectedNodes);
+                  var totalSelectedCount = CWB.SELECTED_FILES.get('length');
+
+                  if (selectedNodes.length() == totalSelectedCount) {
+                    CWB.filesController.startTaggingFiles(selectedNodes);
+                  } else {
+                    SC.AlertPane.warn({
+                        message: "Are you sure?",
+                        description: "There are files from multiple folders currently selected, but this action will only be applied to files within the selected folder.",
+                        buttons: [
+                            { title: "Okay", action: function() {
+                              CWB.filesController.startTaggingFiles(selectedNodes);
+                            }},
+                            { title: "Cancel" },
+                        ]
+                    });
+                  }
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           }),
@@ -282,7 +312,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               action: function(unused) {
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
                   var doStar = (CWB.filesController.selectedSource != 'starred');
-                  CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
+                  var totalSelectedCount = CWB.SELECTED_FILES.get('length');
+
+                  if (selectedNodes.length() == totalSelectedCount) {
+                    CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
+                  } else {
+                    SC.AlertPane.warn({
+                        message: "Are you sure?",
+                        description: "There are files from multiple folders currently selected, but this action will only be applied to files within the selected folder.",
+                        buttons: [
+                            { title: "Okay", action: function() {
+                              CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
+                            }},
+                            { title: "Cancel" },
+                        ]
+                    });
+                  }
               },
               isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
           })
