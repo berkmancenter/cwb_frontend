@@ -3,11 +3,11 @@ sc_require('core');
 CWB.projectController = SC.ObjectController.create({
     contentBinding: 'CWB.projectsController.selection',
 
-    versionPlusName: 'CWB (v' + CWB.VERSION + ')',
+    versionPlusName: 'FWB (v' + CWB.VERSION + ')',
     selectedVocabularyIndex: null,
 
     idDidChange: function() {
-			this.set('versionPlusName', 'CWB (v' + CWB.VERSION + ') - ' + this.get('name'));
+			this.set('versionPlusName', 'FWB (v' + CWB.VERSION + ') - ' + this.get('name'));
 
 			// go ahead and cache vocabs and terms for this project
 			this.cacheVocabulariesForSelectedProject();

@@ -14,12 +14,12 @@ done
 
 
 function help () {
-	echo "cwb - A script to help manage some of the cwb-specific SproutCore tasks";
+	echo "fwb - A script to help manage some of the fwb-specific SproutCore tasks";
 	echo "";
 	echo "tasks:";
-	echo "	cwb build	- build the cwb project";
-	echo "	cwb build-rails	- build the cwb project into the rails project";
-	echo "	cwb clear-cache	- clear the cached files in both projects";
+	echo "	fwb build	- build the fwb project";
+	echo "	fwb build-rails	- build the fwb project into the rails project";
+	echo "	fwb clear-cache	- clear the cached files in both projects";
 	echo "";
 	echo "options:";
 	echo "	-f		- remove old build result before rebuilding";
@@ -31,8 +31,8 @@ function destroyTmpFiles () {
 }
 
 function destroyStaticFiles () {
-	echo "destroying '../cwb-rails/public/static'..."
-	rm -rf ../cwb-rails/public/static
+	echo "destroying '../fwb_backend/public/static'..."
+	rm -rf ../fwb_backend/public/static
 }
 
 case $TASK in
@@ -40,9 +40,9 @@ case $TASK in
 		if [ $FORCED = true ]; then
 			destroyTmpFiles
 		fi
-		
-		echo "building cwb project..."	
-		sc-build cwb	
+
+		echo "building fwb project..."
+		sc-build cwb
 	;;
 	build-rails)
 		if [ $FORCED = true ]; then
@@ -50,8 +50,8 @@ case $TASK in
 			destroyStaticFiles
 		fi
 
-		echo "building cwb project into rails project..."
-		sc-build cwb --buildroot ../cwb-rails/public	
+		echo "building fwb project into rails project..."
+		sc-build cwb --buildroot ../fwb_backend/public
 	;;
 	clear-cache)
 		destroyTmpFiles

@@ -16,7 +16,7 @@ config :all,
 config :cwb,
   :required => [:sproutcore, 'sproutcore/statechart'],
   :theme => 'sproutcore/ace',
-  :title => "Curator's Workbench (CWB)",
+  :title => "FACADE Workbench (FWB)",
   :mime_types => {},
   :load_fixtures => true
 

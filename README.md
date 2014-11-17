@@ -1,23 +1,23 @@
-The front-end SproutCore application for the Curators Workbench.
+The front-end SproutCore application for the FACADE Workbench.
 
 ## Installing
 
-It's recommended to install the front and back-end CWB applications in sibling directories. For example:
+It's recommended to install the front and back-end FWB applications in sibling directories named `fwb_frontend` and `fwb_backend`. For example:
 
-		git clone git@github.com:berkmancenter/cwb_frontend.git /system/code/cwb-sc
-		git clone git@github.com:berkmancenter/cwb_backend.git /system/code/cwb-rails
+		git clone git@github.com:berkmancenter/fwb_frontend.git /system/code/fwb_frontend
+		git clone git@github.com:berkmancenter/fwb_backend.git /system/code/fwb_backend
 
-After cloning the project, run `bundle install`.
+After cloning the project, move into the project folder and run `bundle install`.
 
 Now install the build tools with `npm install`.
 
 ## Building
 
-In order to run the CWB application, you need to build the front-end Sproutcore app into the back-end Rails app and then run the Rails app.
+In order to run the FWB application, you need to build the front-end Sproutcore app into the back-end Rails app and then run the Rails app.
 
-Build the front-end app:
+Build the front-end app into the rails app:
 
-		sproutcore build cwb --buildroot ../cwb-rails/public
+		./fwb build-rails
 
 From the rails app directory:
 
@@ -30,17 +30,17 @@ You'll find it running at [http://localhost:3000](http://localhost:3000).
 Sproutcore caches heavily so you'll often need to empty the tmp and static files after making front-end code changes:
 
 		rm -rf ./tmp
-		rm -rf ../cwb-rails/public/static
+		rm -rf ../fwb_backend/public/static
 
 Re-build the app:
 
-		sproutcore build cwb --buildroot ../cwb-rails/public
+		./fwb build-rails
 
-We wrote a script that consolidates these 3 commands into a single command:
+As a shortcut, you can pass the `-f` option to the build-rails command. The end result is the same as running the three commands above separately:
 
-		./cwb build-rails -f
+		./fwb build-rails -f
 
-## Using CWB
+## Using FWB
 
 #### Managing Projects
 

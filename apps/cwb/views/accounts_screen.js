@@ -22,7 +22,7 @@ CWB.AccountsScreen = SC.WorkspaceView.extend({
       layout: { centerY: 0, centerX: 0, height: 30, width: 400 },
       fontWeight: SC.BOLD_WEIGHT,
       textAlign: SC.ALIGN_CENTER,
-      value: "CWB (v" + CWB.VERSION + ") - Accounts"
+      value: "FWB (v" + CWB.VERSION + ") - Accounts"
     })
 
   }),

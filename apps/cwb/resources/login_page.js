@@ -18,7 +18,7 @@ CWB.loginPage = SC.Page.design({
         layout: { top: 17, centerX: 0, height: 30, width: 300 },
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_CENTER,
-        value: "Curator's Workbench"
+        value: "FACADE Workbench"
       }),
 
       username: SC.View.design({
