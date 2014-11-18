@@ -245,19 +245,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   var selectedSource = CWB.filesController.selectedSource;
                   var isQueued = (selectedSource != 'queued');
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  var totalSelectedCount = CWB.SELECTED_FILES.get('length');
+                  var totalSelectedNodes = CWB.SELECTED_FILES;
 
-                  if (selectedNodes.length() == totalSelectedCount) {
+                  if (selectedNodes.length() == totalSelectedNodes.get('length')) {
                     selectedNodes.setEach('isQueued', isQueued);
                   } else {
                     SC.AlertPane.warn({
-                        message: "Are you sure?",
-                        description: "There are files from multiple folders currently selected, but this action will only be applied to files within the selected folder.",
+                        message: "Background Items Selected",
+                        description: "There are files from multiple folders currently selected. Do you want to apply this action to all folders or only the currently selected folder?",
                         buttons: [
-                            { title: "Okay", action: function() {
+                            { title: "Current Folder", action: function() {
                               selectedNodes.setEach('isQueued', isQueued);
                             }},
                             { title: "Cancel" },
+                            { title: "All Folders", action:function() {
+                              totalSelectedNodes.setEach('isQueued', isQueued);
+                            }}
                         ]
                     });
                   }
@@ -283,19 +286,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               title: "Add Tags",
               action: function(unused) {
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
-                  var totalSelectedCount = CWB.SELECTED_FILES.get('length');
+                  var totalSelectedNodes = CWB.SELECTED_FILES;
 
-                  if (selectedNodes.length() == totalSelectedCount) {
+                  if (selectedNodes.length() == totalSelectedNodes.get('length')) {
                     CWB.filesController.startTaggingFiles(selectedNodes);
                   } else {
                     SC.AlertPane.warn({
-                        message: "Are you sure?",
-                        description: "There are files from multiple folders currently selected, but this action will only be applied to files within the selected folder.",
+                        message: "Background Items Selected",
+                        description: "There are files from multiple folders currently selected. Do you want to apply this action to all folders or only the currently selected folder?",
                         buttons: [
-                            { title: "Okay", action: function() {
+                            { title: "Current Folder", action: function() {
                               CWB.filesController.startTaggingFiles(selectedNodes);
                             }},
                             { title: "Cancel" },
+                            { title: "All Folders", action:function() {
+                              CWB.filesController.startTaggingFiles(totalSelectedNodes);
+                            }}
                         ]
                     });
                   }
@@ -312,19 +318,22 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               action: function(unused) {
                   var selectedNodes = CWB.filesController.get('content').find(CWB.SELECTED_NODES_QUERY);
                   var doStar = (CWB.filesController.selectedSource != 'starred');
-                  var totalSelectedCount = CWB.SELECTED_FILES.get('length');
+                  var totalSelectedNodes = CWB.SELECTED_FILES;
 
-                  if (selectedNodes.length() == totalSelectedCount) {
+                  if (selectedNodes.length() == totalSelectedNodes.get('length')) {
                     CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
                   } else {
                     SC.AlertPane.warn({
-                        message: "Are you sure?",
-                        description: "There are files from multiple folders currently selected, but this action will only be applied to files within the selected folder.",
+                        message: "Background Items Selected",
+                        description: "There are files from multiple folders currently selected. Do you want to apply this action to all folders or only the currently selected folder?",
                         buttons: [
-                            { title: "Okay", action: function() {
+                            { title: "Current Folder", action: function() {
                               CWB.filesController.sendBatchStarRequest(selectedNodes, doStar);
                             }},
                             { title: "Cancel" },
+                            { title: "All Folders", action:function() {
+                              CWB.filesController.sendBatchStarRequest(totalSelectedNodes, doStar);
+                            }}
                         ]
                     });
                   }
