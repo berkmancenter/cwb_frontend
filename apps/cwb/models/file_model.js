@@ -185,6 +185,7 @@ CWB.File = CWB.Node.extend(
   previewPlaceHolder: 'Loading preview...',
 
   isSelectedDidChange: function() {
+    CWB.filesController.set('selectedFilesCount', CWB.SELECTED_FILES.get('length'));
     CWB.SELECTED_FILES.reload();
   }.observes('isSelected')
 });

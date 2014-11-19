@@ -16,8 +16,10 @@ CWB.MANAGING_FILES = SC.State.extend({
   exitState: function() {
     // trash the current store and recreate
     // this solves a myriad of performance problems because of the state SC keeps around
+    CWB.store.flush();
+    CWB.store.reset();
     CWB.store = SC.Store.create().from('CWB.RailsDataSource');
-    
+
     CWB.getPath('mainPage.mainPane').remove();
   },
 

@@ -115,6 +115,8 @@ CWB.filesController = SC.ArrayController.create({
     })));
   },
 
+  selectedFilesCount: 0,
+
   sendStarRequest: function(file) {
     var projectID = encodeURIComponent(CWB.projectController.get('id'));
     var fileID = encodeURIComponent(file.get('id'));

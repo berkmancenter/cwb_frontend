@@ -13,8 +13,6 @@ CWB.LOGGED_IN = SC.State.extend({
       CWB.loginController.set('username', context.username);
       CWB.loginController.set('email', context.email);
       CWB.loginController.set('isAdmin', context.isAdmin);
-
-      CWB.SELECTED_FILES = CWB.store.find(CWB.SELECTED_FILES_QUERY);
   },
 
   exitState: function() {},

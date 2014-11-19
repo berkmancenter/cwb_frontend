@@ -97,7 +97,6 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                           allFiles.setEach('isSelected', YES);
                       }
                       else if (selectedItemValue == 'none') {
-                          //var selectedFiles = CWB.SELECTED_FILES;
                           var selectedFiles = CWB.filesController.get('content');
                           selectedFiles.setEach('isSelected', NO);
                       }
@@ -265,18 +264,18 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                     });
                   }
               },
-              isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
+              isEnabledBinding: SC.Binding.oneWay('CWB.filesController.selectedFilesCount').bool()
           }),
 
           summaryLabel: SC.LabelView.extend({
               controlSize: SC.REGULAR_CONTROL_SIZE,
               layout: { centerY: 0, centerX: 0, width: 200, height: 18 },
-              selectedCountBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length'),
+              selectedCountBinding: SC.Binding.oneWay('CWB.filesController.selectedFilesCount'),
               value: function() {
-                  var selectedCount = CWB.SELECTED_FILES.get('length');
+                  var selectedCount = CWB.filesController.get('selectedFilesCount');
                   return '' + (selectedCount > 0 ? selectedCount : 'No') + ' ' + (selectedCount == 1 ? 'file' : 'files') + ' selected';
               }.property('selectedCount').cacheable(),
-              isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
+              isEnabledBinding: SC.Binding.oneWay('CWB.filesController.selectedFilesCount').bool()
           }),
 
           addTagsButton: SC.ButtonView.extend({
@@ -306,7 +305,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                     });
                   }
               },
-              isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
+              isEnabledBinding: SC.Binding.oneWay('CWB.filesController.selectedFilesCount').bool()
           }),
 
           markImportantButton: SC.ButtonView.extend({
@@ -338,7 +337,7 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                     });
                   }
               },
-              isEnabledBinding: SC.Binding.oneWay('CWB.SELECTED_FILES.length').bool()
+              isEnabledBinding: SC.Binding.oneWay('CWB.filesController.selectedFilesCount').bool()
           })
       })
       }),
