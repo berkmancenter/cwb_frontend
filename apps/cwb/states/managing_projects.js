@@ -5,8 +5,7 @@ CWB.MANAGING_PROJECTS = SC.State.extend({
     enterState: function() {
         var allProjects = CWB.store.find(CWB.PROJECTS_QUERY);
         CWB.projectsController.set('content', allProjects);
-        CWB.store.find(CWB.FOLDERS_QUERY);
-        CWB.store.find(CWB.FILES_QUERY);
+
         CWB.SELECTED_FILES = CWB.store.find(CWB.SELECTED_FILES_QUERY);
 
         CWB.projectController.set('rootFolders', []);

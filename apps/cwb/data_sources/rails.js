@@ -11,6 +11,13 @@ CWB.RailsDataSource = SC.DataSource.extend({
     headers: {'Accept': 'application/json'},
 
     fetch: function (store, query) {
+        var recordType = query.get('recordType');
+
+        // if we don't have a project, don't bother looking for folder/file data
+        if ((recordType === CWB.Folder || recordType === CWB.File) && window.currentProject === undefined) {
+            return NO;
+        }
+
         if (typeof window.hasFetchedData === 'undefined' || !window.hasFetchedData) {
             window.hasFetchedData = {};
         }
@@ -19,14 +26,22 @@ CWB.RailsDataSource = SC.DataSource.extend({
             window.hasFetchedData[window.currentProject] = {};
         }
 
-        var recordType = query.get('recordType');
         if(window.currentProject && window.hasFetchedData[window.currentProject][recordType]) {
-            // console.log('hijacked! ' + recordType + ' ' + window.currentProject);
-            return YES;
-        } else {
-            // console.log('fetching! ' + recordType + ' ' + window.currentProject);
+            if (recordType === CWB.File) {
+                if (window.hasFetchedData[window.currentProject]['fetchedFilesTwice']) {
+                    // console.log('hijacked! ' + recordType + ' ' + window.currentProject);
+                    return YES;
+                } else {
+                    // don't hijack this because sproutcore is unexplicably missing file data until we fetch files twice
+                    window.hasFetchedData[window.currentProject]['fetchedFilesTwice'] = true;
+                }
+            } else {
+                // console.log('hijacked! ' + recordType + ' ' + window.currentProject);
+                return YES;
+            }
         }
-        
+        // console.log('fetching! ' + recordType + ' ' + window.currentProject);
+
         if(recordType === CWB.Term) {
             SC.Logger.debug('    (Term) recordType: ' + recordType + ' conditions: ' + query.conditions + ' parameters: ' + query.parameters);
 
