@@ -73,14 +73,15 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
               title: 'Select',
               //icon: 'sc-icon-document-16',
               menu: SC.MenuPane.extend({
-                  layout: { width: 130 },
+                  layout: { width: 180 },
 
                   itemValueKey: 'value',
                   itemTitleKey: 'title',
                   itemIconKey: 'icon',
                   items: [
-                      SC.Object.create({ value: 'none', title: 'None', icon: sc_static('icons/empty.png'), checkbox: YES }),
-                      SC.Object.create({ value: 'all', title: 'All', icon: sc_static('icons/empty.png') }),
+                      SC.Object.create({ value: 'none_all', title: 'None (all folders)', icon: sc_static('icons/empty.png') }),
+                      SC.Object.create({ value: 'none', title: 'None (current folder)', icon: sc_static('icons/empty.png') }),
+                      SC.Object.create({ value: 'all', title: 'All (current folder)', icon: sc_static('icons/empty.png') }),
                       SC.Object.create({ value: 'isTagged=YES', title: 'Tagged', icon: sc_static('icons/tag-on.png') }),
                       SC.Object.create({ value: 'isTagged=NO', title: 'Untagged', icon: sc_static('icons/tag-off.png') }),
                       SC.Object.create({ value: 'isStarred=YES', title: 'Starred', icon: sc_static('icons/star-on.png') }),
@@ -88,26 +89,30 @@ CWB.FilesScreen = SC.WorkspaceView.extend({
                   ],
 
                   selectedItemChanged: function(menu) {
-                      menu.get('items').setEach('checkbox', NO);
                       var selectedItem = menu.get('selectedItem');
-                      selectedItem.set('checkbox', YES);
-                      var selectedItemValue = selectedItem.get('value');
-                      if (selectedItemValue == 'all') {
-                          var allFiles = CWB.filesController.get('content');
-                          allFiles.setEach('isSelected', YES);
+                      if (selectedItem) {
+                        var selectedItemValue = selectedItem.get('value');
+                        if (selectedItemValue == 'all') {
+                            var allFiles = CWB.filesController.get('content');
+                            allFiles.setEach('isSelected', YES);
+                        }
+                        else if (selectedItemValue == 'none') {
+                            var selectedFiles = CWB.filesController.get('content');
+                            selectedFiles.setEach('isSelected', NO);
+                        }
+                        else if (selectedItemValue == 'none_all') {
+                            CWB.SELECTED_FILES.setEach('isSelected', NO);
+                        }
+                        else {
+                            var selectedFiles = CWB.filesController.get('content');
+                            selectedFiles.setEach('isSelected', NO);
+                            selectedFiles = selectedFiles.find(SC.Query.local(CWB.File, selectedItemValue));
+                            selectedFiles.setEach('isSelected', YES);
+                        }
+                        menu.set('selectedItem', null);
+                        return YES;
                       }
-                      else if (selectedItemValue == 'none') {
-                          var selectedFiles = CWB.filesController.get('content');
-                          selectedFiles.setEach('isSelected', NO);
-                      }
-                      else {
-                          var selectedFiles = CWB.filesController.get('content')
-                          selectedFiles.setEach('isSelected', NO);
-                          selectedFiles = selectedFiles.find(SC.Query.local(CWB.Node, selectedItemValue));
-                          selectedFiles.setEach('isSelected', YES);
-                      }
-                      //CWB.filesController.updateSelectionAfterContentChange();
-                      return YES;
+                      return NO;
                   }.observes('.selectedItem')
               })
           }),
