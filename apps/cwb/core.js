@@ -14,7 +14,7 @@ CWB = SC.Application.create(
   /** @scope CWB.prototype */ {
 
   NAMESPACE: 'CWB',
-  VERSION: '0.6.0',
+  VERSION: '0.7.0',
 
   // This is your application store.  You will use this store to access all
   // of your model data.  You can also set a data source on this store to
