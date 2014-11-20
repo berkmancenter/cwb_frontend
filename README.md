@@ -74,6 +74,10 @@ You can add files to the work queue by toggling their checkboxes on and then cli
 
 Note: the work queue is tied to your current tagging session only (unlike tags and stars). If you leave and come back the work queue will be empty.
 
+**Selecting Files From Multiple Folders**
+
+If you select files from multiple folders before clicking one of the buttons in the bottom toolbar, you'll be presented with the option to perform that action against *all* of the selected files or only against the selected files within the current folder.
+
 #### Image Previews
 
 When you create a project, image previews will be generated for the following file types:
