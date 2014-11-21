@@ -52,15 +52,29 @@ Select a vocabulary to view a list of the terms it contains, and use the buttons
 
 #### Tagging Files
 
-After selecting a project, click the "Files" button in the top right corner to go to the files page. Here users can view the list of folders and files that belong to a project, and can "tag" each file with terms from the project's vocabularies.
+After selecting a project, click the "Files" button in the top right corner to go to the files page. Here users can view the list of folders and files that belong to a project and can begin tagging each file with terms from the project's vocabularies.
 
-Three actions can be performed on any file or group of files:
+**Selecting Files**
+
+You can select a file by clicking its checkbox or by using the "Select" menu in the top toolbar. The Select menu provides the following options:
+
+- None (all folders) - Deselect all files across all folders
+- None (this folder) - Deselect all files within the current folder, leave other folders as-is
+- All (this folder) - Select all files within the current folder only
+- Tagged - Select all tagged files within the current folder only
+- Untagged - Select all untagged files within the current folder only
+- Starred - Select all starred files within the current folder only
+- Unstarred - Select all unstarred files with the current folder only
+
+If you select files from multiple folders before clicking one of the buttons in the bottom toolbar, you'll be presented with the option to perform that action against *all* of the selected files or only against the selected files within the current folder. Note that the count of selected files in the bottom toolbar reflects the *total* number of selected files, not the number of files selected within the current folder.
+
+Three actions can be performed on any file or group of selected files:
 
 **Add Tags**
 
 You can open the tagging pane for a single file by double clicking the file or by clicking the file's tag icon. Once the pane is open, you'll see a list of the project's vocabularies and terms. The highlighted terms are terms that the file has already been tagged with. Make sure the appropriate terms are selected by clicking on them and then click "Save". Any terms you de-selected will be removed from the file.
 
-You can add tags to multiple files at once by toggling the checkbox on for a set of files and then clicking the "Add Tags" button. In this case, the highlighted terms are terms that every selected file (in the current folder) has already been tagged with. When you click save, each file will be tagged with the new set of terms you selected and any pre-existing tags will be removed.
+You can add tags to multiple files at once by toggling the checkbox on for a set of files and then clicking the "Add Tags" button. In this case, the highlighted terms are terms that every selected file (see Selecting Files for more info) has already been tagged with. When you click save, each file will be tagged with the new set of terms you selected and any pre-existing tags will be removed.
 
 There are no restrictions on the number of tags you can apply.
 
@@ -73,10 +87,6 @@ You can "star" a specific file as important by clicking its star icon. Or you ca
 You can add files to the work queue by toggling their checkboxes on and then clicking the "Add to Work Queue" button. To view the work queue simply click the "Work Queue" folder in the top left corner.
 
 Note: the work queue is tied to your current tagging session only (unlike tags and stars). If you leave and come back the work queue will be empty.
-
-**Selecting Files From Multiple Folders**
-
-If you select files from multiple folders before clicking one of the buttons in the bottom toolbar, you'll be presented with the option to perform that action against *all* of the selected files or only against the selected files within the current folder.
 
 #### Image Previews
 
