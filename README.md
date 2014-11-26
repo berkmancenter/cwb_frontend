@@ -42,6 +42,8 @@ As a shortcut, you can pass the `-f` option to the build-rails command. The end 
 
 ## Using FWB
 
+For the best experience using the FWB application, please use [Google Chrome](https://www.google.com/intl/en/chrome/browser/).
+
 #### Managing Projects
 
 After logging in, you'll see the projects screen. Here users can add and remove projects using the buttons in the top left corner of the screen.
