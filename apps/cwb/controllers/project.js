@@ -27,9 +27,9 @@ CWB.projectController = SC.ObjectController.create({
             .notify(this, function(response, that) {
                 if (SC.ok(response)) {
                     CWB.VOCABULARIES = response.get('body') || [];
-                    CWB.VOCABULARIES.forEach(function(vocab, index) {
-												that.getTermsForVocabulary(index);
-                    });
+                    for(var i = 0; i < CWB.VOCABULARIES.length; i++) {
+                      that.getTermsForVocabulary(i);
+                    }
                 } else {
                     console.warn('Sorry, we were unable to fetch vocabularies for project: ' + projectID);
                     CWB.VOCABULARIES = [];
